@@ -30,14 +30,51 @@ textarea {
 }
 
 .table {
-    display: table;
-    width: 500px;
+    background-color:aqua;
+    width:1700px;
+    display: table;           
+    align-content:center;    
+    color:red;
 }
 
-.tr {
-    display: table-row;
+#table {
+    background-color: aqua;
+    display: table;
+    align-content: center;
+    color: red;
 }
+
+
+
+
+.tr {
+    display: table-row;    
+    align-content: center;
+    color: blue;
+}
+
+#tr {
+    display: table-row;
+    align-content: center;
+    color: blue;
+}
+
+
+
 
 .td {
     display: table-cell;
+    align-content:center;
+    vertical-align:middle;
+    color:  orange;
 }
+
+
+#td {
+    display: table-cell;
+    align-content: center;
+    color: orange;
+}
+
+
+
