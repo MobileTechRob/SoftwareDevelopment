@@ -19,11 +19,25 @@ textarea {
 }
 
 /* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 768px) 
+{
     .jumbotron {
         margin-top: 20px;
     }
     .body-content {
         padding: 0;
     }
+}
+
+.table {
+    display: table;
+    width: 500px;
+}
+
+.tr {
+    display: table-row;
+}
+
+.td {
+    display: table-cell;
 }
