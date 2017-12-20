@@ -1,0 +1,49 @@
+﻿body {
+}
+
+.menutable {
+    background-color: black;
+    display: table;
+    align-content: center;
+    color: red;
+    border: solid;
+    position: absolute;
+    margin-left: 40%;
+}
+
+#table {
+    background-color: aqua;
+    display: table;
+    align-content: center;
+    color: red;
+}
+
+.tr {
+    display: table-row;
+    align-content: center;
+    color: blue;
+    border: solid;
+}
+
+#tr {
+    display: table-row;
+    align-content: center;
+    color: blue;
+}
+
+
+.td {
+    display: table-cell;
+    align-content: center;
+    vertical-align: middle;
+    color: orange;
+    border: solid;
+}
+
+
+#td {
+    display: table-cell;
+    align-content: center;
+    color: orange;
+}
+

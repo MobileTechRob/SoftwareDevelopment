@@ -11,4 +11,14 @@ public partial class MainMenu : System.Web.UI.Page
     {
 
     }
+
+    protected void btnPatientCare_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void btnPatientReports_Click(object sender, EventArgs e)
+    {
+
+    }
 }
