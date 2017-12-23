@@ -1,0 +1,22 @@
+﻿body {
+}
+
+.menutable {
+    display: table;
+    align-content: center;
+    position: absolute;
+    margin-top: 20%;
+    margin-left: 35%;
+}
+
+.tr {
+    display: table-row;
+    align-content: center;
+}
+
+.td {
+    display: table-cell;
+    align-content: center;
+    vertical-align: middle;
+}
+

@@ -19,11 +19,11 @@ public partial class MainMenu : System.Web.UI.Page
 
     protected void btnPatientCare_Click(object sender, EventArgs e)
     {
-
+        Response.Redirect("~/PatientCare/PatientCare.aspx");
     }
 
-    protected void btnPatientReports_Click(object sender, EventArgs e)
+    protected void btnSystemConfiguration_Click(object sender, EventArgs e)
     {
-
+        Response.Redirect("~/PatientCare/PatientCare.aspx");
     }
 }

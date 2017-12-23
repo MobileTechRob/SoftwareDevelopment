@@ -8,7 +8,8 @@ using System.Text;
 public enum MyDataTypes
 {
     INTEGER,
-    STRING
+    STRING,
+    DATETIME
 }
 
 public class MyDataGridColumn
@@ -82,6 +83,20 @@ public class MyDataGridPager
 
             foreach (MyDataGridColumn column in columnDictionary.Values)
             {
+                DataColumn dataColumn = new DataColumn();
+                dataColumn.ColumnName = column.DataGridColumnName;
+
+                if (column.DataType == MyDataTypes.INTEGER)
+                    dataColumn.DataType = System.Type.GetType("System.Int32");
+
+                if (column.DataType == MyDataTypes.STRING)
+                    dataColumn.DataType = System.Type.GetType("System.String");
+
+                if (column.DataType == MyDataTypes.DATETIME)
+                    dataColumn.DataType = System.Type.GetType("System.DateTime");
+
+                dataGridTable.Columns.Add(column.DataGridColumnName, dataColumn.DataType);
+
                 sqlSelectClause.Append(column.DataBaseTableColumnName);
                 sqlSelectClause.Append(",");
 
@@ -109,13 +124,45 @@ public class MyDataGridPager
             string fieldData = string.Empty;
             tlist = new List<string>();
 
+            DataRow row=null;
+            object[] itemArray = null;
+            int itemCount = 0;
+            
             if (databaseReader.HasRows)
-            {
+            {                           
                 while (databaseReader.Read())
                 {
-                    fieldData = databaseReader.GetString(1);
-                    tlist.Add(fieldData);
+                    row = dataGridTable.NewRow();
+                    itemCount = 0;
+                 
+                    itemArray = new object[columnDictionary.Count];
+
+                    foreach (MyDataGridColumn column in columnDictionary.Values)
+                    {
+                        switch (column.DataType)
+                        {
+                            case MyDataTypes.INTEGER:
+                                itemArray[itemCount] = Utilities.ParseInt32(databaseReader, itemCount);
+                                break;
+
+                            case MyDataTypes.STRING:
+                                itemArray[itemCount] = Utilities.ParseStr(databaseReader, itemCount);
+                                break;
+
+                            case MyDataTypes.DATETIME:
+                                itemArray[itemCount] = Utilities.ParseDateTime(databaseReader, itemCount);
+                                break;
+                        }
+
+                        itemCount++;
+                    }
+
+                    row.ItemArray = itemArray;
+                    dataGridTable.Rows.Add(row);
                 }
+
+                databaseReader.Close();
+
             }            
         }
                    

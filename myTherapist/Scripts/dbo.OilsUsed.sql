@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[OilsUsed]
+(
+	[ApptDate] DATETIME NOT NULL PRIMARY KEY, 
+    [OilsUsed] NVARCHAR(MAX) NULL
+)
