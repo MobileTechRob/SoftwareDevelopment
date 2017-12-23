@@ -9,6 +9,11 @@
     margin-left: 35%;
 }
 
+.menubuttontable {
+    display: table;
+    align-content: center;
+}
+
 .tr {
     display: table-row;
     align-content: center;

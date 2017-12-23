@@ -1,5 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="PatientCare.aspx.cs" Inherits="PatientCare_PatientCare" %>
-
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="PatientCare.aspx.cs" Inherits="PatientCare_PatientCare" EnableEventValidation="false"  %>
 <%@ Register src="PatientListing.ascx" tagname="PatientListing" tagprefix="uc1" %>
 
 <!DOCTYPE html>
@@ -15,8 +14,25 @@
         </div>
 
         <uc1:PatientListing ID="PatientListing1" runat="server" />
-
+        
+        <div class="menubuttontable">
+            <div class="tr">
+                <div class="td">
+                    <asp:Button runat="server" ID="btnPreviousPage" Text="<" />
+                    <asp:Button runat="server" ID="btnNextPAge" Text=">" />
+                </div>
+            </div>
+        </div>        
+        <br />
+        <div class="menubuttontable">
+            <div class="tr">
+                <div class="td">
+                    <asp:Button runat="server" ID="btnCreatePatient" Text="Create Patient" />                   
+                    <asp:Button runat="server" ID="btnStartAppt" Text="Start Appointment" />
+                    <asp:Button runat="server" ID="btnPatientHistory" Text="Patient History" />
+                </div>
+            </div>
+        </div>
     </form>
 </body>
 </html>
-

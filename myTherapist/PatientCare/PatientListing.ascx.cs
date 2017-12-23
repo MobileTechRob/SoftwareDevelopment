@@ -27,8 +27,30 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         else
             pager.PageNumber = Int32.Parse(Session["PatientList_PageNumber"].ToString());
 
-        patientlisting.DataSource = pager.BuildTable();
-        patientlisting.DataBind();        
+        //patientlisting.DataSource = pager.BuildTable();        
+        //patientlisting.ItemDataBound += Patientlisting_ItemDataBound;
+        //patientlisting.ItemCreated += Patientlisting_ItemCreated;
+        //patientlisting.DataBind();
+
+        patientlistgridview.DataSource = pager.BuildTable();        
+        patientlistgridview.RowDataBound += Patientlistgridview_RowDataBound;
+        patientlistgridview.SelectedIndexChanged += Patientlistgridview_SelectedIndexChanged;
+        patientlistgridview.DataBind();
+
+    }
+
+    private void Patientlistgridview_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        string s = "";
+    }
+
+    private void Patientlistgridview_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(patientlistgridview,"Select$" + e.Row.RowIndex);
+            e.Row.Attributes["style"] = "cursor:pointer";
+        }
     }
 }
 

@@ -4,3 +4,5 @@
 <asp:DataGrid runat="server" ID="patientlisting">
 
 </asp:DataGrid>
+
+<asp:GridView runat="server" ID="patientlistgridview"></asp:GridView>

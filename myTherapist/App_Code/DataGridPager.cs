@@ -162,10 +162,12 @@ public class MyDataGridPager
                 }
 
                 databaseReader.Close();
-
+                databaseConnection.Close();
             }            
         }
                    
+
+
         return dataGridTable;
     }
 
