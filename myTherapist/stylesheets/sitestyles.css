@@ -3,16 +3,28 @@
 }
 
 .bodystyle {
-    background-color: burlywood;
+    background-color: #F4A460;
 }
 
 
 .menutable {
+    background-color: #F4A460;
     display: table;
     align-content: center;
     position: absolute;
     margin-top: 20%;
     margin-left: 35%;
+}
+
+.table {
+    background-color: #F4A460;
+    display: table;
+    align-content: center;
+    border:solid;
+}
+
+.fieldset-auto-width {
+    display: inline-block;
 }
 
 .menubuttontable {

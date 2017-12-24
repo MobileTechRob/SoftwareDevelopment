@@ -12,6 +12,14 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (IsPostBack == false)
+            btnPreviousPage.Enabled = false;
+
+        LoadGrid();
+    }
+
+    private void LoadGrid()
+    {
         pager = new MyDataGridPager("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True", "PatientInformation");
         pager.AddColumn("Id", "Id", MyDataTypes.INTEGER, true);
         pager.AddColumn("Name", "Name", MyDataTypes.STRING, false);
@@ -27,21 +35,17 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         else
             pager.PageNumber = Int32.Parse(Session["PatientList_PageNumber"].ToString());
 
-        //patientlisting.DataSource = pager.BuildTable();        
-        //patientlisting.ItemDataBound += Patientlisting_ItemDataBound;
-        //patientlisting.ItemCreated += Patientlisting_ItemCreated;
-        //patientlisting.DataBind();
-
-        patientlistgridview.DataSource = pager.BuildTable();        
+        patientlistgridview.DataSource = pager.BuildTable();
         patientlistgridview.RowDataBound += Patientlistgridview_RowDataBound;
         patientlistgridview.SelectedIndexChanged += Patientlistgridview_SelectedIndexChanged;
         patientlistgridview.DataBind();
-
     }
+
 
     private void Patientlistgridview_SelectedIndexChanged(object sender, EventArgs e)
     {
-        string s = "";
+        GridView gridView = (GridView)sender;
+        int selectedIndex = gridView.SelectedIndex;
     }
 
     private void Patientlistgridview_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -51,6 +55,37 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
             e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(patientlistgridview,"Select$" + e.Row.RowIndex);
             e.Row.Attributes["style"] = "cursor:pointer";
         }
+    }
+
+    protected void btnPreviousPage_Click(object sender, EventArgs e)
+    {        
+        string page = Session["PatientList_PageNumber"].ToString();
+
+        int pageNumber = Int32.Parse(page);
+
+        pageNumber -= 1;
+
+        Session["PatientList_PageNumber"] = pageNumber.ToString();
+
+        if (pageNumber == 1)
+            btnPreviousPage.Enabled = false;
+
+        LoadGrid();      
+    }
+
+    protected void btnNextPAge_Click(object sender, EventArgs e)
+    {
+        string page = Session["PatientList_PageNumber"].ToString();
+
+        int pageNumber = Int32.Parse(page);
+
+        pageNumber += 1;
+
+        Session["PatientList_PageNumber"] = pageNumber.ToString();
+
+        LoadGrid();
+
+        btnPreviousPage.Enabled = true;
     }
 }
 

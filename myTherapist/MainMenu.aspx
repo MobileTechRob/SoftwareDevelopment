@@ -1,13 +1,13 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="MainMenu.aspx.cs" Inherits="MainMenu" %>
 
 <!DOCTYPE html>
-<link rel="stylesheet" runat="server" href="sitestyles.css"/> 
+<link rel="stylesheet" runat="server" href="stylesheets/sitestyles.css"/> 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">    
     <title>hello</title>
 </head>
 
-<body>
+<body class="bodystyle">
     <form id="form1" runat="server">
         <div class="menutable">
             <div class="tr">
