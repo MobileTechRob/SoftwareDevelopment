@@ -1,4 +1,11 @@
-﻿body {
+﻿
+input, select, textbox ,textarea {
+    max-width: 500px;
+}
+
+
+
+body {
     background-color:burlywood;
 }
 

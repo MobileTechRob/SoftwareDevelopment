@@ -9,6 +9,7 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (Session["PatienName"] != null)
+            patientHeader.Text = Session["PatienName"].ToString();
     }
 }

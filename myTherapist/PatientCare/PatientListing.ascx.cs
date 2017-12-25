@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+
 public partial class PatientCare_PatientListing : System.Web.UI.UserControl
 {
-
     MyDataGridPager pager = null;
 
     protected void Page_Load(object sender, EventArgs e)
@@ -46,6 +46,17 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
     {
         GridView gridView = (GridView)sender;
         int selectedIndex = gridView.SelectedIndex;
+
+        int patientID = Int32.Parse(patientlistgridview.Rows[selectedIndex].Cells[0].Text);
+        string patientName = patientlistgridview.Rows[selectedIndex].Cells[1].Text;
+
+        for (int index = 0; index < patientlistgridview.Rows.Count; index++)
+            patientlistgridview.Rows[index].BackColor = System.Drawing.ColorTranslator.FromHtml("#F4A460");
+
+        patientlistgridview.Rows[selectedIndex].BackColor = System.Drawing.ColorTranslator.FromHtml("#F9cda8");
+
+        Session["PatientID"] = patientlistgridview.Rows[selectedIndex].Cells[0].Text;
+        Session["PatienName"] = patientlistgridview.Rows[selectedIndex].Cells[1].Text;
     }
 
     private void Patientlistgridview_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -60,9 +71,7 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
     protected void btnPreviousPage_Click(object sender, EventArgs e)
     {        
         string page = Session["PatientList_PageNumber"].ToString();
-
         int pageNumber = Int32.Parse(page);
-
         pageNumber -= 1;
 
         Session["PatientList_PageNumber"] = pageNumber.ToString();
@@ -76,15 +85,12 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
     protected void btnNextPAge_Click(object sender, EventArgs e)
     {
         string page = Session["PatientList_PageNumber"].ToString();
-
         int pageNumber = Int32.Parse(page);
-
         pageNumber += 1;
 
         Session["PatientList_PageNumber"] = pageNumber.ToString();
 
         LoadGrid();
-
         btnPreviousPage.Enabled = true;
     }
 }

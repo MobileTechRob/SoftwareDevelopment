@@ -3,6 +3,8 @@
 
 <%@ Register src="AddEditPatientControl.ascx" tagname="AddEditPatientControl" tagprefix="uc2" %>
 
+<%@ Register src="PatientApptControl.ascx" tagname="PatientApptControl" tagprefix="uc3" %>
+
 <!DOCTYPE html>
 
 <link rel="stylesheet" runat="server" href="../stylesheets/sitestyles.css"/> 
@@ -15,6 +17,7 @@
     <form id="form1" runat="server">
         
         <uc1:PatientListing ID="PatientListing1" runat="server" />                
+        <uc3:PatientApptControl ID="PatientApptControl1" runat="server" />
         <uc2:AddEditPatientControl ID="AddEditPatientControl1" runat="server" />
         <br />
 
@@ -22,8 +25,10 @@
         <div id="navigationMenu" class="menubuttontable">
             <div class="tr">
                 <div class="td">
-                    <asp:Button runat="server" ID="btnCreatePatient" Text="Create Patient" OnClick="btnCreatePatient_Click" />                   
+                    <asp:Button runat="server" ID="btnCreatePatient" Text="Create Patient" OnClick="btnCreatePatient_Click" />  
+                    <asp:Button runat="server" ID="btnSaveAppt" Text="Save Appointment" OnClick="btnSaveAppt_Click" />
                     <asp:Button runat="server" ID="btnStartAppt" Text="Start Appointment" OnClick="btnStartAppt_Click" />
+                    <asp:Button runat="server" ID="btnPatientListing" Text="Patient Listing" OnClick="btnPatientListing_Click" />
                     <asp:Button runat="server" ID="btnPatientHistory" Text="Patient History" OnClick="btnPatientHistory_Click" />
                 </div>
             </div>

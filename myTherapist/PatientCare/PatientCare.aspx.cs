@@ -16,7 +16,12 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         if (IsPostBack == false)
         {
             PatientListing1.Visible = true;
-            AddEditPatientControl1.Visible = false;            
+            AddEditPatientControl1.Visible = false;
+            PatientApptControl1.Visible = false;
+
+            btnSaveAppt.Visible = false;
+            btnPatientListing.Visible = false;
+
         }                  
     }
 
@@ -41,18 +46,34 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         PatientListing1.Visible = false;
         AddEditPatientControl1.Visible = true;
 
-
         menuPanel.Visible = false;
         Response.Clear();
     }
 
     protected void btnStartAppt_Click(object sender, EventArgs e)
     {
-      
+        PatientListing1.Visible = false;
+        AddEditPatientControl1.Visible = false;
+        PatientApptControl1.Visible = true;
+
+        btnStartAppt.Visible = false;
+        btnSaveAppt.Visible = true;
+        btnCreatePatient.Visible = false;        
+        btnPatientListing.Visible = true;
     }
 
     protected void btnPatientHistory_Click(object sender, EventArgs e)
     {
         
+    }
+
+    protected void btnSaveAppt_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void btnPatientListing_Click(object sender, EventArgs e)
+    {
+
     }
 }
