@@ -69,7 +69,58 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
 
     protected void btnSaveAppt_Click(object sender, EventArgs e)
     {
+        RadioButtonList rbl = null;
+        TextBox txtBox = null;
+        
+        rbl = (RadioButtonList)PatientApptControl1.FindControl("LHT");
+        string lht = rbl.Text;
 
+        rbl = (RadioButtonList)PatientApptControl1.FindControl("SP");
+        string sp = rbl.Text;
+
+        rbl = (RadioButtonList)PatientApptControl1.FindControl("KD1");
+        string kd1 = rbl.Text;
+
+        rbl = (RadioButtonList)PatientApptControl1.FindControl("RHT");
+        string rht = rbl.Text;
+
+        rbl = (RadioButtonList)PatientApptControl1.FindControl("SP2");
+        string sp1 = rbl.Text;
+
+        rbl = (RadioButtonList)PatientApptControl1.FindControl("KD2");
+        string kd2 = rbl.Text;
+
+        txtBox = (TextBox)PatientApptControl1.FindControl("txtboxTherapyPerformed");
+        string therapy = txtBox.Text;
+
+        txtBox = (TextBox)PatientApptControl1.FindControl("txtboxOilsUsed");
+        string oilsUsed = txtBox.Text;
+
+        txtBox = (TextBox)PatientApptControl1.FindControl("txtBoxSessionGoals");
+        string sessionGoals = txtBox.Text;
+
+        PatientAppointmentInfomationDataContext patientApptDataContext = new PatientAppointmentInfomationDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
+        PatientAppointmentInformation patientAppointmentInformation = new PatientAppointmentInformation();
+
+
+        patientAppointmentInformation.ApptDate = DateTime.Now;
+        patientAppointmentInformation.ImageBeforeTherapy = "";
+        patientAppointmentInformation.ImageAfterTherapy = "";
+
+        patientAppointmentInformation.LHT = "";
+        patientAppointmentInformation.SP = "";
+        patientAppointmentInformation.KD1 = "";
+
+        patientAppointmentInformation.RLU = "";
+        patientAppointmentInformation.LV = "";
+        patientAppointmentInformation.KD2 = "";
+
+        patientAppointmentInformation.TherapyPerformed = "";
+        patientAppointmentInformation.OilsUsed = "";
+        patientAppointmentInformation.SessionGoals = "";
+
+        patientApptDataContext.PatientAppointmentInformations.InsertOnSubmit(patientAppointmentInformation);
+        patientApptDataContext.SubmitChanges();        
     }
 
     protected void btnPatientListing_Click(object sender, EventArgs e)

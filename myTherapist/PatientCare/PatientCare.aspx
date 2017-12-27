@@ -8,9 +8,9 @@
 <!DOCTYPE html>
 
 <link rel="stylesheet" runat="server" href="../stylesheets/sitestyles.css"/> 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" title="myTherapist">
 <head runat="server">
-    <title></title>
+    <title>myTherapist</title>
 </head>
 
 <body class="bodystyle" >
@@ -34,7 +34,9 @@
             </div>
         </div>
         </asp:Panel>
-
+        <br />
+        <br />
+        <br />
     </form>
 </body>
 </html>

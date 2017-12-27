@@ -56,7 +56,7 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         patientlistgridview.Rows[selectedIndex].BackColor = System.Drawing.ColorTranslator.FromHtml("#F9cda8");
 
         Session["PatientID"] = patientlistgridview.Rows[selectedIndex].Cells[0].Text;
-        Session["PatienName"] = patientlistgridview.Rows[selectedIndex].Cells[1].Text;
+        Session["PatientName"] = patientlistgridview.Rows[selectedIndex].Cells[1].Text;
     }
 
     private void Patientlistgridview_RowDataBound(object sender, GridViewRowEventArgs e)

@@ -4,7 +4,7 @@
 <link rel="stylesheet" runat="server" href="stylesheets/sitestyles.css"/> 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">    
-    <title>hello</title>
+    <title>myTherapist</title>
 </head>
 
 <body class="bodystyle">

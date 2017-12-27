@@ -1,8 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="PatientApptControl.ascx.cs" Inherits="PatientCare_PatientApptControl" %>
 <link rel="stylesheet" runat="server" href="./stylesheets/sitestyles.css" id="Link1" /> 
 
-<h2>Patient Appointment</h2>
+<h4 title="myTherapist">Patient Appointment</h4>
 
+<asp:Label ID="lblPatientHeader" runat="server" Text="Patient Name:"></asp:Label>
 <asp:Label ID="patientHeader" runat="server"></asp:Label>
 
 <asp:Table runat="server" ID="PatientApptControl_Table1">
@@ -18,18 +19,17 @@
                         </asp:RadioButtonList>
                     </asp:TableCell>
                     <asp:TableCell runat="server" Text="SP">    
-                            <asp:RadioButtonList runat="server" AutoPostBack="false" ID="RadioButtonList1">
+                            <asp:RadioButtonList runat="server" AutoPostBack="false" ID="SP">
                                 <asp:ListItem Text="None" Value="None"></asp:ListItem>
                                 <asp:ListItem Text="Weak" Value="Weak"></asp:ListItem>
                                 <asp:ListItem Text="Strong" Value="Strong"></asp:ListItem>
                             </asp:RadioButtonList>
                     </asp:TableCell>
                     <asp:TableCell runat="server" Text="KD">    
-                            <asp:RadioButtonList runat="server" AutoPostBack="false" ID="RadioButtonList2">
+                            <asp:RadioButtonList runat="server" AutoPostBack="false" ID="KD1">
                                 <asp:ListItem Text="None" Value="None"></asp:ListItem>
                                 <asp:ListItem Text="Weak" Value="Weak"></asp:ListItem>
                                 <asp:ListItem Text="Strong" Value="Strong"></asp:ListItem>
-
                             </asp:RadioButtonList>
                     </asp:TableCell>        
                     <asp:TableCell runat="server">    
@@ -38,7 +38,7 @@
                 </asp:TableRow>
                 <asp:TableRow>            
                     <asp:TableCell runat="server" Text="RHT">    
-                        <asp:RadioButtonList runat="server" AutoPostBack="false" ID="RadioButtonList3">
+                        <asp:RadioButtonList runat="server" AutoPostBack="false" ID="RHT">
                                 <asp:ListItem Text="None" Value="None"></asp:ListItem>
                                 <asp:ListItem Text="Weak" Value="Weak"></asp:ListItem>
                                 <asp:ListItem Text="Strong" Value="Strong"></asp:ListItem>
@@ -46,7 +46,7 @@
                         </asp:RadioButtonList>
                     </asp:TableCell>
                     <asp:TableCell runat="server" Text="SP">    
-                            <asp:RadioButtonList runat="server" AutoPostBack="false" ID="RadioButtonList4">
+                            <asp:RadioButtonList runat="server" AutoPostBack="false" ID="SP2">
                                 <asp:ListItem Text="None" Value="None"></asp:ListItem>
                                 <asp:ListItem Text="Weak" Value="Weak"></asp:ListItem>
                                 <asp:ListItem Text="Strong" Value="Strong"></asp:ListItem>
@@ -54,7 +54,7 @@
                             </asp:RadioButtonList>
                     </asp:TableCell>
                     <asp:TableCell runat="server" Text="KD">    
-                            <asp:RadioButtonList runat="server" AutoPostBack="false" ID="RadioButtonList5">
+                            <asp:RadioButtonList runat="server" AutoPostBack="false" ID="KD2">
                                 <asp:ListItem Text="None" Value="None"></asp:ListItem>
                                 <asp:ListItem Text="Weak" Value="Weak"></asp:ListItem>
                                 <asp:ListItem Text="Strong" Value="Strong"></asp:ListItem>
@@ -97,7 +97,7 @@
     </asp:TableRow>
     <asp:TableRow>
         <asp:TableCell ColumnSpan="7">            
-            <asp:TextBox runat="server" Width="1200px" Height="150" TextMode="MultiLine" ID="txtboxTherapyPerformed"/>            
+            <asp:TextBox runat="server" Width="1400px" Height="150" TextMode="MultiLine" ID="txtboxTherapyPerformed"/>            
         </asp:TableCell>
     </asp:TableRow>
     <asp:TableRow>
@@ -107,7 +107,7 @@
     </asp:TableRow>
     <asp:TableRow>
         <asp:TableCell ColumnSpan="7">
-            <asp:TextBox runat="server" Width="1200px" Height="150" TextMode="MultiLine" ID="txtboxOilsUsed"/>            
+            <asp:TextBox runat="server" Width="1400px" Height="150" TextMode="MultiLine" ID="txtboxOilsUsed"/>            
         </asp:TableCell>
     </asp:TableRow>
     <asp:TableRow>
@@ -117,7 +117,7 @@
     </asp:TableRow>
     <asp:TableRow>
         <asp:TableCell ColumnSpan="7">
-            <asp:TextBox runat="server" Width="1200px" Height="150" TextMode="MultiLine" ID="txtBoxSessionGoals"/>            
+            <asp:TextBox runat="server" Width="1400px" Height="150" TextMode="MultiLine" ID="txtBoxSessionGoals"/>            
         </asp:TableCell>
     </asp:TableRow>    
 </asp:Table>

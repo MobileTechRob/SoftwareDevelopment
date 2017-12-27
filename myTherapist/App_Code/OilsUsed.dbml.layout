@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="OilsUsed">
+  <DataContextMoniker Name="/OilsUsedDataContext" />
+  <nestedChildShapes>
+    <classShape Id="fcfdd7c9-6f41-4172-9c56-47516ff7049e" absoluteBounds="2.625, 1.125, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/OilsUsedDataContext/OilsUsed" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c16fcdd1-517c-43a8-be27-316dc1afbfd7" absoluteBounds="2.64, 1.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
