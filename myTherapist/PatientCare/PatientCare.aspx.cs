@@ -70,10 +70,12 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
     protected void btnSaveAppt_Click(object sender, EventArgs e)
     {
         RadioButtonList rbl = null;
+        FileUpload fupl = null;
+
         TextBox txtBox = null;
-        
-        rbl = (RadioButtonList)PatientApptControl1.FindControl("LHT");
-        string lht = rbl.Text;
+
+        rbl = (RadioButtonList)PatientApptControl1.FindControl("RLU");
+        string rlu = rbl.Text;
 
         rbl = (RadioButtonList)PatientApptControl1.FindControl("SP");
         string sp = rbl.Text;
@@ -81,14 +83,22 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         rbl = (RadioButtonList)PatientApptControl1.FindControl("KD1");
         string kd1 = rbl.Text;
 
-        rbl = (RadioButtonList)PatientApptControl1.FindControl("RHT");
-        string rht = rbl.Text;
+        rbl = (RadioButtonList)PatientApptControl1.FindControl("LHT");
+        string lht = rbl.Text;
 
-        rbl = (RadioButtonList)PatientApptControl1.FindControl("SP2");
-        string sp1 = rbl.Text;
+        rbl = (RadioButtonList)PatientApptControl1.FindControl("LV");
+        string lv = rbl.Text;
 
         rbl = (RadioButtonList)PatientApptControl1.FindControl("KD2");
         string kd2 = rbl.Text;
+
+        fupl = (FileUpload)PatientApptControl1.FindControl("uploadImageBefore");
+        string filePathImageBefore = string.Empty;
+        filePathImageBefore = fupl.FileName;
+
+        fupl = (FileUpload)PatientApptControl1.FindControl("uploadImageAfter");
+        string filePathImageAfter = string.Empty;
+        filePathImageAfter = fupl.FileName;
 
         txtBox = (TextBox)PatientApptControl1.FindControl("txtboxTherapyPerformed");
         string therapy = txtBox.Text;
@@ -102,25 +112,44 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         PatientAppointmentInfomationDataContext patientApptDataContext = new PatientAppointmentInfomationDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
         PatientAppointmentInformation patientAppointmentInformation = new PatientAppointmentInformation();
 
+        DateTime apptDate = DateTime.Now;
 
-        patientAppointmentInformation.ApptDate = DateTime.Now;
-        patientAppointmentInformation.ImageBeforeTherapy = "";
-        patientAppointmentInformation.ImageAfterTherapy = "";
+        patientAppointmentInformation.ApptDate = apptDate;
+        patientAppointmentInformation.ImageBeforeTherapy = filePathImageBefore;
+        patientAppointmentInformation.ImageAfterTherapy = filePathImageAfter;
 
-        patientAppointmentInformation.LHT = "";
-        patientAppointmentInformation.SP = "";
-        patientAppointmentInformation.KD1 = "";
+        patientAppointmentInformation.RLU = rlu;        
+        patientAppointmentInformation.SP = sp;
+        patientAppointmentInformation.KD1 = kd1;
 
-        patientAppointmentInformation.RLU = "";
-        patientAppointmentInformation.LV = "";
-        patientAppointmentInformation.KD2 = "";
+        patientAppointmentInformation.LHT = lht;
+        patientAppointmentInformation.LV = lv;
+        patientAppointmentInformation.KD2 = kd2;
 
-        patientAppointmentInformation.TherapyPerformed = "";
-        patientAppointmentInformation.OilsUsed = "";
-        patientAppointmentInformation.SessionGoals = "";
+        patientAppointmentInformation.TherapyPerformed = therapy;
+        patientAppointmentInformation.OilsUsed = oilsUsed;
+        patientAppointmentInformation.SessionGoals = sessionGoals;
 
         patientApptDataContext.PatientAppointmentInformations.InsertOnSubmit(patientAppointmentInformation);
-        patientApptDataContext.SubmitChanges();        
+        patientApptDataContext.SubmitChanges();
+
+        string[] p = {",", " ", "\r\n" };
+
+        string[] listOfOilsUsed = oilsUsed.Split(p, StringSplitOptions.RemoveEmptyEntries);
+
+        if (listOfOilsUsed.Length > 0)
+        {
+            OilsUsedDataContext oilDataContext = new OilsUsedDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
+
+            foreach (string oil in listOfOilsUsed)
+            {
+                OilsUsed oils = new OilsUsed();
+                oils.ApptDate = apptDate;
+                oils.OilsUsed1 = oil;
+                oilDataContext.OilsUseds.InsertOnSubmit(oils);
+                oilDataContext.SubmitChanges();
+            }               
+        }
     }
 
     protected void btnPatientListing_Click(object sender, EventArgs e)
