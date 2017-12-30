@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 
 <link rel="stylesheet" runat="server" href="../stylesheets/sitestyles.css"/> 
-<html xmlns="http://www.w3.org/1999/xhtml" title="myTherapist">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>myTherapist</title>
 </head>
@@ -30,6 +30,7 @@
                     <asp:Button runat="server" ID="btnStartAppt" Text="Start Appointment" OnClick="btnStartAppt_Click" />
                     <asp:Button runat="server" ID="btnPatientListing" Text="Patient Listing" OnClick="btnPatientListing_Click" />
                     <asp:Button runat="server" ID="btnPatientHistory" Text="Patient History" OnClick="btnPatientHistory_Click" />
+                    <asp:Button runat="server" ID="btnDeletePatient" Text="Delete Patient" OnClick="btnDeletePatient_Click" />
                 </div>
             </div>
         </div>

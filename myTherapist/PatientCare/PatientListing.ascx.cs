@@ -18,7 +18,7 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         LoadGrid();
     }
 
-    private void LoadGrid()
+    public void LoadGrid()
     {
         pager = new MyDataGridPager("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True", "PatientInformation");
         pager.AddColumn("Id", "Id", MyDataTypes.INTEGER, true);
@@ -63,8 +63,7 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(patientlistgridview,"Select$" + e.Row.RowIndex);
-            e.Row.Attributes["style"] = "cursor:pointer";
+            e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(patientlistgridview,"Select$" + e.Row.RowIndex);            
         }
     }
 

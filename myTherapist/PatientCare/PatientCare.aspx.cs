@@ -6,9 +6,12 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 public partial class PatientCare_PatientCare : System.Web.UI.Page
-{    
+{
+    PatientCare_PatientListing patientListing;
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        patientListing = PatientListing1;
 
         AddEditPatientControl1.patientCareCanceled += AddEditPatientControl1_patientCareCanceled;
         AddEditPatientControl1.patientCareSaved += AddEditPatientControl1_patientCareSaved;
@@ -155,5 +158,20 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
     protected void btnPatientListing_Click(object sender, EventArgs e)
     {
 
+    }
+
+    protected void btnDeletePatient_Click(object sender, EventArgs e)
+    {
+        PatientDataContext patientDC = new PatientDataContext("Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf; Integrated Security = True");
+        PatientInformation patientToDelete = new PatientInformation();
+        Int32 patientId = 0;
+
+        if (Int32.TryParse(Session["PatientID"].ToString(), out patientId))
+        {
+            patientToDelete = patientDC.PatientInformations.Single(patient => patient.Id == patientId);
+
+            patientDC.PatientInformations.DeleteOnSubmit(patientToDelete);
+            patientDC.SubmitChanges();            
+        }
     }
 }
