@@ -12,12 +12,19 @@ public enum MyDataTypes
     DATETIME
 }
 
+public enum MyDataSort
+{
+    ASC,
+    DESC    
+}
+
 public class MyDataGridColumn
 {
     public string DataBaseTableColumnName { get; set; }
     public string DataGridColumnName { get; set; }
     public bool OrderByColumn { get; set; }
     public MyDataTypes DataType { get; set; }
+    public int HeaderWidth { get; set; }
 
     public MyDataGridColumn()
     {
@@ -33,7 +40,7 @@ public class MyDataGridPager
     public int NumberRowsToDisplay { get; set; }
     public int PageNumber { get; set; }
     public string WhereClause {get;set;}
-
+    public MyDataSort Sort { get; set; }
     private DataTable dataGridTable;
     private string databaseTableName;
     private SortedDictionary<int, MyDataGridColumn> columnDictionary;
@@ -51,17 +58,27 @@ public class MyDataGridPager
         columnDictionary = new SortedDictionary<int, MyDataGridColumn>();
         databaseConnection = new System.Data.SqlClient.SqlConnection(connnectionString);
         databaseTableName = tableName;
+        Sort = MyDataSort.ASC;
     }
 
-    public void AddColumn(string databaseColumnName, string dataGridColumnName, MyDataTypes dataType, bool orderByColumn)
+    public void AddColumn(string databaseColumnName, string dataGridColumnName, MyDataTypes dataType, bool orderByColumn, int gridWidth)
     {
         MyDataGridColumn column = new MyDataGridColumn();
         column.DataBaseTableColumnName = databaseColumnName;
         column.DataGridColumnName = dataGridColumnName;
         column.OrderByColumn = orderByColumn;
         column.DataType = dataType;
+        column.HeaderWidth = gridWidth;
 
         columnDictionary.Add(columnDictionary.Count + 1, column);
+    }
+
+    public int ColumnWidth(int column)
+    {
+        if (columnDictionary.ContainsKey(column))
+            return columnDictionary[column].HeaderWidth;
+        else
+            return 10;
     }
 
     public DataTable BuildTable()
@@ -108,14 +125,28 @@ public class MyDataGridPager
             sqlCommandString.Append(sqlSelectClause.ToString().TrimEnd(parms));
             sqlCommandString.Append(" FROM ");
             sqlCommandString.Append(databaseTableName);
-            sqlCommandString.Append(" ORDER BY ");
-            sqlCommandString.Append(orderByColumnName);
-            sqlCommandString.Append(" OFFSET ");
-            sqlCommandString.Append(((PageNumber - 1) * NumberRowsToDisplay).ToString());
-            sqlCommandString.Append(" ROWS ");
-            sqlCommandString.Append(" FETCH NEXT ");
-            sqlCommandString.Append(NumberRowsToDisplay.ToString());
-            sqlCommandString.Append(" ROWS ONLY ");
+
+            if (String.IsNullOrEmpty(orderByColumnName) == false)
+            {
+                sqlCommandString.Append(" ORDER BY ");
+                sqlCommandString.Append(orderByColumnName);
+            }
+
+            if (Sort == MyDataSort.ASC)
+                sqlCommandString.Append(" ASC ");
+            else
+                sqlCommandString.Append(" DESC ");
+
+            if (NumberRowsToDisplay > 0)
+            { 
+                sqlCommandString.Append(" OFFSET ");
+                sqlCommandString.Append(((PageNumber - 1) * NumberRowsToDisplay).ToString());
+                sqlCommandString.Append(" ROWS ");
+                sqlCommandString.Append(" FETCH NEXT ");
+                sqlCommandString.Append(NumberRowsToDisplay.ToString());
+                sqlCommandString.Append(" ROWS ONLY ");
+            }
+
 
             //= "SELECT * FROM TableName ORDER BY id OFFSET 10 ROWS FETCH NEXT 10 ROWS ONLY";=
             databaseCommand.CommandText = sqlCommandString.ToString();
@@ -166,8 +197,6 @@ public class MyDataGridPager
             }            
         }
                    
-
-
         return dataGridTable;
     }
 

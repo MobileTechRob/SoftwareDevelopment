@@ -98,7 +98,7 @@ public partial class OilsUsed : INotifyPropertyChanging, INotifyPropertyChanged
 		OnCreated();
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApptDate", DbType="DateTime NOT NULL", IsPrimaryKey=true)]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApptDate", DbType="DateTime2 NOT NULL", IsPrimaryKey=true)]
 	public System.DateTime ApptDate
 	{
 		get

@@ -11,7 +11,7 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
     MyDataGridPager pager = null;
 
     protected void Page_Load(object sender, EventArgs e)
-    {
+    {         
         if (IsPostBack == false)
             btnPreviousPage.Enabled = false;
 
@@ -21,10 +21,10 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
     public void LoadGrid()
     {
         pager = new MyDataGridPager("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True", "PatientInformation");
-        pager.AddColumn("Id", "Id", MyDataTypes.INTEGER, true);
-        pager.AddColumn("Name", "Name", MyDataTypes.STRING, false);
-        pager.AddColumn("EmailAddress", "Email Address", MyDataTypes.STRING, false);
-        pager.AddColumn("TelephoneNumber", "Telephone Number", MyDataTypes.STRING, false);
+        pager.AddColumn("Id", "Id", MyDataTypes.INTEGER, true, 35);
+        pager.AddColumn("Name", "Name", MyDataTypes.STRING, false, 500);
+        pager.AddColumn("EmailAddress", "Email Address", MyDataTypes.STRING, false, 250);
+        pager.AddColumn("TelephoneNumber", "Telephone Number", MyDataTypes.STRING, false, 235);
         pager.NumberRowsToDisplay = 5;
 
         if (IsPostBack == false)
@@ -36,7 +36,7 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
             pager.PageNumber = Int32.Parse(Session["PatientList_PageNumber"].ToString());
 
         patientlistgridview.DataSource = pager.BuildTable();
-        patientlistgridview.RowDataBound += Patientlistgridview_RowDataBound;
+        patientlistgridview.RowDataBound += Patientlistgridview_RowDataBound;        
         patientlistgridview.SelectedIndexChanged += Patientlistgridview_SelectedIndexChanged;
         patientlistgridview.DataBind();
     }
@@ -60,10 +60,14 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
     }
 
     private void Patientlistgridview_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
+    {        
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(patientlistgridview,"Select$" + e.Row.RowIndex);            
+            e.Row.Cells[0].Width = pager.ColumnWidth(1);
+            e.Row.Cells[1].Width = pager.ColumnWidth(2);
+            e.Row.Cells[2].Width = pager.ColumnWidth(3);
+            e.Row.Cells[3].Width = pager.ColumnWidth(4);
         }
     }
 
