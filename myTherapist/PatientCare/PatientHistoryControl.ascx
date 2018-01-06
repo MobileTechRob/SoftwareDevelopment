@@ -6,4 +6,4 @@
 <br />
 <asp:RadioButtonList runat="server" ID="rblDisplaySort"><asp:ListItem Value="Ascending"></asp:ListItem><asp:ListItem Value="Descending"></asp:ListItem></asp:RadioButtonList>
 <br />
-<asp:Table runat="server" ID="patientHistoryGrid" />
+<%--<asp:Table runat="server" ID="patientHistoryGrid" HorizontalAlign="Center" />--%>

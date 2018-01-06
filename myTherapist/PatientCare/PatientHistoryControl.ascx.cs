@@ -45,46 +45,59 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             TableRow row = null;
             TableCell columnHeader = null;
             TableCell pulseStrength = null;
+            int COLUMN_WIDTH_APPTDATE = 200;
+            int COLUMN_WIDTH_TEXT = 200;
+            int COLUMN_WIDTH = 150;
             System.Data.DataRow tableRow = null;
             int itemArrayIndex = 0;
 
+            Table patientHistoryGrid = new Table();
+
             row = new TableRow();
-            columnHeader = new TableCell();
-            columnHeader.Text = "ApptDate";
-            row.Cells.Add(columnHeader);
 
             columnHeader = new TableCell();
+            columnHeader.CssClass = "";
+            columnHeader.Text = "Appointment Date";
+            columnHeader.Width = COLUMN_WIDTH_APPTDATE;
+            row.Cells.Add(columnHeader);
+            
+            columnHeader = new TableCell();
             columnHeader.Text = "RLU";
+            columnHeader.Width = COLUMN_WIDTH;
             row.Cells.Add(columnHeader);
 
             columnHeader = new TableCell();
             columnHeader.Text = "SP";
+            columnHeader.Width = COLUMN_WIDTH;
             row.Cells.Add(columnHeader);
 
             columnHeader = new TableCell();
             columnHeader.Text = "KD";
+            columnHeader.Width = COLUMN_WIDTH;
             row.Cells.Add(columnHeader);
 
             columnHeader = new TableCell();
             columnHeader.Text = "LHT";
+            columnHeader.Width = COLUMN_WIDTH;
             row.Cells.Add(columnHeader);
 
             columnHeader = new TableCell();
             columnHeader.Text = "LV";
+            columnHeader.Width = COLUMN_WIDTH;
             row.Cells.Add(columnHeader);
 
             columnHeader = new TableCell();
             columnHeader.Text = "KD";
+            columnHeader.Width = COLUMN_WIDTH;
             row.Cells.Add(columnHeader);
-            
-            patientHistoryGrid.Rows.Add(row);
-            row = new TableRow();
-            row.Height = 20;
 
+            patientHistoryGrid.Rows.Add(row);
+            
             // blank row
+            row = new TableRow();
+            row.Height = 20;            
             patientHistoryGrid.Rows.Add(row);
             
-
             while (rowIndex < patientHistory.Rows.Count)
             {
                 tableRow = patientHistory.Rows[rowIndex];                
@@ -112,8 +125,11 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
                 patientHistoryGrid.Rows.Add(row);
 
                 rowIndex++;
-            }                       
-        }
+            }
+
+            this.Controls.Add(patientHistoryGrid);
+
+        }        
     }
 }
 
