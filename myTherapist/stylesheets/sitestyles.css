@@ -4,6 +4,9 @@ input, select, textbox ,textarea {
 }
 
 
+.reportheader { font-weight:bold; text-wrap:avoid;}
+.reporttext  { text-wrap: avoid; width: }
+.reporttextdate {text-wrap: avoid; width:300px;}
 
 body {
     background-color:burlywood;

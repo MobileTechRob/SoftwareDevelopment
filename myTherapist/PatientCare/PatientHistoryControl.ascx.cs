@@ -45,9 +45,11 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             TableRow row = null;
             TableCell columnHeader = null;
             TableCell pulseStrength = null;
-            int COLUMN_WIDTH_APPTDATE = 200;
+            TableCell patientAppt = null;
+            int COLUMN_WIDTH_APPTDATE = 210;
             int COLUMN_WIDTH_TEXT = 200;
-            int COLUMN_WIDTH = 150;
+            int COLUMN_WIDTH_IMAGE = 200;
+            int COLUMN_WIDTH = 70;
             System.Data.DataRow tableRow = null;
             int itemArrayIndex = 0;
 
@@ -56,41 +58,59 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             row = new TableRow();
 
             columnHeader = new TableCell();
-            columnHeader.CssClass = "";
+            columnHeader.CssClass ="reportheader";
             columnHeader.Text = "Appointment Date";
             columnHeader.Width = COLUMN_WIDTH_APPTDATE;
             row.Cells.Add(columnHeader);
             
             columnHeader = new TableCell();
+            columnHeader.CssClass = "reportheader";
             columnHeader.Text = "RLU";
             columnHeader.Width = COLUMN_WIDTH;
             row.Cells.Add(columnHeader);
 
             columnHeader = new TableCell();
+            columnHeader.CssClass = "reportheader";
             columnHeader.Text = "SP";
             columnHeader.Width = COLUMN_WIDTH;
             row.Cells.Add(columnHeader);
 
             columnHeader = new TableCell();
+            columnHeader.CssClass = "reportheader";
             columnHeader.Text = "KD";
             columnHeader.Width = COLUMN_WIDTH;
             row.Cells.Add(columnHeader);
 
             columnHeader = new TableCell();
+            columnHeader.CssClass = "reportheader";
             columnHeader.Text = "LHT";
             columnHeader.Width = COLUMN_WIDTH;
             row.Cells.Add(columnHeader);
 
             columnHeader = new TableCell();
+            columnHeader.CssClass = "reportheader";
             columnHeader.Text = "LV";
             columnHeader.Width = COLUMN_WIDTH;
             row.Cells.Add(columnHeader);
 
             columnHeader = new TableCell();
+            columnHeader.CssClass = "reportheader";
             columnHeader.Text = "KD";
             columnHeader.Width = COLUMN_WIDTH;
             row.Cells.Add(columnHeader);
 
+            columnHeader = new TableCell();
+            columnHeader.CssClass = "reportheader";
+            columnHeader.Text = "Image Before";
+            columnHeader.Width = COLUMN_WIDTH_IMAGE;
+            row.Cells.Add(columnHeader);
+
+            columnHeader = new TableCell();
+            columnHeader.CssClass = "reportheader";
+            columnHeader.Text = "Image After";
+            columnHeader.Width = COLUMN_WIDTH_IMAGE;
+            row.Cells.Add(columnHeader);
+            
             patientHistoryGrid.Rows.Add(row);
             
             // blank row
@@ -104,16 +124,21 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
                 row = new TableRow();
                 itemArrayIndex = 0;
 
+                patientAppt = new TableCell();
+                patientAppt.CssClass = "reporttextdate";
+                patientAppt.Text = tableRow.ItemArray[itemArrayIndex].ToString();
+                row.Cells.Add(patientAppt);
+
+                itemArrayIndex = 2;
+
                 while (itemArrayIndex < 7)
                 {
                     pulseStrength = new TableCell();
+                    pulseStrength.CssClass = "reporttext";
                     pulseStrength.Text = tableRow.ItemArray[itemArrayIndex].ToString();
                     row.Cells.Add(pulseStrength);
 
-                    if (itemArrayIndex == 0)
-                        itemArrayIndex += 2;
-                    else
-                        itemArrayIndex += 1;
+                    itemArrayIndex += 1;
 
                     itemArrayIndex = itemArrayIndex + 1;
                 }
