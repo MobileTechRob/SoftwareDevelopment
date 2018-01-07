@@ -42,6 +42,9 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             patientHistory = pager.BuildTable();
             int rowIndex = 0;
 
+            GridView patentHistoryGridView = new GridView();
+
+
             TableRow row = null;
             TableCell columnHeader = null;
             TableCell pulseStrength = null;
