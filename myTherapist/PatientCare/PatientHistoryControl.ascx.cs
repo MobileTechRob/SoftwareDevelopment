@@ -21,6 +21,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             pager = new MyDataGridPager("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True", "PatientAppointmentInformation");
             pager.NumberRowsToDisplay = 5;
             pager.AddColumn("ApptDate", "Appointment Date", MyDataTypes.DATETIME, true, 35);
+            pager.AddColumn("PatientId", "", MyDataTypes.DATETIME, true, 35);
             pager.AddColumn("RLU", "RLU", MyDataTypes.STRING, false, 0);
             pager.AddColumn("SP", "SP", MyDataTypes.STRING, false, 0);
             pager.AddColumn("KD1", "KD", MyDataTypes.STRING, false, 0);
@@ -36,22 +37,39 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             pager.Sort = MyDataSort.DESC;
 
             patienthistorygridview.DataSource = pager.BuildTable();
+            patienthistorygridview.EnableSortingAndPagingCallbacks = true;
+            patienthistorygridview.AllowPaging = true;
+            patienthistorygridview.AllowSorting = true;
             patienthistorygridview.RowDataBound += Patienthistorygridview_RowDataBound;
-            patienthistorygridview.SelectedIndexChanged += Patienthistorygridview_SelectedIndexChanged;
-            patienthistorygridview.DataBind();
+            patienthistorygridview.SelectedIndexChanged += Patienthistorygridview_SelectedIndexChanged;            
+            patienthistorygridview.DataBind();            
         }
     }
 
     private void Patienthistorygridview_SelectedIndexChanged(object sender, EventArgs e)
     {
+        GridView gridView = (GridView)sender;
+        int selectedIndex = gridView.SelectedIndex;
 
+        for (int index = 0; index < patienthistorygridview.Rows.Count; index++)
+            patienthistorygridview.Rows[index].BackColor = System.Drawing.ColorTranslator.FromHtml("#F4A460");
+
+        patienthistorygridview.Rows[selectedIndex].BackColor = System.Drawing.ColorTranslator.FromHtml("#F9cda8");
+
+        Session["PatientHistoryAppointmentDate"] = patienthistorygridview.Rows[selectedIndex].Cells[0].Text;
+        Session["PatientHistoryPatientId"] = patienthistorygridview.Rows[selectedIndex].Cells[1].Text;
     }
 
     private void Patienthistorygridview_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        if (e.Row.RowType == DataControlRowType.DataRow)
+        if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.Cells[1].Visible = false;            
+        }
+        else if (e.Row.RowType == DataControlRowType.DataRow)
         {
             e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(patienthistorygridview, "Select$" + e.Row.RowIndex);
+            e.Row.Cells[1].Visible = false;
         }
     }
 }

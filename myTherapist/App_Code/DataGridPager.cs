@@ -21,6 +21,7 @@ public enum MyDataSort
 public class MyDataGridColumn
 {
     public string DataBaseTableColumnName { get; set; }
+    public bool IncludeInDataGrid { get; set; }
     public string DataGridColumnName { get; set; }
     public bool OrderByColumn { get; set; }
     public MyDataTypes DataType { get; set; }
@@ -61,7 +62,7 @@ public class MyDataGridPager
         Sort = MyDataSort.ASC;
     }
 
-    public void AddColumn(string databaseColumnName, string dataGridColumnName, MyDataTypes dataType, bool orderByColumn, int gridWidth)
+    public void AddColumn(string databaseColumnName, string dataGridColumnName, MyDataTypes dataType, bool orderByColumn, int gridWidth, bool includeInGrid = true)
     {
         MyDataGridColumn column = new MyDataGridColumn();
         column.DataBaseTableColumnName = databaseColumnName;
@@ -69,6 +70,7 @@ public class MyDataGridPager
         column.OrderByColumn = orderByColumn;
         column.DataType = dataType;
         column.HeaderWidth = gridWidth;
+        column.IncludeInDataGrid = includeInGrid;
 
         columnDictionary.Add(columnDictionary.Count + 1, column);
     }
