@@ -35,15 +35,27 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             pager.NumberRowsToDisplay = 0;
             pager.WhereClause = String.Format("PatientId = {0}", Session["PatientId"].ToString());
             pager.Sort = MyDataSort.DESC;
-
+            
             patienthistorygridview.DataSource = pager.BuildTable();
-            patienthistorygridview.EnableSortingAndPagingCallbacks = true;
+            //patienthistorygridview.EnableSortingAndPagingCallbacks = true;
             patienthistorygridview.AllowPaging = true;
-            patienthistorygridview.AllowSorting = true;
+            patienthistorygridview.Sorted += Patienthistorygridview_Sorted;
+            patienthistorygridview.Sorting += Patienthistorygridview_Sorting;
+            patienthistorygridview.AllowSorting = true;            
             patienthistorygridview.RowDataBound += Patienthistorygridview_RowDataBound;
             patienthistorygridview.SelectedIndexChanged += Patienthistorygridview_SelectedIndexChanged;            
             patienthistorygridview.DataBind();            
         }
+    }
+
+    private void Patienthistorygridview_Sorted(object sender, EventArgs e)
+    {
+        string s = "";
+    }
+
+    private void Patienthistorygridview_Sorting(object sender, GridViewSortEventArgs e)
+    {
+        string s = "";
     }
 
     private void Patienthistorygridview_SelectedIndexChanged(object sender, EventArgs e)
