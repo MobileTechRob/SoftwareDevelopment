@@ -60,6 +60,7 @@ public class MyDataGridPager
         databaseConnection = new System.Data.SqlClient.SqlConnection(connnectionString);
         databaseTableName = tableName;
         Sort = MyDataSort.ASC;
+        PageNumber = 1;
     }
 
     public void AddColumn(string databaseColumnName, string dataGridColumnName, MyDataTypes dataType, bool orderByColumn, int gridWidth, bool includeInGrid = true)
