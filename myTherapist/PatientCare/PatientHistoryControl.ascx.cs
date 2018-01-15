@@ -14,11 +14,13 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
     {
         if (Session["PatientName"] != null)
             lblPatientName.Text = Session["PatientName"].ToString();
-       
-        if (Session["PatientId"] != null) 
+
+        if (Session["PatientId"] != null)
         {
             BuildGrid();
         }
+        else
+            Session["PatientHistorySortOrder"] = "DESC";
     }
 
     private void BuildGrid()
@@ -43,11 +45,11 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         {
             if (Session["PatientHistorySortOrder"] != null)
             {
-                if (Session["PatientHistorySortOrder"].ToString() == "DESC")                                    
-                    pager.Sort = MyDataSort.DESC;                
-                else                
-                    pager.Sort = MyDataSort.ASC;                
-            } 
+                if (Session["PatientHistorySortOrder"].ToString() == "DESC")
+                    pager.Sort = MyDataSort.DESC;
+                else
+                    pager.Sort = MyDataSort.ASC;
+            }
         }
 
         pager.AddColumn("ImageBeforeTherapy", "Image Before Therapy", MyDataTypes.STRING, false, 0);
@@ -89,18 +91,15 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             Session["PatientHistoryAppointmentDate"] = patienthistorygridview.Rows[selectedIndex].Cells[0].Text;
             Session["PatientHistoryPatientId"] = patienthistorygridview.Rows[selectedIndex].Cells[1].Text;
         }
-
-
-
-
     }
 
     private void Patienthistorygridview_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.Header)
         {
-            e.Row.Cells[0].Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(patienthistorygridview, "Select$0"); 
-            e.Row.Cells[1].Visible = false;            
+            e.Row.Cells[0].Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(patienthistorygridview, "Select$0");            
+            e.Row.Cells[0].Style["text-decoration"]="underline";
+            e.Row.Cells[1].Visible = false;                            
         }
         else if (e.Row.RowType == DataControlRowType.DataRow)
         {
