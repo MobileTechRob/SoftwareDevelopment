@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Globalization;
 
 public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
 {
@@ -26,10 +27,9 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
             //PatientAppointmentInformation patientRecord = null;// new PatientAppointmentInformation();
             PatientAppointmentInformation patientRecord1 = null;
 
-
             if (Session["PatientHistoryAppointmentDate"] != null)
             {
-                string datestring = Session["PatientHistoryAppointmentDate"].ToString();
+                string datestring = Session["PatientHistoryAppointmentDate"].ToString();               
                 dt = DateTime.Parse(datestring);
             }
 
@@ -76,7 +76,7 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
         PatientAppointmentInfomationDataContext patientApptDataContext = new PatientAppointmentInfomationDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
         PatientAppointmentInformation patientAppointmentInformation = new PatientAppointmentInformation();
 
-        string apptDateStr = DateTime.Now.ToShortDateString() + " " + DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString() + "." + DateTime.Now.Millisecond.ToString();
+        string apptDateStr = DateTime.Now.ToShortDateString() + " " + DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();
         DateTime apptDate = DateTime.Parse(apptDateStr);
 
         patientAppointmentInformation.ApptDate = apptDate;

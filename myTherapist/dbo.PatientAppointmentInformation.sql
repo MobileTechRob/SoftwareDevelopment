@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[PatientAppointmentInformation] (    
+﻿CREATE TABLE [dbo].[PatientAppointmentInformation] (
     [ApptDate]           DATETIME       NOT NULL,
     [PatientId]          BIGINT         NOT NULL,
     [RLU]                NCHAR (10)     NULL,
@@ -12,6 +12,7 @@
     [SessionGoals]       NVARCHAR (MAX) NULL,
     [ImageBeforeTherapy] NVARCHAR (MAX) NULL,
     [ImageAfterTherapy]  NVARCHAR (MAX) NULL,
-    PRIMARY KEY CLUSTERED ([ApptDate] ASC, [PatientId] ASC)
+    [GUID] UNIQUEIDENTIFIER NOT NULL, 
+    PRIMARY KEY CLUSTERED ([ApptDate] ASC, [PatientId] ASC, [GUID] ASC)
 );
 
