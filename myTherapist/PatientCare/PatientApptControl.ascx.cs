@@ -13,6 +13,46 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
             patientHeader.Text = Session["PatientName"].ToString();
     }
 
+    public void LoadPatientAppt()
+    {
+
+        DateTime dt = DateTime.MinValue;
+        long id = 0;
+
+        if ((Session["EditPatient"] != null) && (Session["EditPatient"].ToString() == "true"))
+        {
+            PatientAppointmentInfomationDataContext piDC = new PatientAppointmentInfomationDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
+           
+            //PatientAppointmentInformation patientRecord = null;// new PatientAppointmentInformation();
+            PatientAppointmentInformation patientRecord1 = null;
+
+
+            if (Session["PatientHistoryAppointmentDate"] != null)
+            {
+                string datestring = Session["PatientHistoryAppointmentDate"].ToString();
+                dt = DateTime.Parse(datestring);
+            }
+
+            if (Session["PatientHistoryPatientId"] != null)
+            {
+                string idstring = Session["PatientHistoryPatientId"].ToString();
+                id = long.Parse(idstring);
+            }
+
+            var appointmentquery = from patients in piDC.PatientAppointmentInformations where patients.ApptDate == dt select patients;
+
+
+
+            //patientRecord1 = piDC.PatientAppointmentInformations.Single(patientRecord => (patientRecord.ApptDate == dt && patientRecord.PatientId == id));
+            //patientRecord1 = piDC.PatientAppointmentInformations.Single(appointmentquery.First);
+            patientRecord1 = appointmentquery.First();
+
+
+
+            string RLU = patientRecord1.RLU;
+        }
+    }
+
     public void SaveAppt()
     {        
         string rlu = RLU.Text;       

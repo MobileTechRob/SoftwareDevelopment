@@ -19,8 +19,8 @@
     <form id="form1" runat="server">
         
         <uc1:PatientListing ID="PatientListing1" runat="server" />                
-        <uc3:PatientApptControl ID="PatientApptControl1" runat="server" />
         <uc2:AddEditPatientControl ID="AddEditPatientControl1" runat="server" />
+        <uc3:PatientApptControl ID="PatientApptControl1" runat="server" />
         <uc4:PatientHistoryControl ID="PatientHistoryControl1" runat="server" />
         <br />
         <asp:Label runat="server" ID="lblWarningText" Text=""/>
@@ -32,7 +32,9 @@
                     <asp:Button runat="server" ID="btnCreatePatient" Text="Create Patient" OnClick="btnCreatePatient_Click" />  
                     <asp:Button runat="server" ID="btnSaveAppt" Text="Save Appointment" OnClick="btnSaveAppt_Click" />
                     <asp:Button runat="server" ID="btnCancelAppt" Text="Cancel Appointment" OnClick="btnCancelAppt_Click" />
-                    <asp:Button runat="server" ID="btnStartAppt" Text="Start Appointment" OnClick="btnStartAppt_Click" />                    
+                    <asp:Button runat="server" ID="btnStartAppt" Text="Start New Appointment" OnClick="btnStartAppt_Click" />                    
+                    <asp:Button runat="server" ID="btnEditAppt" Text="Edit Appointment" OnClick="btnEditAppt_Click" />                    
+                    <asp:Button runat="server" ID="btnSaveChanges" Text="Save Changes" OnClick="btnSaveChanges_Click" />                    
                     <asp:Button runat="server" ID="btnPatientListing" Text="Patient Listing" OnClick="btnPatientListing_Click" />
                     <asp:Button runat="server" ID="btnPatientHistory" Text="Patient History" OnClick="btnPatientHistory_Click" />
                     <asp:Button runat="server" ID="btnDeletePatient" Text="Delete Patient" OnClick="btnDeletePatient_Click" />

@@ -3,7 +3,8 @@
 <h2>Patient History</h2>
 <asp:Label runat="server" ID="lblPatientName" Text="" />
 <br />
+<asp:Label runat="server" ID="lblNotice" Text=""/>
 <br />
 <asp:GridView runat="server" ID="patienthistorygridview" RowStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"  RowStyle-Width="50" ></asp:GridView>
 <br />
-<%--<asp:Table runat="server" ID="patientHistoryGrid" HorizontalAlign="Center" />--%>
+

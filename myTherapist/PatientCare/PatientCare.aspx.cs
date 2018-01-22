@@ -26,6 +26,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
             btnSaveAppt.Visible = false;
             btnPatientListing.Visible = false;
             btnCancelAppt.Visible = false;
+            btnEditAppt.Visible = false;
         }                  
     }
 
@@ -63,6 +64,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         PatientHistoryControl1.Visible = false;
 
         btnStartAppt.Visible = false;
+        btnEditAppt.Visible = false;
         btnSaveAppt.Visible = true;
         btnCancelAppt.Visible = true;
         btnDeletePatient.Visible = false;
@@ -95,6 +97,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
             btnCreatePatient.Visible = false;
             btnCancelAppt.Visible = false;
             btnSaveAppt.Visible = false;
+            btnEditAppt.Visible = true;
             btnStartAppt.Visible = true;
             btnPatientListing.Visible = true;
             btnDeletePatient.Visible = true;
@@ -112,6 +115,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         btnSaveAppt.Visible = false;
         btnCreatePatient.Visible = true;
         btnStartAppt.Visible = true;
+        btnEditAppt.Visible = false;
     }
 
     protected void btnPatientListing_Click(object sender, EventArgs e)
@@ -154,5 +158,23 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         btnSaveAppt.Visible = false;
         btnDeletePatient.Visible = true;
         btnPatientHistory.Visible = true;
+    }
+
+    protected void btnEditAppt_Click(object sender, EventArgs e)
+    {
+        if (PatientHistoryControl1.ShowIndividualAppt())
+        {
+            Session["EditPatient"] = "true";
+            btnEditAppt.Visible = false;
+            btnSaveChanges.Visible = true;
+            PatientHistoryControl1.Visible = false;
+            PatientApptControl1.Visible = true;
+            PatientApptControl1.LoadPatientAppt();
+        }
+    }
+
+    protected void btnSaveChanges_Click(object sender, EventArgs e)
+    {
+
     }
 }

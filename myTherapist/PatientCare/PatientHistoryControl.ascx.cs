@@ -28,7 +28,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         pager = new MyDataGridPager("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True", "PatientAppointmentInformation");
         pager.NumberRowsToDisplay = 10;
         pager.AddColumn("ApptDate", "Appointment Date", MyDataTypes.DATETIME, true, 35);
-        pager.AddColumn("PatientId", "", MyDataTypes.DATETIME, false, 35);
+        pager.AddColumn("PatientId", "", MyDataTypes.INTEGER, false, 35);
         pager.AddColumn("RLU", "RLU", MyDataTypes.STRING, false, 0);
         pager.AddColumn("SP", "SP", MyDataTypes.STRING, false, 0);
         pager.AddColumn("KD1", "KD", MyDataTypes.STRING, false, 0);
@@ -88,6 +88,9 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
 
             patienthistorygridview.Rows[selectedIndex].BackColor = System.Drawing.ColorTranslator.FromHtml("#F9cda8");
 
+            string date = patienthistorygridview.Rows[selectedIndex].Cells[0].Text;
+            string id = patienthistorygridview.Rows[selectedIndex].Cells[1].Text;
+
             Session["PatientHistoryAppointmentDate"] = patienthistorygridview.Rows[selectedIndex].Cells[0].Text;
             Session["PatientHistoryPatientId"] = patienthistorygridview.Rows[selectedIndex].Cells[1].Text;
         }
@@ -107,6 +110,18 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             e.Row.Cells[1].Visible = false;
         }
     }
+
+    public bool ShowIndividualAppt()
+    {
+        if ((Session["PatientHistoryAppointmentDate"] == null) && (Session["PatientHistoryPatientId"] == null))
+        {
+            lblNotice.Text = "Select an appointment";
+            return false;
+        }
+
+        return true;
+    }
+
 }
 
 
