@@ -83,6 +83,8 @@ public partial class OilsUsed : INotifyPropertyChanging, INotifyPropertyChanged
 	
 	private string _OilsUsed1;
 	
+	private System.Guid _Guid;
+	
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -91,6 +93,8 @@ public partial class OilsUsed : INotifyPropertyChanging, INotifyPropertyChanged
     partial void OnApptDateChanged();
     partial void OnOilsUsed1Changing(string value);
     partial void OnOilsUsed1Changed();
+    partial void OnGuidChanging(System.Guid value);
+    partial void OnGuidChanged();
     #endregion
 	
 	public OilsUsed()
@@ -134,6 +138,26 @@ public partial class OilsUsed : INotifyPropertyChanging, INotifyPropertyChanged
 				this._OilsUsed1 = value;
 				this.SendPropertyChanged("OilsUsed1");
 				this.OnOilsUsed1Changed();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Guid", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+	public System.Guid Guid
+	{
+		get
+		{
+			return this._Guid;
+		}
+		set
+		{
+			if ((this._Guid != value))
+			{
+				this.OnGuidChanging(value);
+				this.SendPropertyChanging();
+				this._Guid = value;
+				this.SendPropertyChanged("Guid");
+				this.OnGuidChanged();
 			}
 		}
 	}

@@ -15,6 +15,7 @@
       <Column Name="SessionGoals" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="ImageBeforeTherapy" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="ImageAfterTherapy" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

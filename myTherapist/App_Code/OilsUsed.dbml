@@ -4,6 +4,7 @@
     <Type Name="OilsUsed">
       <Column Name="ApptDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="OilsUsed" Member="OilsUsed1" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Guid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
     </Type>
   </Table>
 </Database>
