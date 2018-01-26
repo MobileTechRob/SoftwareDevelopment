@@ -61,4 +61,25 @@ public static class Utilities
         return data;
     }
 
+    public static Guid ParseGuid(System.Data.SqlClient.SqlDataReader rdr, int index)
+    {
+        Guid data = Guid.Empty;
+
+        try
+        {
+            data = rdr.GetGuid(index);
+        }
+        catch (Exception ex)
+        {
+            data = Guid.Empty;
+            ex.GetHashCode();
+        }
+
+        return data;
+    }
+
+
+
+
+
 }

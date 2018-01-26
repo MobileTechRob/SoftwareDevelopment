@@ -19,6 +19,7 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
 
         DateTime dt = DateTime.MinValue;
         long id = 0;
+        Guid patientGuid = Guid.Empty;
 
         if ((Session["EditPatient"] != null) && (Session["EditPatient"].ToString() == "true"))
         {
@@ -39,17 +40,16 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
                 id = long.Parse(idstring);
             }
 
-            var appointmentquery = from patients in piDC.PatientAppointmentInformations where patients.ApptDate == dt select patients;
+            if (Session["PatientHistoryGuid"] != null)
+            {
+                string guidstring = Session["PatientHistoryGuid"].ToString();
+                patientGuid = Guid.Parse(guidstring);
+            }
 
-
-
-            //patientRecord1 = piDC.PatientAppointmentInformations.Single(patientRecord => (patientRecord.ApptDate == dt && patientRecord.PatientId == id));
-            //patientRecord1 = piDC.PatientAppointmentInformations.Single(appointmentquery.First);
+            var appointmentquery = from patients in piDC.PatientAppointmentInformations where patients.GUID == patientGuid  select patients;
             patientRecord1 = appointmentquery.First();
 
-
-
-            string RLU = patientRecord1.RLU;
+            RLU.SelectedValue = patientRecord1.RLU.Trim();
         }
     }
 
@@ -78,11 +78,15 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
 
         string apptDateStr = DateTime.Now.ToShortDateString() + " " + DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();
         DateTime apptDate = DateTime.Parse(apptDateStr);
+        Guid patientAppt = Guid.NewGuid();
 
         patientAppointmentInformation.ApptDate = apptDate;
+        patientAppointmentInformation.PatientId = long.Parse(Session["PatientID"].ToString());
+        patientAppointmentInformation.GUID = patientAppt;
+
         patientAppointmentInformation.ImageBeforeTherapy = filePathImageBefore;
         patientAppointmentInformation.ImageAfterTherapy = filePathImageAfter;
-
+        
         patientAppointmentInformation.RLU = rlu;
         patientAppointmentInformation.SP = sp;
         patientAppointmentInformation.KD1 = kd1;
@@ -110,11 +114,11 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
             {
                 OilsUsed oils = new OilsUsed();
                 oils.ApptDate = apptDate;
+                oils.Guid = patientAppt;
                 oils.OilsUsed1 = oil;
                 oilDataContext.OilsUseds.InsertOnSubmit(oils);
                 oilDataContext.SubmitChanges();
             }
         }
     }
-
 }

@@ -9,7 +9,8 @@ public enum MyDataTypes
 {
     INTEGER,
     STRING,
-    DATETIME
+    DATETIME,
+    GUID
 }
 
 public enum MyDataSort
@@ -115,6 +116,9 @@ public class MyDataGridPager
                 if (column.DataType == MyDataTypes.DATETIME)
                     dataColumn.DataType = System.Type.GetType("System.DateTime");
 
+                if (column.DataType == MyDataTypes.GUID)
+                    dataColumn.DataType = System.Type.GetType("System.Guid");
+
                 dataGridTable.Columns.Add(column.DataGridColumnName, dataColumn.DataType);
 
                 sqlSelectClause.Append(column.DataBaseTableColumnName);
@@ -185,6 +189,10 @@ public class MyDataGridPager
 
                             case MyDataTypes.DATETIME:
                                 itemArray[itemCount] = Utilities.ParseDateTime(databaseReader, itemCount);
+                                break;
+
+                            case MyDataTypes.GUID:
+                                itemArray[itemCount] = Utilities.ParseGuid(databaseReader, itemCount);
                                 break;
                         }
 

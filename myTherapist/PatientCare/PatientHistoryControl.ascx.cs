@@ -29,6 +29,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         pager.NumberRowsToDisplay = 10;
         pager.AddColumn("ApptDate", "Appointment Date", MyDataTypes.DATETIME, true, 35);
         pager.AddColumn("PatientId", "", MyDataTypes.INTEGER, false, 35);
+        pager.AddColumn("GUID", "", MyDataTypes.GUID, false, 0);
         pager.AddColumn("RLU", "RLU", MyDataTypes.STRING, false, 0);
         pager.AddColumn("SP", "SP", MyDataTypes.STRING, false, 0);
         pager.AddColumn("KD1", "KD", MyDataTypes.STRING, false, 0);
@@ -69,7 +70,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         GridView gridView = (GridView)sender;
         int selectedIndex = gridView.SelectedIndex;
 
-        if (selectedIndex == 0)
+        if (selectedIndex == -1)
         {
             if (Session["PatientHistorySortOrder"] != null)
             {
@@ -81,7 +82,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
                 BuildGrid();
             }
         }
-        else if (selectedIndex != 0)
+        else if (selectedIndex != -1)
         {
             for (int index = 0; index < patienthistorygridview.Rows.Count; index++)
                 patienthistorygridview.Rows[index].BackColor = System.Drawing.ColorTranslator.FromHtml("#F4A460");
@@ -93,6 +94,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
 
             Session["PatientHistoryAppointmentDate"] = patienthistorygridview.Rows[selectedIndex].Cells[0].Text;
             Session["PatientHistoryPatientId"] = patienthistorygridview.Rows[selectedIndex].Cells[1].Text;
+            Session["PatientHistoryGuid"] = patienthistorygridview.Rows[selectedIndex].Cells[2].Text;
         }
     }
 
@@ -100,14 +102,16 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
     {
         if (e.Row.RowType == DataControlRowType.Header)
         {
-            e.Row.Cells[0].Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(patienthistorygridview, "Select$0");            
+            e.Row.Cells[0].Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(patienthistorygridview, "Select$-1");            
             e.Row.Cells[0].Style["text-decoration"]="underline";
-            e.Row.Cells[1].Visible = false;                            
+            e.Row.Cells[1].Visible = false;
+            e.Row.Cells[2].Visible = false;
         }
         else if (e.Row.RowType == DataControlRowType.DataRow)
         {
             e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(patienthistorygridview, "Select$" + e.Row.RowIndex);
             e.Row.Cells[1].Visible = false;
+            e.Row.Cells[2].Visible = false;
         }
     }
 
