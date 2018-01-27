@@ -12,7 +12,7 @@
        <div class="tdpulsesection">
             <div class="trpulseinfoheader">
                 <div class="tdpulseinfoheader">          
-                    <asp:Label runat="server" Text="Pulse Information"/>      
+                    <asp:Label runat="server" Text="Pulse Information" ID="test"/>      
                     <asp:Label runat="server" Text="  " Height="15"/>      
                 </div>
             </div>
