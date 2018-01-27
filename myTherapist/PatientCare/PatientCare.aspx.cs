@@ -169,7 +169,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
             btnSaveChanges.Visible = true;
             PatientHistoryControl1.Visible = false;
             PatientApptControl1.Visible = true;
-            PatientApptControl1.LoadPatientAppt();
+            PatientApptControl1.LoadPatientAppt();            
         }
     }
 

@@ -83,19 +83,19 @@
          <div class="tdimagesectionone">
             <div class="trimageinfoheader">                
                 <asp:Label runat="server" Text="Image Before"></asp:Label><asp:FileUpload runat="server" ID="uploadImageBeforea" />
-            <div class="tdimagecolumn">     
-                <asp:Image runat="server" Width="250" Height="250" ImageUrl="~/Images/photoGoesHere.png" ID="ImageFiller1a" />
-            </div>
-                 
+                
+                <div class="tdimagecolumn">     
+                   <asp:Image runat="server" Width="250" Height="250" ImageUrl="~/Images/photoGoesHere.png" ID="ImageFiller1a" />
+                </div>                 
             </div>
          </div>
          <div class="tdimagesectiontwo">
             <div class="trimageinfoheader">
                 <asp:Label runat="server" Text="Image After"></asp:Label><asp:FileUpload runat="server" ID="uploadImageAfterb" />
-            <div class="tdimagecolumn">                
-                <asp:Image runat="server" Width="250" Height="250" ImageUrl="~/Images/photoGoesHere.png" ID="ImageFiller2b" />
-            </div>
-
+                
+                <div class="tdimagecolumn">                
+                    <asp:Image runat="server" Width="250" Height="250" ImageUrl="~/Images/photoGoesHere.png" ID="ImageFiller2b" />
+                </div>
             </div>
          </div>
     </div>
@@ -172,7 +172,7 @@
         <asp:TableCell runat="server">              
             <asp:Table runat="server">
                 <asp:TableRow runat="server">
-                    <asp:TableCell runat="server"><asp:Label runat="server" Text="Image Before"></asp:Label></asp:TableCell><asp:TableCell><asp:FileUpload runat="server" ID="uploadImageBefore" /></asp:TableCell>
+                    <asp:TableCell runat="server"><asp:Label runat="server" Text="Image Before"></asp:Label></asp:TableCell><asp:TableCell><asp:FileUpload runat="server" ID="uploadImageBefore" AutoPostBack="true"  /></asp:TableCell>
                 </asp:TableRow>
                 <asp:TableRow runat="server">
                     <asp:TableCell runat="server" Width="20" Height="20" ColumnSpan="2"><asp:Image runat="server" Width="250" Height="250" ImageUrl="~/Images/photoGoesHere.png" ID="ImageFiller1" /></asp:TableCell>

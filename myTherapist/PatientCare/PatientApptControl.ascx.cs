@@ -11,7 +11,10 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["PatientName"] != null)
-            patientHeader.Text = Session["PatientName"].ToString();     
+            patientHeader.Text = Session["PatientName"].ToString();
+
+        if (!String.IsNullOrEmpty(uploadImageBefore.FileName))
+            ImageFiller1.ImageUrl = uploadImageBefore.FileName;
     }
 
     public void LoadPatientAppt()
@@ -52,11 +55,9 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
             if (!string.IsNullOrEmpty(patientRecord1.KD2.Trim()))
                 KD2.SelectedValue = patientRecord1.KD2.Trim();
 
-
-            
-
-
-
+            //KDa.SelectedValue = "";
+            //ImageFiller1a.ImageUrl = "";
+            //ImageFiller2.ImageUrl = "";
         }
     }
 
