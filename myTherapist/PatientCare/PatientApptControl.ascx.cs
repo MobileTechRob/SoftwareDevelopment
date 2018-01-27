@@ -23,22 +23,8 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
 
         if ((Session["EditPatient"] != null) && (Session["EditPatient"].ToString() == "true"))
         {
-            PatientAppointmentInfomationDataContext piDC = new PatientAppointmentInfomationDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
-           
-            //PatientAppointmentInformation patientRecord = null;// new PatientAppointmentInformation();
+            PatientAppointmentInfomationDataContext piDC = new PatientAppointmentInfomationDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");                       
             PatientAppointmentInformation patientRecord1 = null;
-
-            if (Session["PatientHistoryAppointmentDate"] != null)
-            {
-                string datestring = Session["PatientHistoryAppointmentDate"].ToString();               
-                dt = DateTime.Parse(datestring);
-            }
-
-            if (Session["PatientHistoryPatientId"] != null)
-            {
-                string idstring = Session["PatientHistoryPatientId"].ToString();
-                id = long.Parse(idstring);
-            }
 
             if (Session["PatientHistoryGuid"] != null)
             {
@@ -49,14 +35,33 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
             var appointmentquery = from patients in piDC.PatientAppointmentInformations where patients.GUID == patientGuid  select patients;
             patientRecord1 = appointmentquery.First();
 
-            RLU.SelectedValue = patientRecord1.RLU.Trim();
+            if (!string.IsNullOrEmpty(patientRecord1.RLU.Trim()))
+                RLU.SelectedValue = patientRecord1.RLU.Trim();
+
+            if (!string.IsNullOrEmpty(patientRecord1.SP.Trim()))
+                SP.SelectedValue = patientRecord1.SP.Trim();
+
+            if (!string.IsNullOrEmpty(patientRecord1.KD1.Trim()))
+                KD1.SelectedValue = patientRecord1.KD1.Trim();
+
+            if (!string.IsNullOrEmpty(patientRecord1.LHT.Trim()))
+                LHT.SelectedValue = patientRecord1.LHT.Trim();
+
+            if (!string.IsNullOrEmpty(patientRecord1.LV.Trim()))
+                LV.SelectedValue = patientRecord1.LV.Trim();
+
+            if (!string.IsNullOrEmpty(patientRecord1.KD2.Trim()))
+                KD2.SelectedValue = patientRecord1.KD2.Trim();  
+            
+
         }
     }
 
     public void SaveAppt()
     {        
         string rlu = RLU.Text;       
-        string sp = SP.Text;               
+        string sp = SP.Text;
+
         string kd1 = KD1.Text;
         
         string lht = LHT.Text;        

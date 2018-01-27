@@ -6,7 +6,7 @@ input, select, textbox ,textarea {
 
 .reportheader { font-weight:bold; text-wrap:avoid;}
 .reportsortheader { font:xx-large; }
-.reporttext  { text-wrap: avoid; width; }
+.reporttext  { text-wrap: avoid; width:300px; }
 .reporttextdate {text-wrap: avoid; width:300px;}
 
 body {
@@ -38,19 +38,107 @@ body {
     display: inline-block;
 }
 
+.tablenoborder {
+    display: table;
+    align-content: center;
+    border: none;
+    width: 950px;
+}
+
 .menubuttontable {
     display: table;
     align-content: center;
 }
 
+.trpatientappt {
+    display: table-row;
+    align-content: center;
+    border: none;
+    width: 950px;
+}
+
+.tdpulsesection {
+    display: table-cell;
+    align-content: center;
+    vertical-align: middle;
+    border: none;
+    width: 450px;
+}
+
+.trimageinfoheader {
+    display: table-cell;
+    align-content: center;
+    vertical-align: middle;
+    border: none;
+    width: 175px;
+}
+
+.tdimagesectionone {
+    display: table-cell;
+    align-content: center;
+    vertical-align: middle;
+    border: none;
+    width: 450px;
+}
+
+.tdimagesectiontwo {
+    display: table-cell;
+    align-content: center;
+    vertical-align: middle;
+    border: none;
+    width: 450px;
+}
+
+.trimagecolumn {
+    display: table-cell;
+    align-content: center;
+    vertical-align: middle;
+    border: none;
+    width: 175px;
+}
+
+.tdimagecolumn {
+    display: table-cell;
+    align-content: center;
+    vertical-align: middle;
+    border: none;
+    width: 175px;
+}
+
+.tdpatientappt {
+    display: table-cell;
+    align-content: center;
+    vertical-align: middle;
+    border: none;
+    width: 50px;
+}
+
+.tdpulseinfoheader {
+    display: table-cell;
+    align-content: center;
+    vertical-align: middle;
+    border: none;
+    width: 150px;
+}
+
+.tdpulseinfocolumn {
+    display: table-cell;
+    align-content: center;
+    vertical-align: middle;
+    border: none;
+    width: 175px;
+}
+
 .tr {
     display: table-row;
     align-content: center;
+    border: none;
 }
 
 .td {
     display: table-cell;
     align-content: center;
     vertical-align: middle;
+    border: none;
 }
 
