@@ -13,10 +13,45 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
         if (Session["PatientName"] != null)
             patientHeader.Text = Session["PatientName"].ToString();
 
-        if (!String.IsNullOrEmpty(uploadImageBefore.FileName))
-            ImageFiller1.ImageUrl = uploadImageBefore.FileName;
-    }
+        //if (!String.IsNullOrEmpty(uploadImageBeforea.FileName))
+          //  ImageFiller1a.ImageUrl = "c:\\PatientImages\\" + uploadImageBeforea.FileName;
 
+        if (IsPostBack)
+        {
+            Boolean fileOK = false;
+            String path = Server.MapPath("~/UploadedImages/");
+
+            if (uploadImageBeforea.HasFile)
+            {
+                String fileExtension = System.IO.Path.GetExtension(uploadImageBeforea.FileName).ToLower();
+                String[] allowedExtensions = {".gif", ".png", ".jpeg", ".jpg", ".bmp"};
+
+                for (int i = 0; i < allowedExtensions.Length; i++)
+                {
+                    if (fileExtension == allowedExtensions[i])                    
+                        fileOK = true;                    
+                }
+            }
+
+            if (fileOK)
+            {
+                try
+                {
+                    uploadImageBeforea.PostedFile.SaveAs(path + uploadImageBeforea.FileName);
+                    //Label1.Text = "File uploaded!";
+                }
+                catch (Exception ex)
+                {
+                    //Label1.Text = "File could not be uploaded.";
+                }
+            }
+            else
+            {
+                //Label1.Text = "Cannot accept files of this type.";
+            }
+        }        
+    }
+    
     public void LoadPatientAppt()
     {
         DateTime dt = DateTime.MinValue;
@@ -54,6 +89,8 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
 
             if (!string.IsNullOrEmpty(patientRecord1.KD2.Trim()))
                 KD2.SelectedValue = patientRecord1.KD2.Trim();
+
+
 
             //KDa.SelectedValue = "";
             //ImageFiller1a.ImageUrl = "";

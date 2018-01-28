@@ -80,15 +80,18 @@
                 </div>
             </div>
          </div>
+
          <div class="tdimagesectionone">
             <div class="trimageinfoheader">                
                 <asp:Label runat="server" Text="Image Before"></asp:Label><asp:FileUpload runat="server" ID="uploadImageBeforea" />
                 
                 <div class="tdimagecolumn">     
                    <asp:Image runat="server" Width="250" Height="250" ImageUrl="~/Images/photoGoesHere.png" ID="ImageFiller1a" />
+                   <asp:Button runat="server" ID="btnPreview" Text="Preview" />
                 </div>                 
             </div>
          </div>
+
          <div class="tdimagesectiontwo">
             <div class="trimageinfoheader">
                 <asp:Label runat="server" Text="Image After"></asp:Label><asp:FileUpload runat="server" ID="uploadImageAfterb" />
