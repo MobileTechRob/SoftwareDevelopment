@@ -87,9 +87,17 @@
                 
                 <div class="tdimagecolumn">     
                    <asp:Image runat="server" Width="250" Height="250" ImageUrl="~/Images/photoGoesHere.png" ID="ImageFiller1a" />
-                   <asp:Button runat="server" ID="btnPreview" Text="Preview" />
+                   <asp:Button runat="server" ID="btnPreviewA" Text="Preview" />
                 </div>                 
             </div>
+         </div>
+
+         <div class="tdcolumnspacer">
+             <div class="trcolumnspacer">
+                 <div class="tdcolumnspacer">
+                   <asp:Label runat="server" Width="20px" Text="    "></asp:Label>
+                 </div>
+             </div>
          </div>
 
          <div class="tdimagesectiontwo">
@@ -98,10 +106,36 @@
                 
                 <div class="tdimagecolumn">                
                     <asp:Image runat="server" Width="250" Height="250" ImageUrl="~/Images/photoGoesHere.png" ID="ImageFiller2b" />
+                    <asp:Button runat="server" ID="btnPreviewB" Text="Preview" />
                 </div>
             </div>
          </div>
     </div>
+    
+    <div class="trpatientnotes">        
+        <div class="tdpatientnotes">
+           <asp:Label runat="server" ID="lblTherapya" Text="Therapy"></asp:Label>
+           <asp:TextBox runat="server" Width="2000px" Height="150" TextMode="MultiLine" ID="notes"/>
+        </div>
+    </div>
+    <br />
+    <div class="trpatientnotes">        
+        <div class="tdpatientnotes">
+           <asp:Label runat="server" ID="Label2" Text="Oils Used"></asp:Label>
+           <asp:TextBox runat="server" Width="2000px" Height="150" TextMode="MultiLine" ID="TextBox2"/>
+        </div>
+    </div>
+    <br />
+    <div class="trpatientnotes">        
+        <div class="tdpatientnotes">
+           <asp:Label runat="server" ID="Label3" Text="Session Goals"></asp:Label>
+           <asp:TextBox runat="server" Width="2000px" Height="150" TextMode="MultiLine" ID="TextBox3"/>
+        </div>
+    </div>
+
+
+    
+
 </div> 
 
 <asp:Table runat="server" ID="PatientApptControl_Table1">

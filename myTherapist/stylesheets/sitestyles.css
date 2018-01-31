@@ -43,6 +43,7 @@ body {
     align-content: center;
     border: none;
     width: 950px;
+    max-width: 1000px;
 }
 
 .menubuttontable {
@@ -55,6 +56,24 @@ body {
     align-content: center;
     border: none;
     width: 950px;
+}
+
+.tdpulseinfoheader {
+    display: table-cell;
+    align-content: center;
+    vertical-align: middle;
+    border: none;
+    width: 150px;
+    max-width: 150px;
+}
+
+.tdpulseinfocolumn {
+    display: table-cell;
+    align-content: center;
+    vertical-align: middle;
+    border: none;
+    width: 175px;
+    max-width: 100px;
 }
 
 .tdpulsesection {
@@ -105,6 +124,24 @@ body {
     width: 175px;
 }
 
+.tdcolumnspacer {
+    display: table-cell;
+    align-content: center;
+    vertical-align: middle;
+    border: none;
+    width: 55px;
+}
+
+.trcolumnspacer {
+    display: table-row;
+    align-content: center;
+    vertical-align: middle;
+    border: none;
+    width: 55px;
+}
+
+
+
 .tdpatientappt {
     display: table-cell;
     align-content: center;
@@ -113,20 +150,16 @@ body {
     width: 50px;
 }
 
-.tdpulseinfoheader {
-    display: table-cell;
+.trpatientnotes {
+    display: table-row;
     align-content: center;
-    vertical-align: middle;
-    border: none;
-    width: 150px;
+    border: none;    
 }
 
-.tdpulseinfocolumn {
+.tdpatientnotes {
     display: table-cell;
-    align-content: center;
-    vertical-align: middle;
-    border: none;
-    width: 175px;
+    align-content:center;
+    border: none;    
 }
 
 .tr {
