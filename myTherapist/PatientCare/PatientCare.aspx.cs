@@ -24,10 +24,11 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
             PatientHistoryControl1.Visible = false;
 
             btnSaveAppt.Visible = false;
-            btnPatientListing.Visible = false;
+            btnPatientListing.Visible = false;            
             btnCancelAppt.Visible = false;
+            btnSaveChanges.Visible = false;
             btnEditAppt.Visible = false;
-        }                  
+        }                        
     }
 
     private void AddEditPatientControl1_patientCareSaved(object sender, EventArgs e)
@@ -127,6 +128,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         btnCreatePatient.Visible = true;
         btnCancelAppt.Visible = false;
         btnSaveAppt.Visible = false;
+        btnEditAppt.Visible = false;
         btnPatientHistory.Visible = true;
         btnPatientListing.Visible = false;
         btnDeletePatient.Visible = true;        
@@ -167,6 +169,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
             Session["EditPatient"] = "true";
             btnEditAppt.Visible = false;
             btnSaveChanges.Visible = true;
+            btnStartAppt.Visible = false;
             PatientHistoryControl1.Visible = false;
             PatientApptControl1.Visible = true;
             PatientApptControl1.LoadPatientAppt();            
@@ -175,6 +178,13 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
 
     protected void btnSaveChanges_Click(object sender, EventArgs e)
     {
+        string s = "";
 
+        if ((Session["EditPatient"] != null) && (Session["EditPatient"].ToString() == "true"))
+        {
+            PatientApptControl1.SaveAppt();
+            PatientApptControl1.Visible = false;
+            PatientHistoryControl1.Visible = true;
+        }        
     }
 }

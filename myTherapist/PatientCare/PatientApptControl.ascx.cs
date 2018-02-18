@@ -21,9 +21,9 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
             Boolean fileOK = false;
             String path = Server.MapPath("~/UploadedImages/");
 
-            if (uploadImageBeforea.HasFile)
+            if (uploadImageBefore.HasFile)
             {
-                String fileExtension = System.IO.Path.GetExtension(uploadImageBeforea.FileName).ToLower();
+                String fileExtension = System.IO.Path.GetExtension(uploadImageBefore.FileName).ToLower();
                 String[] allowedExtensions = {".gif", ".png", ".jpeg", ".jpg", ".bmp"};
 
                 for (int i = 0; i < allowedExtensions.Length; i++)
@@ -31,25 +31,62 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
                     if (fileExtension == allowedExtensions[i])                    
                         fileOK = true;                    
                 }
+
+                if (fileOK)
+                {
+                    try
+                    {
+                        uploadImageBefore.PostedFile.SaveAs(path + uploadImageBefore.FileName);
+                        Session["UploadImageBefore"] = "~/UploadedImages/" + uploadImageBefore.FileName;
+                        ImageBefore.ImageUrl = "~/UploadedImages/" + uploadImageBefore.FileName;
+                        //Label1.Text = "File uploaded!";
+                    }
+                    catch (Exception ex)
+                    {
+                        //Label1.Text = "File could not be uploaded.";
+                    }
+                }
+                else
+                {
+                    //Label1.Text = "Cannot accept files of this type.";
+                }
             }
 
-            if (fileOK)
+
+            if (uploadImageAfter.HasFile)
             {
-                try
+                String fileExtension = System.IO.Path.GetExtension(uploadImageAfter.FileName).ToLower();
+                String[] allowedExtensions = { ".gif", ".png", ".jpeg", ".jpg", ".bmp" };
+
+                for (int i = 0; i < allowedExtensions.Length; i++)
                 {
-                    uploadImageBeforea.PostedFile.SaveAs(path + uploadImageBeforea.FileName);
-                    //Label1.Text = "File uploaded!";
+                    if (fileExtension == allowedExtensions[i])
+                        fileOK = true;
                 }
-                catch (Exception ex)
+
+                if (fileOK)
                 {
-                    //Label1.Text = "File could not be uploaded.";
+                    try
+                    {
+                        uploadImageAfter.PostedFile.SaveAs(path + uploadImageAfter.FileName);
+                        Session["UploadImageAfter"] = "~/UploadedImages/" + uploadImageAfter.FileName;
+                        ImageAfter.ImageUrl = "~/UploadedImages/" + uploadImageAfter.FileName;
+                    }
+                    catch (Exception ex)
+                    {                        
+                    }
+                }
+                else
+                {                    
                 }
             }
-            else
-            {
-                //Label1.Text = "Cannot accept files of this type.";
-            }
-        }        
+            
+
+
+
+
+
+        }
     }
     
     public void LoadPatientAppt()
@@ -90,11 +127,9 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
             if (!string.IsNullOrEmpty(patientRecord1.KD2.Trim()))
                 KD2.SelectedValue = patientRecord1.KD2.Trim();
 
-
-
-            //KDa.SelectedValue = "";
-            //ImageFiller1a.ImageUrl = "";
-            //ImageFiller2.ImageUrl = "";
+            ImageBefore.ImageUrl = patientRecord1.ImageBeforeTherapy;
+            ImageAfter.ImageUrl = patientRecord1.ImageAfterTherapy;
+            
         }
     }
 
@@ -115,56 +150,80 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
         string filePathImageAfter = string.Empty;
         filePathImageAfter = uploadImageAfter.FileName;
         
-        string therapy = txtboxTherapyPerformed.Text;        
-        string oilsUsed = txtboxOilsUsed.Text;        
+        string therapy = txtBoxTherapyPerformed.Text;        
+        string oilsUsed = txtBoxOilsUsed.Text;        
         string sessionGoals = txtBoxSessionGoals.Text;
 
         PatientAppointmentInfomationDataContext patientApptDataContext = new PatientAppointmentInfomationDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
         PatientAppointmentInformation patientAppointmentInformation = new PatientAppointmentInformation();
 
-        string apptDateStr = DateTime.Now.ToShortDateString() + " " + DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();
-        DateTime apptDate = DateTime.Parse(apptDateStr);
-        Guid patientAppt = Guid.NewGuid();
 
-        patientAppointmentInformation.ApptDate = apptDate;
-        patientAppointmentInformation.PatientId = long.Parse(Session["PatientID"].ToString());
-        patientAppointmentInformation.GUID = patientAppt;
-
-        patientAppointmentInformation.ImageBeforeTherapy = filePathImageBefore;
-        patientAppointmentInformation.ImageAfterTherapy = filePathImageAfter;
-        
-        patientAppointmentInformation.RLU = rlu;
-        patientAppointmentInformation.SP = sp;
-        patientAppointmentInformation.KD1 = kd1;
-
-        patientAppointmentInformation.LHT = lht;
-        patientAppointmentInformation.LV = lv;
-        patientAppointmentInformation.KD2 = kd2;
-
-        patientAppointmentInformation.TherapyPerformed = therapy;
-        patientAppointmentInformation.OilsUsed = oilsUsed;
-        patientAppointmentInformation.SessionGoals = sessionGoals;
-
-        patientApptDataContext.PatientAppointmentInformations.InsertOnSubmit(patientAppointmentInformation);
-        patientApptDataContext.SubmitChanges();
-
-        string[] p = { ",", " ", "\r\n" };
-
-        string[] listOfOilsUsed = oilsUsed.Split(p, StringSplitOptions.RemoveEmptyEntries);
-
-        if (listOfOilsUsed.Length > 0)
+        if (Session["EditPatient"] == null)
         {
-            OilsUsedDataContext oilDataContext = new OilsUsedDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
+            string apptDateStr = DateTime.Now.ToShortDateString() + " " + DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();
+            DateTime apptDate = DateTime.Parse(apptDateStr);
+            Guid patientAppt = Guid.NewGuid();
 
-            foreach (string oil in listOfOilsUsed)
+            patientAppointmentInformation.ApptDate = apptDate;
+            patientAppointmentInformation.PatientId = long.Parse(Session["PatientID"].ToString());
+            patientAppointmentInformation.GUID = patientAppt;
+
+            patientAppointmentInformation.ImageBeforeTherapy = ImageBefore.ImageUrl;
+            patientAppointmentInformation.ImageAfterTherapy = ImageAfter.ImageUrl;
+
+            patientAppointmentInformation.RLU = rlu;
+            patientAppointmentInformation.SP = sp;
+            patientAppointmentInformation.KD1 = kd1;
+
+            patientAppointmentInformation.LHT = lht;
+            patientAppointmentInformation.LV = lv;
+            patientAppointmentInformation.KD2 = kd2;
+
+            patientAppointmentInformation.TherapyPerformed = therapy;
+            patientAppointmentInformation.OilsUsed = oilsUsed;
+            patientAppointmentInformation.SessionGoals = sessionGoals;
+
+            patientApptDataContext.PatientAppointmentInformations.InsertOnSubmit(patientAppointmentInformation);
+            patientApptDataContext.SubmitChanges();
+
+            string[] p = { ",", " ", "\r\n" };
+
+            string[] listOfOilsUsed = oilsUsed.Split(p, StringSplitOptions.RemoveEmptyEntries);
+
+            if (listOfOilsUsed.Length > 0)
             {
-                OilsUsed oils = new OilsUsed();
-                oils.ApptDate = apptDate;
-                oils.Guid = patientAppt;
-                oils.OilsUsed1 = oil;
-                oilDataContext.OilsUseds.InsertOnSubmit(oils);
-                oilDataContext.SubmitChanges();
+                OilsUsedDataContext oilDataContext = new OilsUsedDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
+
+                foreach (string oil in listOfOilsUsed)
+                {
+                    OilsUsed oils = new OilsUsed();
+                    oils.ApptDate = apptDate;
+                    oils.Guid = patientAppt;
+                    oils.OilsUsed1 = oil;
+                    oilDataContext.OilsUseds.InsertOnSubmit(oils);
+                    oilDataContext.SubmitChanges();
+                }
             }
+        }
+        else
+        {
+            PatientAppointmentInfomationDataContext piDC = new PatientAppointmentInfomationDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
+            PatientAppointmentInformation patientRecord1 = null;
+            Guid patientGuid = Guid.Empty;
+
+            if (Session["PatientHistoryGuid"] != null)
+            {
+                string guidstring = Session["PatientHistoryGuid"].ToString();
+                patientGuid = Guid.Parse(guidstring);
+            }
+
+            var appointmentquery = from patients in piDC.PatientAppointmentInformations where patients.GUID == patientGuid select patients;
+            patientRecord1 = appointmentquery.First();
+
+            patientRecord1.ImageBeforeTherapy = ImageBefore.ImageUrl;
+            patientRecord1.ImageAfterTherapy = ImageAfter.ImageUrl;
+
+            piDC.SubmitChanges();
         }
     }
 }

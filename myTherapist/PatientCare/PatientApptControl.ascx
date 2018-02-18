@@ -24,7 +24,7 @@
             <div class="trpulseinfocolumn">   
                 <div class="tdpulseinfocolumn">          
                     <asp:Label runat="server" Text="RLU"/>
-                        <asp:RadioButtonList runat="server" AutoPostBack="false" ID="RLUa">
+                        <asp:RadioButtonList runat="server" AutoPostBack="false" ID="RLU">
                             <asp:ListItem Text="No" Value="No"></asp:ListItem>
                             <asp:ListItem Text="Weak" Value="Weak"></asp:ListItem>
                             <asp:ListItem Text="Normal" Value="Normal"></asp:ListItem>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="tdpulseinfocolumn">
                     <asp:Label runat="server" Text="SP"/>
-                    <asp:RadioButtonList runat="server" AutoPostBack="false" ID="SPa">
+                    <asp:RadioButtonList runat="server" AutoPostBack="false" ID="SP">
                          <asp:ListItem Text="No" Value="No"></asp:ListItem>
                         <asp:ListItem Text="Weak" Value="Weak"></asp:ListItem>
                         <asp:ListItem Text="Normal" Value="Normal"></asp:ListItem>
@@ -42,7 +42,7 @@
                 </div>
                 <div class="tdpulseinfocolumn">
                     <asp:Label runat="server" Text="KD"/>
-                        <asp:RadioButtonList runat="server" AutoPostBack="false" ID="KDa">
+                        <asp:RadioButtonList runat="server" AutoPostBack="false" ID="KD1">
                             <asp:ListItem Text="No" Value="No"></asp:ListItem>
                             <asp:ListItem Text="Weak" Value="Weak"></asp:ListItem>
                             <asp:ListItem Text="Normal" Value="Normal"></asp:ListItem>
@@ -53,7 +53,7 @@
             <div class="trpulseinfocolumn">   
                 <div class="tdpulseinfocolumn">          
                     <asp:Label runat="server" Text="LHT"/>
-                    <asp:RadioButtonList runat="server" AutoPostBack="false" ID="LHTa">
+                    <asp:RadioButtonList runat="server" AutoPostBack="false" ID="LHT">
                          <asp:ListItem Text="No" Value="No"></asp:ListItem>
                         <asp:ListItem Text="Weak" Value="Weak"></asp:ListItem>
                         <asp:ListItem Text="Normal" Value="Normal"></asp:ListItem>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="tdpulseinfocolumn">
                     <asp:Label runat="server" Text="LV"/>
-                    <asp:RadioButtonList runat="server" AutoPostBack="false" ID="LVb">
+                    <asp:RadioButtonList runat="server" AutoPostBack="false" ID="LV">
                          <asp:ListItem Text="No" Value="No"></asp:ListItem>
                          <asp:ListItem Text="Weak" Value="Weak"></asp:ListItem>
                         <asp:ListItem Text="Normal" Value="Normal"></asp:ListItem>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="tdpulseinfocolumn">
                     <asp:Label runat="server" Text="KD"/>
-                    <asp:RadioButtonList runat="server" AutoPostBack="false" ID="KDb">
+                    <asp:RadioButtonList runat="server" AutoPostBack="false" ID="KD2">
                         <asp:ListItem Text="No" Value="No"></asp:ListItem>
                         <asp:ListItem Text="Weak" Value="Weak"></asp:ListItem>
                         <asp:ListItem Text="Normal" Value="Normal"></asp:ListItem>
@@ -83,10 +83,10 @@
 
          <div class="tdimagesectionone">
             <div class="trimageinfoheader">                
-                <asp:Label runat="server" Text="Image Before"></asp:Label><asp:FileUpload runat="server" ID="uploadImageBeforea" />
+                <asp:Label runat="server" Text="Image Before"></asp:Label><asp:FileUpload runat="server" ID="uploadImageBefore" />
                 
                 <div class="tdimagecolumn">     
-                   <asp:Image runat="server" Width="250" Height="250" ImageUrl="~/Images/photoGoesHere.png" ID="ImageFiller1a" />
+                   <asp:Image runat="server" Width="250" Height="250" ImageUrl="~/Images/photoGoesHere.png" ID="ImageBefore" />
                    <asp:Button runat="server" ID="btnPreviewA" Text="Preview" />
                 </div>                 
             </div>
@@ -102,43 +102,45 @@
 
          <div class="tdimagesectiontwo">
             <div class="trimageinfoheader">
-                <asp:Label runat="server" Text="Image After"></asp:Label><asp:FileUpload runat="server" ID="uploadImageAfterb" />
+                <asp:Label runat="server" Text="Image After"></asp:Label><asp:FileUpload runat="server" ID="uploadImageAfter" />
                 
                 <div class="tdimagecolumn">                
-                    <asp:Image runat="server" Width="250" Height="250" ImageUrl="~/Images/photoGoesHere.png" ID="ImageFiller2b" />
+                    <asp:Image runat="server" Width="250" Height="250" ImageUrl="~/Images/photoGoesHere.png" ID="ImageAfter" />
                     <asp:Button runat="server" ID="btnPreviewB" Text="Preview" />
                 </div>
             </div>
          </div>
     </div>
-    
-    <div class="trpatientnotes">        
-        <div class="tdpatientnotes">
-           <asp:Label runat="server" ID="lblTherapya" Text="Therapy"></asp:Label>
-           <asp:TextBox runat="server" Width="2000px" Height="150" TextMode="MultiLine" ID="notes"/>
-        </div>
-    </div>
-    <br />
-    <div class="trpatientnotes">        
-        <div class="tdpatientnotes">
-           <asp:Label runat="server" ID="Label2" Text="Oils Used"></asp:Label>
-           <asp:TextBox runat="server" Width="2000px" Height="150" TextMode="MultiLine" ID="TextBox2"/>
-        </div>
-    </div>
-    <br />
-    <div class="trpatientnotes">        
-        <div class="tdpatientnotes">
-           <asp:Label runat="server" ID="Label3" Text="Session Goals"></asp:Label>
-           <asp:TextBox runat="server" Width="2000px" Height="150" TextMode="MultiLine" ID="TextBox3"/>
-        </div>
-    </div>
-
-
-    
-
 </div> 
 
-<asp:Table runat="server" ID="PatientApptControl_Table1">
+<div class="tablenoborder">    
+    <div class="trpatientnotes">                        
+        <asp:Label runat="server" ID="lblTherapya" Text="Therapy"/>
+    </div>
+    <div class="trpatientnotes">                        
+        <div class="tdpatientnotes">                             
+           <asp:TextBox runat="server" Width="2000px" Height="150" TextMode="MultiLine" ID="txtBoxTherapyPerformed"/>
+        </div>
+    </div>
+    <div class="trpatientnotes">        
+        <asp:Label runat="server" ID="lblOilsa" Text="Oils Used"></asp:Label>
+    </div>
+    <div class="trpatientnotes">        
+        <div class="tdpatientnotes">           
+           <asp:TextBox runat="server" Width="2000px" Height="150" TextMode="MultiLine" ID="txtBoxOilsUsed"/>
+        </div>
+    </div>
+    <div class="trpatientnotes">        
+        <asp:Label runat="server" ID="lblSessionGoalsa" Text="Session Goals"></asp:Label>
+    </div>
+    <div class="trpatientnotes">
+        <div class="tdpatientnotes">           
+           <asp:TextBox runat="server" Width="2000px" Height="150" TextMode="MultiLine" ID="txtBoxSessionGoals"/>
+        </div>
+    </div>
+</div> 
+
+<%--<asp:Table runat="server" ID="PatientApptControl_Table1">
     <asp:TableRow runat="server">
         <asp:TableCell runat="server" Text="Pulse Information">
             <asp:Table runat="server">
@@ -203,9 +205,7 @@
                 </asp:TableRow>                
             </asp:Table>
         </asp:TableCell>
-
-      
-
+        
         <asp:TableCell runat="server">              
             <asp:Table runat="server">
                 <asp:TableRow runat="server">
@@ -260,5 +260,5 @@
             <asp:TextBox runat="server" Width="1400px" Height="150" TextMode="MultiLine" ID="txtBoxSessionGoals"/>
         </asp:TableCell>
     </asp:TableRow>    
-</asp:Table>
+</asp:Table>--%>
 
