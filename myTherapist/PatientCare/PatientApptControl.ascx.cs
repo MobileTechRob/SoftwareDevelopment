@@ -129,6 +129,10 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
 
             ImageBefore.ImageUrl = patientRecord1.ImageBeforeTherapy;
             ImageAfter.ImageUrl = patientRecord1.ImageAfterTherapy;
+
+            txtBoxTherapyPerformed.Text = patientRecord1.TherapyPerformed;
+            txtBoxSessionGoals.Text = patientRecord1.SessionGoals;
+
             
         }
     }
@@ -220,9 +224,19 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
             var appointmentquery = from patients in piDC.PatientAppointmentInformations where patients.GUID == patientGuid select patients;
             patientRecord1 = appointmentquery.First();
 
+            patientRecord1.LV = LV.Text;
+            patientRecord1.RLU = RLU.Text;
+            patientRecord1.KD1 = KD1.Text;
+            patientRecord1.SP = SP.Text;
+            patientRecord1.LHT = LHT.Text;            
+            patientRecord1.KD2 = KD2.Text;
+
             patientRecord1.ImageBeforeTherapy = ImageBefore.ImageUrl;
             patientRecord1.ImageAfterTherapy = ImageAfter.ImageUrl;
 
+            patientRecord1.TherapyPerformed = txtBoxTherapyPerformed.Text;
+            patientRecord1.SessionGoals = txtBoxSessionGoals.Text;
+            
             piDC.SubmitChanges();
         }
     }

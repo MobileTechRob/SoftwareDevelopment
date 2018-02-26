@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Text;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 public enum MyDataTypes
 {
@@ -46,6 +48,8 @@ public class MyDataGridPager
     private DataTable dataGridTable;
     private string databaseTableName;
     private SortedDictionary<int, MyDataGridColumn> columnDictionary;
+    private SortedDictionary<string, int> gridIndexByColumnName;
+
     private System.Data.SqlClient.SqlConnection databaseConnection;
     private System.Data.SqlClient.SqlCommand databaseCommand;
     private System.Data.SqlClient.SqlDataReader databaseReader;
@@ -58,6 +62,7 @@ public class MyDataGridPager
 
         dataGridTable = new DataTable();
         columnDictionary = new SortedDictionary<int, MyDataGridColumn>();
+        gridIndexByColumnName = new SortedDictionary<string, int>();
         databaseConnection = new System.Data.SqlClient.SqlConnection(connnectionString);
         databaseTableName = tableName;
         Sort = MyDataSort.ASC;
@@ -75,6 +80,16 @@ public class MyDataGridPager
         column.IncludeInDataGrid = includeInGrid;
 
         columnDictionary.Add(columnDictionary.Count + 1, column);
+        gridIndexByColumnName.Add(databaseColumnName, gridIndexByColumnName.Count);
+    }
+
+    public int GridIndexByColumnName(string columnName)
+    {
+        int index;
+
+        gridIndexByColumnName.TryGetValue(columnName, out index);
+
+        return index;
     }
 
     public int ColumnWidth(int column)
@@ -194,6 +209,12 @@ public class MyDataGridPager
                             case MyDataTypes.GUID:
                                 itemArray[itemCount] = Utilities.ParseGuid(databaseReader, itemCount);
                                 break;
+
+                            default:
+                                itemArray[itemCount] = new Image();
+                                break;
+
+
                         }
 
                         itemCount++;

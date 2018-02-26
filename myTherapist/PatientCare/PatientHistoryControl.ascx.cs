@@ -112,6 +112,10 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(patienthistorygridview, "Select$" + e.Row.RowIndex);
             e.Row.Cells[1].Visible = false;
             e.Row.Cells[2].Visible = false;
+
+            Image imageBefore = new Image();
+            imageBefore.ImageUrl = "";
+            TableCell imgCell  = new TableCell();               
         }
     }
 
