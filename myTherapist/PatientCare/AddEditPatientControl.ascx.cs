@@ -13,7 +13,7 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        string s = "";
+        //string s = "";
 
     }
 
