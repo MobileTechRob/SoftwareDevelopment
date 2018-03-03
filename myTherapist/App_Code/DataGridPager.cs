@@ -12,7 +12,8 @@ public enum MyDataTypes
     INTEGER,
     STRING,
     DATETIME,
-    GUID
+    GUID,
+    IMAGE
 }
 
 public enum MyDataSort
@@ -134,6 +135,8 @@ public class MyDataGridPager
                 if (column.DataType == MyDataTypes.GUID)
                     dataColumn.DataType = System.Type.GetType("System.Guid");
 
+
+                                                
                 dataGridTable.Columns.Add(column.DataGridColumnName, dataColumn.DataType);
 
                 sqlSelectClause.Append(column.DataBaseTableColumnName);
@@ -210,9 +213,6 @@ public class MyDataGridPager
                                 itemArray[itemCount] = Utilities.ParseGuid(databaseReader, itemCount);
                                 break;
 
-                            default:
-                                itemArray[itemCount] = new Image();
-                                break;
 
 
                         }

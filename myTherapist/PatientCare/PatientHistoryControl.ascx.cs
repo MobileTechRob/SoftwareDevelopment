@@ -53,8 +53,8 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             }
         }
 
-        pager.AddColumn("ImageBeforeTherapy", "Image Before Therapy", MyDataTypes.STRING, false, 0);
-        pager.AddColumn("ImageAfterTherapy", "Image After Therapy", MyDataTypes.STRING, false, 0);
+        //pager.AddColumn("ImageBeforeTherapy", "Image Before Therapy", MyDataTypes.STRING, false, 0);
+        //pager.AddColumn("ImageAfterTherapy", "Image After Therapy", MyDataTypes.STRING, false, 0);
 
         pager.WhereClause = String.Format("PatientId = {0}", Session["PatientId"].ToString());
 
@@ -100,12 +100,30 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
 
     private void Patienthistorygridview_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        TableCell cell = null;
+        Image img = null;
+
         if (e.Row.RowType == DataControlRowType.Header)
         {
             e.Row.Cells[0].Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(patienthistorygridview, "Select$-1");            
-            e.Row.Cells[0].Style["text-decoration"]="underline";
+            e.Row.Cells[0].Style["text-decoration"]="underline";            
             e.Row.Cells[1].Visible = false;
             e.Row.Cells[2].Visible = false;
+
+            if (e.Row.FindControl("Image Before Therapy") == null)
+            {
+                cell = new TableCell();
+                cell.ID = "Image Before Therapy";
+                cell.Text = "Image Before Therapy";
+                cell.Font.Bold = true;
+                e.Row.Cells.Add(cell);
+
+                cell = new TableCell();
+                cell.Text = "Image After Therapy";
+                cell.Font.Bold = true;
+                e.Row.Cells.Add(cell);
+            }
+
         }
         else if (e.Row.RowType == DataControlRowType.DataRow)
         {
@@ -113,9 +131,25 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             e.Row.Cells[1].Visible = false;
             e.Row.Cells[2].Visible = false;
 
-            Image imageBefore = new Image();
-            imageBefore.ImageUrl = "";
-            TableCell imgCell  = new TableCell();               
+            if (e.Row.FindControl("TongueImage") == null)
+            {
+                cell = new TableCell();
+                cell.ID = "TongueImage";
+                img = new Image();
+                img.ImageUrl = "~/UploadedImages/badtongue.jpg";
+                img.Width = 25;
+                img.Height = 25;
+                cell.Controls.Add(img);
+                e.Row.Cells.Add(cell);
+
+                cell = new TableCell();
+                img = new Image();
+                img.ImageUrl = "~/UploadedImages/badtongue.jpg";
+                img.Width = 25;
+                img.Height = 25;
+                cell.Controls.Add(img);
+                e.Row.Cells.Add(cell);
+            }
         }
     }
 
