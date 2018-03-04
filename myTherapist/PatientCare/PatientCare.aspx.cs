@@ -24,10 +24,12 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
             PatientHistoryControl1.Visible = false;
 
             btnSaveAppt.Visible = false;
-            btnPatientListing.Visible = false;            
+            btnPatientListing.Visible = false;
             btnCancelAppt.Visible = false;
             btnSaveChanges.Visible = false;
             btnEditAppt.Visible = false;
+            btnCancelChanges.Visible = false;
+            
         }                        
     }
 
@@ -170,6 +172,10 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
             btnEditAppt.Visible = false;
             btnSaveChanges.Visible = true;
             btnStartAppt.Visible = false;
+            btnCancelChanges.Visible = true;
+            btnCreatePatient.Visible = false;
+            btnSaveAppt.Visible = false;
+
             PatientHistoryControl1.Visible = false;
             PatientApptControl1.Visible = true;
             PatientApptControl1.LoadPatientAppt();            
@@ -183,10 +189,24 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         if ((Session["EditPatient"] != null) && (Session["EditPatient"].ToString() == "true"))
         {
             PatientApptControl1.SaveAppt();
+
             PatientApptControl1.Visible = false;
             PatientHistoryControl1.Visible = true;
+            btnEditAppt.Visible = true;
             btnSaveChanges.Visible = false;
-
+            btnCancelChanges.Visible = false;
+            btnPatientListing.Visible = true;
         }        
+    }
+
+    protected void btnCancelChanges_Click(object sender, EventArgs e)
+    {
+        PatientHistoryControl1.Visible = true;
+        PatientApptControl1.Visible = false;
+
+        btnCancelChanges.Visible = false;
+        btnEditAppt.Visible = true;
+        btnPatientListing.Visible = true;
+        btnStartAppt.Visible = true;
     }
 }

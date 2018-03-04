@@ -6,8 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserControl
-{
-    //System.Data.DataTable patientHistory = null;
+{    
     MyDataGridPager pager = null;
 
     protected void Page_Load(object sender, EventArgs e)
@@ -23,6 +22,11 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             Session["PatientHistorySortOrder"] = "DESC";
     }
 
+    public void Refresh()
+    {
+        BuildGrid();
+    }
+    
     private void BuildGrid()
     {
         pager = new MyDataGridPager("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True", "PatientAppointmentInformation");
@@ -52,9 +56,6 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
                     pager.Sort = MyDataSort.ASC;
             }
         }
-
-        //pager.AddColumn("ImageBeforeTherapy", "Image Before Therapy", MyDataTypes.STRING, false, 0);
-        //pager.AddColumn("ImageAfterTherapy", "Image After Therapy", MyDataTypes.STRING, false, 0);
 
         pager.WhereClause = String.Format("PatientId = {0}", Session["PatientId"].ToString());
 

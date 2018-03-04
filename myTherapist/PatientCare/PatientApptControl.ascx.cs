@@ -154,14 +154,13 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
         string filePathImageAfter = string.Empty;
         filePathImageAfter = uploadImageAfter.FileName;
         
-        string therapy = txtBoxTherapyPerformed.Text;        
-        string oilsUsed = txtBoxOilsUsed.Text;        
+        string therapy = txtBoxTherapyPerformed.Text;                
         string sessionGoals = txtBoxSessionGoals.Text;
 
         PatientAppointmentInfomationDataContext patientApptDataContext = new PatientAppointmentInfomationDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
         PatientAppointmentInformation patientAppointmentInformation = new PatientAppointmentInformation();
 
-
+        // new appointment
         if (Session["EditPatient"] == null)
         {
             string apptDateStr = DateTime.Now.ToShortDateString() + " " + DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();
@@ -184,7 +183,6 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
             patientAppointmentInformation.KD2 = kd2;
 
             patientAppointmentInformation.TherapyPerformed = therapy;
-            patientAppointmentInformation.OilsUsed = oilsUsed;
             patientAppointmentInformation.SessionGoals = sessionGoals;
 
             patientApptDataContext.PatientAppointmentInformations.InsertOnSubmit(patientAppointmentInformation);
@@ -192,22 +190,6 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
 
             string[] p = { ",", " ", "\r\n" };
 
-            string[] listOfOilsUsed = oilsUsed.Split(p, StringSplitOptions.RemoveEmptyEntries);
-
-            if (listOfOilsUsed.Length > 0)
-            {
-                OilsUsedDataContext oilDataContext = new OilsUsedDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
-
-                foreach (string oil in listOfOilsUsed)
-                {
-                    OilsUsed oils = new OilsUsed();
-                    oils.ApptDate = apptDate;
-                    oils.Guid = patientAppt;
-                    oils.OilsUsed1 = oil;
-                    oilDataContext.OilsUseds.InsertOnSubmit(oils);
-                    oilDataContext.SubmitChanges();
-                }
-            }
         }
         else
         {

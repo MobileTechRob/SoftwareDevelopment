@@ -35,6 +35,7 @@
                     <asp:Button runat="server" ID="btnStartAppt" Text="Start New Appointment" OnClick="btnStartAppt_Click" />                    
                     <asp:Button runat="server" ID="btnEditAppt" Text="Edit Appointment" OnClick="btnEditAppt_Click" />                    
                     <asp:Button runat="server" ID="btnSaveChanges" Text="Save Changes" OnClick="btnSaveChanges_Click" />                    
+                    <asp:Button runat="server" ID="btnCancelChanges" Text="Cancel Changes" OnClick="btnCancelChanges_Click"/>  
                     <asp:Button runat="server" ID="btnPatientListing" Text="Patient Listing" OnClick="btnPatientListing_Click" />
                     <asp:Button runat="server" ID="btnPatientHistory" Text="Patient History" OnClick="btnPatientHistory_Click" />
                     <asp:Button runat="server" ID="btnDeletePatient" Text="Delete Patient" OnClick="btnDeletePatient_Click" />

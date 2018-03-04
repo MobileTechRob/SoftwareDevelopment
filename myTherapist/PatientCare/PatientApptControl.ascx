@@ -114,28 +114,25 @@
 </div> 
 
 <div class="tablenoborder">    
-    <div class="trpatientnotes">                        
-        <asp:Label runat="server" ID="lblTherapya" Text="Therapy"/>
-    </div>
-    <div class="trpatientnotes">                        
-        <div class="tdpatientnotes">                             
-           <asp:TextBox runat="server" Width="2000px" Height="150" TextMode="MultiLine" ID="txtBoxTherapyPerformed"/>
+    <div class="tdpatientnotes">    
+        <div class="trpatientnotes">                        
+            <asp:Label runat="server" ID="lblTherapya" Text="Therapy/Oils Used"/>
+        </div>
+        <div class="trpatientnotes">                        
+            <div class="tdpatientnotes">                             
+                <asp:TextBox runat="server" Width="2000px" Height="150" TextMode="MultiLine" ID="txtBoxTherapyPerformed"/>
+            </div>
         </div>
     </div>
-    <div class="trpatientnotes">        
-        <asp:Label runat="server" ID="lblOilsa" Text="Oils Used"></asp:Label>
-    </div>
-    <div class="trpatientnotes">        
-        <div class="tdpatientnotes">           
-           <asp:TextBox runat="server" Width="2000px" Height="150" TextMode="MultiLine" ID="txtBoxOilsUsed"/>
+
+    <div class="tdpatientnotes">    
+        <div class="trpatientnotes">        
+            <asp:Label runat="server" ID="lblSessionGoalsa" Text="Session Goals"></asp:Label>
         </div>
-    </div>
-    <div class="trpatientnotes">        
-        <asp:Label runat="server" ID="lblSessionGoalsa" Text="Session Goals"></asp:Label>
-    </div>
-    <div class="trpatientnotes">
-        <div class="tdpatientnotes">           
-           <asp:TextBox runat="server" Width="2000px" Height="150" TextMode="MultiLine" ID="txtBoxSessionGoals"/>
+        <div class="trpatientnotes">
+            <div class="tdpatientnotes">           
+                <asp:TextBox runat="server" Width="2000px" Height="150" TextMode="MultiLine" ID="txtBoxSessionGoals"/>
+            </div>
         </div>
     </div>
 </div> 
