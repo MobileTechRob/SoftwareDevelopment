@@ -81,11 +81,13 @@ public partial class PatientInformation : INotifyPropertyChanging, INotifyProper
 	
 	private int _Id;
 	
-	private string _Name;
+	private string _FirstName;
 	
 	private string _EmailAddress;
 	
 	private string _TelephoneNumber;
+	
+	private string _LastName;
 	
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -93,12 +95,14 @@ public partial class PatientInformation : INotifyPropertyChanging, INotifyProper
     partial void OnCreated();
     partial void OnIdChanging(int value);
     partial void OnIdChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
+    partial void OnFirstNameChanging(string value);
+    partial void OnFirstNameChanged();
     partial void OnEmailAddressChanging(string value);
     partial void OnEmailAddressChanged();
     partial void OnTelephoneNumberChanging(string value);
     partial void OnTelephoneNumberChanged();
+    partial void OnLastNameChanging(string value);
+    partial void OnLastNameChanged();
     #endregion
 	
 	public PatientInformation()
@@ -126,22 +130,22 @@ public partial class PatientInformation : INotifyPropertyChanging, INotifyProper
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(50)")]
-	public string Name
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName", DbType="NVarChar(50)")]
+	public string FirstName
 	{
 		get
 		{
-			return this._Name;
+			return this._FirstName;
 		}
 		set
 		{
-			if ((this._Name != value))
+			if ((this._FirstName != value))
 			{
-				this.OnNameChanging(value);
+				this.OnFirstNameChanging(value);
 				this.SendPropertyChanging();
-				this._Name = value;
-				this.SendPropertyChanged("Name");
-				this.OnNameChanged();
+				this._FirstName = value;
+				this.SendPropertyChanged("FirstName");
+				this.OnFirstNameChanged();
 			}
 		}
 	}
@@ -182,6 +186,26 @@ public partial class PatientInformation : INotifyPropertyChanging, INotifyProper
 				this._TelephoneNumber = value;
 				this.SendPropertyChanged("TelephoneNumber");
 				this.OnTelephoneNumberChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="NVarChar(50)")]
+	public string LastName
+	{
+		get
+		{
+			return this._LastName;
+		}
+		set
+		{
+			if ((this._LastName != value))
+			{
+				this.OnLastNameChanging(value);
+				this.SendPropertyChanging();
+				this._LastName = value;
+				this.SendPropertyChanged("LastName");
+				this.OnLastNameChanged();
 			}
 		}
 	}

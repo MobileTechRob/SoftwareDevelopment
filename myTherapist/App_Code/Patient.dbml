@@ -3,9 +3,10 @@
   <Table Name="dbo.PatientInformation" Member="PatientInformations">
     <Type Name="PatientInformation">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="EmailAddress" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="TelephoneNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

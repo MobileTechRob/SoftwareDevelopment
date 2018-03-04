@@ -42,7 +42,12 @@ public class MyDataGridColumn
 /// </summary>
 public class MyDataGridPager
 {
+    private int _totalNumberOfTableRows = 0;
+    private int _numberOfCompletePages = 0;
+    
     public int NumberRowsToDisplay { get; set; }
+    public int NumberOfTableRows { get { return _totalNumberOfTableRows; } }
+    public int NumberOfCompletePages { get { return _numberOfCompletePages; } }
     public int PageNumber { get; set; }
     public string WhereClause {get;set;}
     public MyDataSort Sort { get; set; }
@@ -55,7 +60,7 @@ public class MyDataGridPager
     private System.Data.SqlClient.SqlCommand databaseCommand;
     private System.Data.SqlClient.SqlDataReader databaseReader;
 
-    public MyDataGridPager(string connnectionString, string tableName)
+    public MyDataGridPager(string connnectionString, string tableName, int rowsToDisplay = 15)
     {
         //
         // TODO: Add constructor logic here
@@ -68,6 +73,7 @@ public class MyDataGridPager
         databaseTableName = tableName;
         Sort = MyDataSort.ASC;
         PageNumber = 1;
+        NumberRowsToDisplay = rowsToDisplay;
     }
 
     public void AddColumn(string databaseColumnName, string dataGridColumnName, MyDataTypes dataType, bool orderByColumn, int gridWidth, bool includeInGrid = true)
@@ -116,6 +122,16 @@ public class MyDataGridPager
             databaseCommand = new System.Data.SqlClient.SqlCommand();
             sqlSelectClause = new StringBuilder();
 
+            sqlSelectClause.Append("SELECT Count(*) FROM ");
+            sqlSelectClause.Append(databaseTableName);
+
+            databaseCommand.CommandText = sqlSelectClause.ToString();
+            databaseCommand.Connection = databaseConnection;
+            _totalNumberOfTableRows = (int)databaseCommand.ExecuteScalar();
+            sqlSelectClause.Clear();
+
+            _numberOfCompletePages = _totalNumberOfTableRows / NumberRowsToDisplay;
+
             sqlSelectClause.Append("SELECT ");
 
             foreach (MyDataGridColumn column in columnDictionary.Values)
@@ -134,8 +150,6 @@ public class MyDataGridPager
 
                 if (column.DataType == MyDataTypes.GUID)
                     dataColumn.DataType = System.Type.GetType("System.Guid");
-
-
                                                 
                 dataGridTable.Columns.Add(column.DataGridColumnName, dataColumn.DataType);
 
@@ -212,9 +226,6 @@ public class MyDataGridPager
                             case MyDataTypes.GUID:
                                 itemArray[itemCount] = Utilities.ParseGuid(databaseReader, itemCount);
                                 break;
-
-
-
                         }
 
                         itemCount++;
@@ -222,13 +233,26 @@ public class MyDataGridPager
 
                     row.ItemArray = itemArray;
                     dataGridTable.Rows.Add(row);
+                    
                 }
 
                 databaseReader.Close();
                 databaseConnection.Close();
-            }            
+
+            }
+
+            if (dataGridTable.Rows.Count < NumberRowsToDisplay)
+            {
+                while (NumberRowsToDisplay != dataGridTable.Rows.Count)
+                {
+                    itemArray = new object[columnDictionary.Count];
+                    row = dataGridTable.NewRow();
+                    row.ItemArray = itemArray;
+                    dataGridTable.Rows.Add(row);
+                }
+            }
         }
-                   
+
         return dataGridTable;
     }
 

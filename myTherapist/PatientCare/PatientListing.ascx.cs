@@ -25,8 +25,7 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         pager.AddColumn("Name", "Name", MyDataTypes.STRING, false, 500);
         pager.AddColumn("EmailAddress", "Email Address", MyDataTypes.STRING, false, 250);
         pager.AddColumn("TelephoneNumber", "Telephone Number", MyDataTypes.STRING, false, 235);
-        pager.NumberRowsToDisplay = 5;
-
+        
         if (IsPostBack == false)
         {
             pager.PageNumber = 1;
@@ -39,6 +38,9 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         patientlistgridview.RowDataBound += Patientlistgridview_RowDataBound;        
         patientlistgridview.SelectedIndexChanged += Patientlistgridview_SelectedIndexChanged;
         patientlistgridview.DataBind();
+
+        if (pager.NumberOfCompletePages == 0)
+          btnNextPAge.Enabled = false;        
     }
 
 
@@ -46,17 +48,21 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
     {
         GridView gridView = (GridView)sender;
         int selectedIndex = gridView.SelectedIndex;
+        int result = 0;
 
-        int patientID = Int32.Parse(patientlistgridview.Rows[selectedIndex].Cells[0].Text);
-        string patientName = patientlistgridview.Rows[selectedIndex].Cells[1].Text;
+        if (Int32.TryParse(patientlistgridview.Rows[selectedIndex].Cells[0].Text, out result))
+        {
+            int patientID = Int32.Parse(patientlistgridview.Rows[selectedIndex].Cells[0].Text);
+            string patientName = patientlistgridview.Rows[selectedIndex].Cells[1].Text;
 
-        for (int index = 0; index < patientlistgridview.Rows.Count; index++)
-            patientlistgridview.Rows[index].BackColor = System.Drawing.ColorTranslator.FromHtml("#F4A460");
+            for (int index = 0; index < patientlistgridview.Rows.Count; index++)
+                patientlistgridview.Rows[index].BackColor = System.Drawing.ColorTranslator.FromHtml("#F4A460");
 
-        patientlistgridview.Rows[selectedIndex].BackColor = System.Drawing.ColorTranslator.FromHtml("#F9cda8");
+            patientlistgridview.Rows[selectedIndex].BackColor = System.Drawing.ColorTranslator.FromHtml("#F9cda8");
 
-        Session["PatientID"] = patientlistgridview.Rows[selectedIndex].Cells[0].Text;
-        Session["PatientName"] = patientlistgridview.Rows[selectedIndex].Cells[1].Text;
+            Session["PatientID"] = patientlistgridview.Rows[selectedIndex].Cells[0].Text;
+            Session["PatientName"] = patientlistgridview.Rows[selectedIndex].Cells[1].Text;
+        }
     }
 
     private void Patientlistgridview_RowDataBound(object sender, GridViewRowEventArgs e)
