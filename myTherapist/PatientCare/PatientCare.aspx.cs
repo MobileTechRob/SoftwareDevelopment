@@ -61,18 +61,26 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
 
     protected void btnStartAppt_Click(object sender, EventArgs e)
     {
-        PatientListing1.Visible = false;
-        AddEditPatientControl1.Visible = false;
-        PatientApptControl1.Visible = true;
-        PatientHistoryControl1.Visible = false;
+        if (Session["PatientID"] != null)
+        {
+            PatientListing1.Visible = false;
+            AddEditPatientControl1.Visible = false;
+            PatientApptControl1.Visible = true;
+            PatientHistoryControl1.Visible = false;
 
-        btnStartAppt.Visible = false;
-        btnEditAppt.Visible = false;
-        btnSaveAppt.Visible = true;
-        btnCancelAppt.Visible = true;
-        btnDeletePatient.Visible = false;
-        btnCreatePatient.Visible = false;        
-        btnPatientListing.Visible = true;
+            btnStartAppt.Visible = false;
+            btnEditAppt.Visible = false;
+            btnSaveAppt.Visible = true;
+            btnCancelAppt.Visible = true;
+            btnDeletePatient.Visible = false;
+            btnCreatePatient.Visible = false;
+            btnPatientListing.Visible = true;
+        }
+        else
+        {
+            lblWarningText.Text = "Select a Patient";
+            lblWarningText.ForeColor = System.Drawing.Color.Red;
+        }
     }
 
     protected void btnPatientHistory_Click(object sender, EventArgs e)
@@ -103,7 +111,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
             btnEditAppt.Visible = true;
             btnStartAppt.Visible = true;
             btnPatientListing.Visible = true;
-            btnDeletePatient.Visible = true;
+            btnDeletePatient.Visible = false;
             btnPatientHistory.Visible = false;
         }
            
@@ -119,6 +127,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         btnCreatePatient.Visible = true;
         btnStartAppt.Visible = true;
         btnEditAppt.Visible = false;
+        btnDeletePatient.Visible = false;
     }
 
     protected void btnPatientListing_Click(object sender, EventArgs e)
@@ -133,22 +142,59 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         btnEditAppt.Visible = false;
         btnPatientHistory.Visible = true;
         btnPatientListing.Visible = false;
-        btnDeletePatient.Visible = true;        
+        btnDeletePatient.Visible = true;
+        btnSaveChanges.Visible = false;
     }
 
     protected void btnDeletePatient_Click(object sender, EventArgs e)
     {
         PatientDataContext patientDC = new PatientDataContext("Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf; Integrated Security = True");
         PatientInformation patientToDelete = new PatientInformation();
+
+        PatientAppointmentInfomationDataContext patientAppointmentInformationDC = new PatientAppointmentInfomationDataContext("Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf; Integrated Security = True");
+        PatientAppointmentInformation patientAppointmentInformationToDelete = new PatientAppointmentInformation();
+        
+
         Int32 patientId = 0;
 
-        if (Int32.TryParse(Session["PatientID"].ToString(), out patientId))
+        if (Session["PatientID"] != null)
         {
-            patientToDelete = patientDC.PatientInformations.Single(patient => patient.Id == patientId);
+            if (Session["DeletePatientWarning"] == null)
+            {                
+                lblWarningText.Text = "Click Delete again to confirm this action.";
+                lblWarningText.ForeColor = System.Drawing.Color.Red;
+                lblWarningText.Visible = true;
+                Session["DeletePatientWarning"] = "yes";
+            }
+            else
+            {
+                if (Int32.TryParse(Session["PatientID"].ToString(), out patientId))
+                {
+                    Session["DeletePatientWarning"] = null;
+                    patientToDelete = patientDC.PatientInformations.Single(patient => patient.Id == patientId);
+                    patientDC.PatientInformations.DeleteOnSubmit(patientToDelete);
+                    patientDC.SubmitChanges();
 
-            patientDC.PatientInformations.DeleteOnSubmit(patientToDelete);
-            patientDC.SubmitChanges();
-            PatientListing1.LoadGrid();
+                    var patientApptsToDelete =patientAppointmentInformationDC.PatientAppointmentInformations.Select(patient => patient.PatientId == patientId);
+
+                    if (patientApptsToDelete.Count() > 0)
+                    {
+                        IEnumerable<PatientAppointmentInformation> patientApptDelete = (from patientAppts in patientAppointmentInformationDC.PatientAppointmentInformations where patientAppts.PatientId == patientId select patientAppts);                    
+                        patientAppointmentInformationDC.PatientAppointmentInformations.DeleteAllOnSubmit(patientApptDelete);
+                        patientAppointmentInformationDC.SubmitChanges();
+                    }
+
+                    lblWarningText.Visible = false;
+
+                    PatientListing1.LoadGrid();
+                }
+            }
+        }
+        else
+        {
+            lblWarningText.Visible = true;
+            lblWarningText.Text = "Select a patient to delete.";
+            lblWarningText.ForeColor = System.Drawing.Color.Red;
         }
     }
 
@@ -160,7 +206,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         btnCreatePatient.Visible = true;
         btnStartAppt.Visible = true;
         btnSaveAppt.Visible = false;
-        btnDeletePatient.Visible = true;
+        btnDeletePatient.Visible = false;
         btnPatientHistory.Visible = true;
     }
 
@@ -189,7 +235,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         if ((Session["EditPatient"] != null) && (Session["EditPatient"].ToString() == "true"))
         {
             PatientApptControl1.SaveAppt();
-
+            PatientHistoryControl1.Refresh();
             PatientApptControl1.Visible = false;
             PatientHistoryControl1.Visible = true;
             btnEditAppt.Visible = true;

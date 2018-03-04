@@ -96,6 +96,12 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         LoadGrid();
         btnPreviousPage.Enabled = true;
     }
+
+    protected void btnSearch_Click(object sender, EventArgs e)
+    {
+
+    }
+
 }
 
 
