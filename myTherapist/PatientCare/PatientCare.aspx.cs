@@ -255,4 +255,9 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         btnPatientListing.Visible = true;
         btnStartAppt.Visible = true;
     }
+
+    protected void btnUpdatePatient_Click(object sender, EventArgs e)
+    {
+
+    }
 }

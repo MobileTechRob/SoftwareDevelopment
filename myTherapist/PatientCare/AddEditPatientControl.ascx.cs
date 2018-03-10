@@ -23,8 +23,8 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
         PatientInformation pi = new PatientInformation();
         PatientDataContext patientDC = new PatientDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
 
-        pi.FirstName = txtboxName.Text;
-        pi.LastName = txtboxName.Text;
+        pi.FirstName = txtboxFirstName.Text;
+        pi.LastName = txtboxLastName.Text;
         pi.TelephoneNumber = txtboxPhone.Text;
         pi.EmailAddress = txtboxEmailAddress.Text;
         patientDC.PatientInformations.InsertOnSubmit(pi);        

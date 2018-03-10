@@ -22,9 +22,10 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
     {
         pager = new MyDataGridPager("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True", "PatientInformation");
         pager.AddColumn("Id", "Id", MyDataTypes.INTEGER, true, 35);
-        pager.AddColumn("Name", "Name", MyDataTypes.STRING, false, 500);
+        pager.AddColumn("FirstName", "First Name", MyDataTypes.STRING, false, 250);
+        pager.AddColumn("LastName", "Last Name", MyDataTypes.STRING, false, 250);
         pager.AddColumn("EmailAddress", "Email Address", MyDataTypes.STRING, false, 250);
-        pager.AddColumn("TelephoneNumber", "Telephone Number", MyDataTypes.STRING, false, 235);
+        pager.AddColumn("TelephoneNumber", "Telephone Number", MyDataTypes.STRING, false, 100);
         
         if (IsPostBack == false)
         {

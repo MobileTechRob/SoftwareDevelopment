@@ -168,6 +168,12 @@ body {
     border: none;
 }
 
+.tra {
+    display: table-row;
+    align-content: center;
+    border: none;        
+}
+
 .td {
     display: table-cell;
     align-content: center;
@@ -175,3 +181,10 @@ body {
     border: none;
 }
 
+.tda {
+    display: table-cell;
+    align-content: center;
+    vertical-align: middle;
+    border: none;    
+    padding: 0px 0px 5px 0px;
+}

@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="PatientApptControl.ascx.cs" Inherits="PatientCare_PatientApptControl" %>
-<link rel="stylesheet" runat="server" href="./stylesheets/sitestyles.css" id="Link1" /> 
+<link rel="stylesheet" runat="server" href="../stylesheets/sitestyles.css" id="Link1" /> 
 <h4 title="myTherapist">Patient Appointment</h4>
 <asp:Label ID="lblPatientHeader" runat="server" Text="Patient Name:"></asp:Label>
 <asp:Label ID="patientHeader" runat="server"></asp:Label>
