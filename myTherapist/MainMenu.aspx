@@ -12,9 +12,23 @@
         <div class="menutable">
             <div class="tr">
                 <div class="td">
-                    <asp:LinkButton runat="server"  ID="btnPatientCare" Text="Patient Care" Font-Size="XX-Large" OnClick="btnPatientCare_Click"></asp:LinkButton>
-                    <asp:Label runat="server" ID="space" Text="    " Font-Size="Large" />
-                    <asp:LinkButton runat="server"  ID="btnSystemConfiguration" Text="System Configuration" Font-Size="XX-Large" OnClick="btnSystemConfiguration_Click"></asp:LinkButton>
+                    <asp:Image runat="server" ImageUrl="~/Images/PamCare.PNG" ID="PamCareImage" ImageAlign="Middle" />
+                </div>
+            </div>
+            <div class="tr">
+                <div class="td">
+                    <asp:TextBox runat="server" ID="txtBoxUserName"  />                    
+                </div>
+            </div>
+            <div class="tr">
+                 <div class="td">
+                    <asp:Button runat="server" Text="Login" />
+                </div>
+            </div>        
+            <div class="tr">
+                 <div class="td">                    
+                    <asp:LinkButton runat="server"  ID="LinkButton2" Text="Patient Care" Font-Size="XX-Large" OnClick="btnPatientCare_Click"></asp:LinkButton>
+                    <asp:Label runat="server" ID="Label2" Text="    " Font-Size="Large" />                               
                 </div>
             </div>
         </div>

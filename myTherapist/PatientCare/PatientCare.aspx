@@ -19,8 +19,8 @@
     <form id="form1" runat="server">
         
         <uc1:PatientListing ID="PatientListing1" runat="server" />                
-        <uc2:AddEditPatientControl ID="AddEditPatientControl1" runat="server" />
         <uc3:PatientApptControl ID="PatientApptControl1" runat="server" />
+        <uc2:AddEditPatientControl ID="AddEditPatientControl1" runat="server" />
         <uc4:PatientHistoryControl ID="PatientHistoryControl1" runat="server" />
         <br />
         <asp:Label runat="server" ID="lblWarningText" Text=""/>

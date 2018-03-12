@@ -214,7 +214,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
     {
         if (PatientHistoryControl1.ShowIndividualAppt())
         {
-            Session["EditPatient"] = "true";
+            Session["EditPatientAppt"] = "true";
             btnEditAppt.Visible = false;
             btnSaveChanges.Visible = true;
             btnStartAppt.Visible = false;
@@ -232,7 +232,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
     {
         string s = "";
 
-        if ((Session["EditPatient"] != null) && (Session["EditPatient"].ToString() == "true"))
+        if ((Session["EditPatientAppt"] != null) && (Session["EditPatientAppt"].ToString() == "true"))
         {
             PatientApptControl1.SaveAppt();
             PatientHistoryControl1.Refresh();
@@ -258,6 +258,15 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
 
     protected void btnUpdatePatient_Click(object sender, EventArgs e)
     {
-
+        if (Session["PatientID"] != null)
+        {
+            AddEditPatientControl1.SetEditMode();
+            AddEditPatientControl1.Visible = true;
+        }
+        else
+        {
+            lblWarningText.Text = "Select a Patient";
+            lblWarningText.ForeColor = System.Drawing.Color.Red;
+        }
     }
 }

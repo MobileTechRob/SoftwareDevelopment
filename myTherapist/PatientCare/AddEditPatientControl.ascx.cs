@@ -17,21 +17,35 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
 
     }
 
+    public void SetEditMode()
+    {
+        Session["EditPatientInformation"] = "true";
+    }
 
     protected void btnSavePatient_Click(object sender, EventArgs e)
     {
         PatientInformation pi = new PatientInformation();
         PatientDataContext patientDC = new PatientDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
 
-        pi.FirstName = txtboxFirstName.Text;
-        pi.LastName = txtboxLastName.Text;
-        pi.TelephoneNumber = txtboxPhone.Text;
-        pi.EmailAddress = txtboxEmailAddress.Text;
-        patientDC.PatientInformations.InsertOnSubmit(pi);        
-        patientDC.SubmitChanges();
+        if (Session["EditPatientInformation"] == null)
+        {
+            pi.FirstName = txtboxFirstName.Text;
+            pi.LastName = txtboxLastName.Text;
+            pi.TelephoneNumber = txtboxPhone.Text;
+            pi.EmailAddress = txtboxEmailAddress.Text;
+            patientDC.PatientInformations.InsertOnSubmit(pi);
+            patientDC.SubmitChanges();
 
-        if (patientCareSaved != null)
-            patientCareSaved(this, new EventArgs());
+            if (patientCareSaved != null)
+                patientCareSaved(this, new EventArgs());
+        }
+        else
+        {
+
+
+
+        }
+        
     }
 
     protected void btnCancel_Click(object sender, EventArgs e)
