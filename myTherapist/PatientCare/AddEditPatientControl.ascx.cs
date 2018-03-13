@@ -41,11 +41,18 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
         }
         else
         {
+            int patientID = Int32.Parse(Session["PatientID"].ToString());
 
-
-
+            IQueryable<PatientInformation> apatient = from patients in patientDC.PatientInformations where (patients.Id == patientID) select patients;
+            pi = apatient.Single<PatientInformation>();
+            pi.FirstName = txtboxFirstName.Text;
+            pi.LastName = txtboxLastName.Text;
+            pi.TelephoneNumber = txtboxPhone.Text;
+            pi.EmailAddress = txtboxEmailAddress.Text;
+            
+            patientDC.SubmitChanges();
         }
-        
+
     }
 
     protected void btnCancel_Click(object sender, EventArgs e)
