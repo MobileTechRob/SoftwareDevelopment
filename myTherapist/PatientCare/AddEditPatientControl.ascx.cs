@@ -33,11 +33,19 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
             pi.LastName = txtboxLastName.Text;
             pi.TelephoneNumber = txtboxPhone.Text;
             pi.EmailAddress = txtboxEmailAddress.Text;
-            patientDC.PatientInformations.InsertOnSubmit(pi);
-            patientDC.SubmitChanges();
 
-            if (patientCareSaved != null)
-                patientCareSaved(this, new EventArgs());
+            try
+            {
+                patientDC.PatientInformations.InsertOnSubmit(pi);
+                patientDC.SubmitChanges();
+
+                if (patientCareSaved != null)
+                    patientCareSaved(this, new EventArgs());
+
+            }
+            catch (Exception ex)
+            {
+            }
         }
         else
         {
@@ -49,8 +57,19 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
             pi.LastName = txtboxLastName.Text;
             pi.TelephoneNumber = txtboxPhone.Text;
             pi.EmailAddress = txtboxEmailAddress.Text;
-            
-            patientDC.SubmitChanges();
+
+            try
+            {
+                patientDC.SubmitChanges();
+
+                Session["EditPatientInformation"] = null;
+
+                if (patientCareSaved != null)
+                    patientCareSaved(this, new EventArgs());
+            }
+            catch (Exception ex)
+            {
+            }            
         }
 
     }
