@@ -20,6 +20,19 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
     public void SetEditMode()
     {
         Session["EditPatientInformation"] = "true";
+
+        PatientInformation pi = new PatientInformation();
+        PatientDataContext patientDC = new PatientDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
+
+        int patientID = Int32.Parse(Session["PatientID"].ToString());
+
+        IQueryable<PatientInformation> apatient = from patients in patientDC.PatientInformations where (patients.Id == patientID) select patients;
+        pi = apatient.Single<PatientInformation>();
+
+        txtboxFirstName.Text = pi.FirstName;
+        txtboxLastName.Text = pi.LastName;
+        txtboxPhone.Text= pi.TelephoneNumber;
+        txtboxEmailAddress.Text = pi.EmailAddress;        
     }
 
     protected void btnSavePatient_Click(object sender, EventArgs e)

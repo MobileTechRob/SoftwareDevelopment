@@ -261,6 +261,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         if (Session["PatientID"] != null)
         {
             PatientListing1.Visible = false;
+            menuPanel.Visible = false;
             AddEditPatientControl1.SetEditMode();
             AddEditPatientControl1.Visible = true;
         }

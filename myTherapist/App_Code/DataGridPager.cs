@@ -90,6 +90,14 @@ public class MyDataGridPager
         gridIndexByColumnName.Add(databaseColumnName, gridIndexByColumnName.Count);
     }
 
+    public void AddWhereClauseArgument(string fieldName, string fieldValue)
+    {
+        StringBuilder whereClause = new StringBuilder();
+
+
+
+    }
+
     public int GridIndexByColumnName(string columnName)
     {
         int index;
