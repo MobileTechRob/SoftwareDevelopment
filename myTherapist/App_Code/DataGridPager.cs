@@ -59,8 +59,9 @@ public class MyDataGridPager
     private System.Data.SqlClient.SqlConnection databaseConnection;
     private System.Data.SqlClient.SqlCommand databaseCommand;
     private System.Data.SqlClient.SqlDataReader databaseReader;
+    StringBuilder whereClause = null;
 
-    public MyDataGridPager(string connnectionString, string tableName, int rowsToDisplay = 15)
+    public MyDataGridPager(string connnectionString, string tableName, int rowsToDisplay = 5)
     {
         //
         // TODO: Add constructor logic here
@@ -74,6 +75,7 @@ public class MyDataGridPager
         Sort = MyDataSort.ASC;
         PageNumber = 1;
         NumberRowsToDisplay = rowsToDisplay;
+        whereClause = new StringBuilder();
     }
 
     public void AddColumn(string databaseColumnName, string dataGridColumnName, MyDataTypes dataType, bool orderByColumn, int gridWidth, bool includeInGrid = true)
@@ -91,11 +93,13 @@ public class MyDataGridPager
     }
 
     public void AddWhereClauseArgument(string fieldName, string fieldValue)
-    {
-        StringBuilder whereClause = new StringBuilder();
-
-
-
+    {        
+        whereClause.Append(fieldName);
+        whereClause.Append(" LIKE '");
+        whereClause.Append("%");
+        whereClause.Append(fieldValue);
+        whereClause.Append("%");
+        whereClause.Append("' AND ");
     }
 
     public int GridIndexByColumnName(string columnName)
@@ -122,6 +126,7 @@ public class MyDataGridPager
         string orderByColumnName = string.Empty;
         char[] parms = {','};
         List<string> tlist = null;
+        string wherePhrase = string.Empty;
 
         databaseConnection.Open();
 
@@ -172,6 +177,13 @@ public class MyDataGridPager
             sqlCommandString.Append(sqlSelectClause.ToString().TrimEnd(parms));
             sqlCommandString.Append(" FROM ");
             sqlCommandString.Append(databaseTableName);
+
+            if (whereClause.Length > 0)
+            {
+                wherePhrase = whereClause.ToString().TrimEnd(new char[] { ' ', 'A', 'N', 'D' });
+                sqlCommandString.Append(" WHERE ");
+                sqlCommandString.Append(wherePhrase);
+            }
 
             if (String.IsNullOrEmpty(orderByColumnName) == false)
             {

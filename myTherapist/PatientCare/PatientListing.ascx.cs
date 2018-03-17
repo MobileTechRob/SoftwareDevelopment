@@ -26,7 +26,13 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         pager.AddColumn("LastName", "Last Name", MyDataTypes.STRING, false, 250);
         pager.AddColumn("EmailAddress", "Email Address", MyDataTypes.STRING, false, 250);
         pager.AddColumn("TelephoneNumber", "Telephone Number", MyDataTypes.STRING, false, 100);
-        
+
+        if (txtBoxPatientFirstName.Text.Length > 0)
+           pager.AddWhereClauseArgument("FirstName", txtBoxPatientFirstName.Text);
+
+        if (txtBoxPatientLastName.Text.Length > 0)
+            pager.AddWhereClauseArgument("LastName", txtBoxPatientLastName.Text);
+
         if (IsPostBack == false)
         {
             pager.PageNumber = 1;
@@ -89,6 +95,13 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
 
         if (pageNumber == 1)
             btnPreviousPage.Enabled = false;
+        else
+            btnPreviousPage.Enabled = true;
+
+        btnNextPAge.Enabled = true;
+
+        if (pager.NumberOfCompletePages < pageNumber)
+            btnNextPAge.Enabled = false;
 
         LoadGrid();      
     }
@@ -103,6 +116,10 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
 
         LoadGrid();
         btnPreviousPage.Enabled = true;
+        btnNextPAge.Enabled = true;
+
+        if (pager.NumberOfCompletePages < pageNumber)
+            btnNextPAge.Enabled = false;
     }
 
     protected void btnSearch_Click(object sender, EventArgs e)

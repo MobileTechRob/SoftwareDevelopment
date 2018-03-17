@@ -13,8 +13,13 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        //string s = "";
-
+        if (IsPostBack == false)
+        {
+            txtboxFirstName.Text = "";
+            txtboxLastName.Text = "";
+            txtboxPhone.Text = "";
+            txtboxEmailAddress.Text = "";
+        }
     }
 
     public void SetEditMode()
