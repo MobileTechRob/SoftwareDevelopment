@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "myTherapist", "myTherapist\", "{F95E80CE-2695-474B-AAA9-6D931094FFCA}"
 	ProjectSection(WebsiteProperties) = preProject
@@ -28,10 +28,13 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{F95E80CE-2695-474B-AAA9-6D931094FFCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F95E80CE-2695-474B-AAA9-6D931094FFCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F95E80CE-2695-474B-AAA9-6D931094FFCA}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{F95E80CE-2695-474B-AAA9-6D931094FFCA}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

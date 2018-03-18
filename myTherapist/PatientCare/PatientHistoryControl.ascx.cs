@@ -4,18 +4,22 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using DataGridObjects;
 
 public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserControl
 {    
-    MyDataGridPager pager = null;
+    MyDataGridComplexPager pager = null;
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (this.Visible == false)
+            return;
+
         if (Session["PatientName"] != null)
             lblPatientName.Text = Session["PatientName"].ToString();
 
         if (Session["PatientId"] != null)
-        {
+        {            
             BuildGrid();
         }
         else
@@ -29,7 +33,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
     
     private void BuildGrid()
     {
-        pager = new MyDataGridPager("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True", "PatientAppointmentInformation");
+        pager = new MyDataGridComplexPager("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True", "PatientAppointmentInformation");
         pager.NumberRowsToDisplay = 10;
         pager.AddColumn("ApptDate", "Appointment Date", MyDataTypes.DATETIME, true, 35);
         pager.AddColumn("PatientId", "", MyDataTypes.INTEGER, false, 35);
@@ -40,6 +44,8 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         pager.AddColumn("LHT", "LHT", MyDataTypes.STRING, false, 0);
         pager.AddColumn("LV", "LV", MyDataTypes.STRING, false, 0);
         pager.AddColumn("KD2", "KD ", MyDataTypes.STRING, false, 0);
+        pager.AddColumn("ImageBeforeTherapy", "", MyDataTypes.STRING, false, 0);
+        pager.AddColumn("ImageAfterTherapy", "", MyDataTypes.STRING, false, 0);
 
         if (IsPostBack == false)
         {
@@ -111,6 +117,10 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             e.Row.Cells[1].Visible = false;
             e.Row.Cells[2].Visible = false;
 
+            e.Row.Cells[9].Visible = false;
+            e.Row.Cells[10].Visible = false;
+
+
             if (e.Row.FindControl("Image Before Therapy") == null)
             {
                 cell = new TableCell();
@@ -132,12 +142,16 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             e.Row.Cells[1].Visible = false;
             e.Row.Cells[2].Visible = false;
 
+            e.Row.Cells[9].Visible = false;
+            e.Row.Cells[10].Visible = false;
+            
+            // Tongue Image wont be there so have to create it
             if (e.Row.FindControl("TongueImage") == null)
             {
                 cell = new TableCell();
                 cell.ID = "TongueImage";
                 img = new Image();
-                img.ImageUrl = "~/UploadedImages/badtongue.jpg";
+                img.ImageUrl = e.Row.Cells[9].Text;
                 img.Width = 25;
                 img.Height = 25;
                 cell.Controls.Add(img);
@@ -145,7 +159,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
 
                 cell = new TableCell();
                 img = new Image();
-                img.ImageUrl = "~/UploadedImages/badtongue.jpg";
+                img.ImageUrl = e.Row.Cells[10].Text; 
                 img.Width = 25;
                 img.Height = 25;
                 cell.Controls.Add(img);

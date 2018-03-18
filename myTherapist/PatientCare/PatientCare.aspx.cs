@@ -25,11 +25,11 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
 
             btnSaveAppt.Visible = false;
             btnPatientListing.Visible = false;
+            btnUpdatePatient.Visible = false;
             btnCancelAppt.Visible = false;
             btnSaveChanges.Visible = false;
             btnEditAppt.Visible = false;
-            btnCancelChanges.Visible = false;
-            
+            btnCancelChanges.Visible = false;            
         }                        
     }
 
@@ -72,6 +72,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
             btnEditAppt.Visible = false;
             btnSaveAppt.Visible = true;
             btnCancelAppt.Visible = true;
+            btnUpdatePatient.Visible = false;
             btnDeletePatient.Visible = false;
             btnCreatePatient.Visible = false;
             btnPatientListing.Visible = true;
@@ -103,7 +104,9 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
             PatientListing1.Visible = false;
             AddEditPatientControl1.Visible = false;
             PatientApptControl1.Visible = false;
+
             PatientHistoryControl1.Visible = true;
+            PatientHistoryControl1.Refresh();
 
             btnCreatePatient.Visible = false;
             btnCancelAppt.Visible = false;

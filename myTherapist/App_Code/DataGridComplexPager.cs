@@ -8,40 +8,11 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using DataGridObjects;
 
-//public enum MyDataTypes
-//{
-//    INTEGER,
-//    STRING,
-//    DATETIME,
-//    GUID,
-//    IMAGE
-//}
-
-//public enum MyDataSort
-//{
-//    ASC,
-//    DESC    
-//}
-
-//public class MyDataGridColumn
-//{
-//    public string DataBaseTableColumnName { get; set; }
-//    public bool IncludeInDataGrid { get; set; }
-//    public string DataGridColumnName { get; set; }
-//    public bool OrderByColumn { get; set; }
-//    public MyDataTypes DataType { get; set; }
-//    public int HeaderWidth { get; set; }
-
-//    public MyDataGridColumn()
-//    {
-
-//    }
-//}
 
 /// <summary>
 /// Summary description for DataGridPager
 /// </summary>
-public class MyDataGridPager
+public class MyDataGridComplexPager
 {
     private int _totalNumberOfTableRows = 0;
     private int _numberOfCompletePages = 0;
@@ -62,7 +33,7 @@ public class MyDataGridPager
     private System.Data.SqlClient.SqlDataReader databaseReader;
     StringBuilder whereClause = null;
 
-    public MyDataGridPager(string connnectionString, string tableName, int rowsToDisplay = 5)
+    public MyDataGridComplexPager(string connnectionString, string tableName, int rowsToDisplay = 5)
     {
         //
         // TODO: Add constructor logic here
@@ -276,4 +247,6 @@ public class MyDataGridPager
 
         return dataGridTable;
     }
+
+
 }
