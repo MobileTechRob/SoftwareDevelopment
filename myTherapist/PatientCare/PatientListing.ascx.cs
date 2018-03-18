@@ -20,7 +20,7 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
 
     public void LoadGrid()
     {
-        pager = new MyDataGridPager("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True", "PatientInformation");
+        pager = new MyDataGridPager("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True", "PatientInformation", true);
         pager.AddColumn("Id", "Id", MyDataTypes.INTEGER, true, 35);
         pager.AddColumn("FirstName", "First Name", MyDataTypes.STRING, false, 250);
         pager.AddColumn("LastName", "Last Name", MyDataTypes.STRING, false, 250);

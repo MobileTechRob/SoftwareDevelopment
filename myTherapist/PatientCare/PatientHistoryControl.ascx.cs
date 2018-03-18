@@ -8,18 +8,21 @@ using DataGridObjects;
 
 public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserControl
 {    
-    MyDataGridComplexPager pager = null;
+    MyDataGridPager pager = null;
 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (this.Visible == false)
+        {
+            Session["PatientHistorySortOrder"] = "DESC";
             return;
+        }
 
         if (Session["PatientName"] != null)
             lblPatientName.Text = Session["PatientName"].ToString();
 
         if (Session["PatientId"] != null)
-        {            
+        {                       
             BuildGrid();
         }
         else
@@ -33,7 +36,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
     
     private void BuildGrid()
     {
-        pager = new MyDataGridComplexPager("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True", "PatientAppointmentInformation");
+        pager = new MyDataGridPager("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True", "PatientAppointmentInformation", false);
         pager.NumberRowsToDisplay = 10;
         pager.AddColumn("ApptDate", "Appointment Date", MyDataTypes.DATETIME, true, 35);
         pager.AddColumn("PatientId", "", MyDataTypes.INTEGER, false, 35);
@@ -117,10 +120,12 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             e.Row.Cells[1].Visible = false;
             e.Row.Cells[2].Visible = false;
 
-            e.Row.Cells[9].Visible = false;
-            e.Row.Cells[10].Visible = false;
+            int indexBeforeTherapy = pager.GridIndexByColumnName("ImageBeforeTherapy");
+            int indexAfterTherapy = pager.GridIndexByColumnName("ImageAfterTherapy");
 
-
+            e.Row.Cells[indexBeforeTherapy].Visible = false;
+            e.Row.Cells[indexAfterTherapy].Visible = false;
+            
             if (e.Row.FindControl("Image Before Therapy") == null)
             {
                 cell = new TableCell();
@@ -142,16 +147,20 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             e.Row.Cells[1].Visible = false;
             e.Row.Cells[2].Visible = false;
 
-            e.Row.Cells[9].Visible = false;
-            e.Row.Cells[10].Visible = false;
+            int indexBeforeTherapy = pager.GridIndexByColumnName("ImageBeforeTherapy");
+            int indexAfterTherapy = pager.GridIndexByColumnName("ImageAfterTherapy");
+
+            e.Row.Cells[indexBeforeTherapy].Visible = false;
+            e.Row.Cells[indexAfterTherapy].Visible = false;
             
             // Tongue Image wont be there so have to create it
             if (e.Row.FindControl("TongueImage") == null)
             {
+
                 cell = new TableCell();
                 cell.ID = "TongueImage";
                 img = new Image();
-                img.ImageUrl = e.Row.Cells[9].Text;
+                img.ImageUrl = e.Row.Cells[indexBeforeTherapy].Text;
                 img.Width = 25;
                 img.Height = 25;
                 cell.Controls.Add(img);
@@ -159,7 +168,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
 
                 cell = new TableCell();
                 img = new Image();
-                img.ImageUrl = e.Row.Cells[10].Text; 
+                img.ImageUrl = e.Row.Cells[indexAfterTherapy].Text; 
                 img.Width = 25;
                 img.Height = 25;
                 cell.Controls.Add(img);

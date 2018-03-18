@@ -8,36 +8,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using DataGridObjects;
 
-//public enum MyDataTypes
-//{
-//    INTEGER,
-//    STRING,
-//    DATETIME,
-//    GUID,
-//    IMAGE
-//}
-
-//public enum MyDataSort
-//{
-//    ASC,
-//    DESC    
-//}
-
-//public class MyDataGridColumn
-//{
-//    public string DataBaseTableColumnName { get; set; }
-//    public bool IncludeInDataGrid { get; set; }
-//    public string DataGridColumnName { get; set; }
-//    public bool OrderByColumn { get; set; }
-//    public MyDataTypes DataType { get; set; }
-//    public int HeaderWidth { get; set; }
-
-//    public MyDataGridColumn()
-//    {
-
-//    }
-//}
-
 /// <summary>
 /// Summary description for DataGridPager
 /// </summary>
@@ -56,13 +26,15 @@ public class MyDataGridPager
     private string databaseTableName;
     private SortedDictionary<int, DataGridObject.MyDataGridColumn> columnDictionary;
     private SortedDictionary<string, int> gridIndexByColumnName;
+    private bool fillToCompletePage = false;
 
     private System.Data.SqlClient.SqlConnection databaseConnection;
     private System.Data.SqlClient.SqlCommand databaseCommand;
     private System.Data.SqlClient.SqlDataReader databaseReader;
     StringBuilder whereClause = null;
 
-    public MyDataGridPager(string connnectionString, string tableName, int rowsToDisplay = 5)
+
+    public MyDataGridPager(string connnectionString, string tableName, bool fillToCompletePage, int rowsToDisplay = 15)
     {
         //
         // TODO: Add constructor logic here
@@ -77,6 +49,7 @@ public class MyDataGridPager
         PageNumber = 1;
         NumberRowsToDisplay = rowsToDisplay;
         whereClause = new StringBuilder();
+        this.fillToCompletePage = fillToCompletePage;
     }
 
     public void AddColumn(string databaseColumnName, string dataGridColumnName, MyDataTypes dataType, bool orderByColumn, int gridWidth, bool includeInGrid = true)
@@ -262,14 +235,17 @@ public class MyDataGridPager
 
             }
 
-            if (dataGridTable.Rows.Count < NumberRowsToDisplay)
+            if (fillToCompletePage)
             {
-                while (NumberRowsToDisplay != dataGridTable.Rows.Count)
+                if (dataGridTable.Rows.Count < NumberRowsToDisplay)
                 {
-                    itemArray = new object[columnDictionary.Count];
-                    row = dataGridTable.NewRow();
-                    row.ItemArray = itemArray;
-                    dataGridTable.Rows.Add(row);
+                    while (NumberRowsToDisplay != dataGridTable.Rows.Count)
+                    {
+                        itemArray = new object[columnDictionary.Count];
+                        row = dataGridTable.NewRow();
+                        row.ItemArray = itemArray;
+                        dataGridTable.Rows.Add(row);
+                    }
                 }
             }
         }
