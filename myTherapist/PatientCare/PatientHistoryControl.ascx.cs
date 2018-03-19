@@ -112,6 +112,8 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
     {
         TableCell cell = null;
         Image img = null;
+        const int IMAGE_HEIGHT = 200;
+        const int IMAGE_WIDTH = IMAGE_HEIGHT;
 
         if (e.Row.RowType == DataControlRowType.Header)
         {
@@ -158,19 +160,23 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             {
 
                 cell = new TableCell();
-                cell.ID = "TongueImage";
+                cell.ID = "TongueImage";               
                 img = new Image();
                 img.ImageUrl = e.Row.Cells[indexBeforeTherapy].Text;
-                img.Width = 25;
-                img.Height = 25;
+                img.ImageAlign = ImageAlign.Middle;
+                img.Width = IMAGE_WIDTH;
+                img.Height = IMAGE_HEIGHT;
+                cell.HorizontalAlign = HorizontalAlign.Left;
                 cell.Controls.Add(img);
                 e.Row.Cells.Add(cell);
 
                 cell = new TableCell();
                 img = new Image();
-                img.ImageUrl = e.Row.Cells[indexAfterTherapy].Text; 
-                img.Width = 25;
-                img.Height = 25;
+                img.ImageUrl = e.Row.Cells[indexAfterTherapy].Text;
+                img.ImageAlign = ImageAlign.Middle;
+                img.Width = IMAGE_WIDTH;
+                img.Height = IMAGE_HEIGHT;
+                cell.HorizontalAlign = HorizontalAlign.Left;
                 cell.Controls.Add(img);
                 e.Row.Cells.Add(cell);
             }

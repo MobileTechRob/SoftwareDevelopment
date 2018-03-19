@@ -97,7 +97,7 @@ body {
     align-content: center;
     vertical-align: middle;
     border: none;
-    width: 450px;
+    width:auto;
 }
 
 .tdimagesectiontwo {
@@ -105,7 +105,7 @@ body {
     align-content: center;
     vertical-align: middle;
     border: none;
-    width: 450px;
+    width:auto;
 }
 
 .trimagecolumn {
@@ -118,17 +118,17 @@ body {
 
 .tdimagecolumn {
     display: table-cell;
-    align-content: center;
+    align-content:stretch;
     vertical-align: middle;
-    border: none;
+    border:none;
     width: 175px;
 }
 
 .tdcolumnspacer {
     display: table-cell;
     align-content: center;
-    vertical-align: middle;
-    border: none;
+    vertical-align: middle;    
+    border:none;
     width: 55px;
 }
 
@@ -139,8 +139,6 @@ body {
     border: none;
     width: 55px;
 }
-
-
 
 .tdpatientappt {
     display: table-cell;
