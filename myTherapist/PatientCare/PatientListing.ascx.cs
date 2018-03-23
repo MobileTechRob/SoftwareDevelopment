@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using DataGridObjects;
+using System.Web.Configuration;
+using System.Data.SqlClient;
 
 public partial class PatientCare_PatientListing : System.Web.UI.UserControl
 {
@@ -20,7 +22,7 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
 
     public void LoadGrid()
     {
-        pager = new MyDataGridPager("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True", "PatientInformation", true);
+        pager = new MyDataGridPager(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString,  "PatientInformation", true);
         pager.AddColumn("Id", "Id", MyDataTypes.INTEGER, true, 35);
         pager.AddColumn("FirstName", "First Name", MyDataTypes.STRING, false, 250);
         pager.AddColumn("LastName", "Last Name", MyDataTypes.STRING, false, 250);

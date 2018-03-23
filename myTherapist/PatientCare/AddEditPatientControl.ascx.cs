@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Configuration;
+using System.Data.SqlClient;
 
 public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserControl
 {
@@ -27,7 +29,7 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
         Session["EditPatientInformation"] = "true";
 
         PatientInformation pi = new PatientInformation();
-        PatientDataContext patientDC = new PatientDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
+        PatientDataContext patientDC = new PatientDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);
 
         int patientID = Int32.Parse(Session["PatientID"].ToString());
 
@@ -43,7 +45,7 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
     protected void btnSavePatient_Click(object sender, EventArgs e)
     {
         PatientInformation pi = new PatientInformation();
-        PatientDataContext patientDC = new PatientDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
+        PatientDataContext patientDC = new PatientDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);
 
         if (Session["EditPatientInformation"] == null)
         {
