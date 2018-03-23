@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[PatientAppointmentInformation] (
+CREATE TABLE [dbo].[PatientAppointmentInformation] (
     [ApptDate]           DATETIME       NOT NULL,
     [PatientId]          BIGINT         NOT NULL,
     [RLU]                NCHAR (10)     NULL,
@@ -18,9 +18,9 @@
 
 CREATE NONCLUSTERED INDEX IX_PatientAppointmentInformation_Date
 ON PatientAppointmentInformation(ApptDate);
-GO;
+GO
 
 CREATE NONCLUSTERED INDEX IX_PatientAppointmentInformation_PatientId
 ON PatientAppointmentInformation(PatientId);
-GO;
+GO
 

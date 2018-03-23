@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Globalization;
+using System.Web.Configuration;
 
 public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
 {
@@ -97,7 +98,7 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
 
         if ((Session["EditPatient"] != null) && (Session["EditPatient"].ToString() == "true"))
         {
-            PatientAppointmentInfomationDataContext piDC = new PatientAppointmentInfomationDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");                       
+            PatientAppointmentInfomationDataContext piDC = new PatientAppointmentInfomationDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);                       
             PatientAppointmentInformation patientRecord1 = null;
 
             if (Session["PatientHistoryGuid"] != null)
@@ -157,7 +158,7 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
         string therapy = txtBoxTherapyPerformed.Text;                
         string sessionGoals = txtBoxSessionGoals.Text;
 
-        PatientAppointmentInfomationDataContext patientApptDataContext = new PatientAppointmentInfomationDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
+        PatientAppointmentInfomationDataContext patientApptDataContext = new PatientAppointmentInfomationDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);
         PatientAppointmentInformation patientAppointmentInformation = new PatientAppointmentInformation();
 
         // new appointment
@@ -193,7 +194,7 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
         }
         else
         {
-            PatientAppointmentInfomationDataContext piDC = new PatientAppointmentInfomationDataContext("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True");
+            PatientAppointmentInfomationDataContext piDC = new PatientAppointmentInfomationDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);
             PatientAppointmentInformation patientRecord1 = null;
             Guid patientGuid = Guid.Empty;
 

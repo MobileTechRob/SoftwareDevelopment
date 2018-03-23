@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using DataGridObjects;
@@ -36,7 +37,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
     
     private void BuildGrid()
     {
-        pager = new MyDataGridPager("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf;Integrated Security=True", "PatientAppointmentInformation", false);
+        pager = new MyDataGridPager(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString, "PatientAppointmentInformation", false);
         pager.NumberRowsToDisplay = 10;
         pager.AddColumn("ApptDate", "Appointment Date", MyDataTypes.DATETIME, true, 35);
         pager.AddColumn("PatientId", "", MyDataTypes.INTEGER, false, 35);
