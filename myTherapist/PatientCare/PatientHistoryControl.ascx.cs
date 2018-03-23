@@ -72,7 +72,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         patienthistorygridview.DataSource = pager.BuildTable();
         patienthistorygridview.RowDataBound += Patienthistorygridview_RowDataBound;
         patienthistorygridview.SelectedIndexChanged += Patienthistorygridview_SelectedIndexChanged;
-        patienthistorygridview.DataBind();
+        patienthistorygridview.DataBind();        
     }
 
 

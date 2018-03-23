@@ -21,6 +21,42 @@ namespace DataGridObjects
         DESC
     }
 
+    public class DataCellDisplay
+    {
+        string fieldName { get; set; }    
+        int column { get; set; }
+    }
+    
+    // represents what one row in the grid looks like.
+    public class DataRowDisplay
+    {
+        List<DataCellDisplay> cells = new List<DataCellDisplay>();
+
+        public void Add(DataCellDisplay cell)
+        {
+            cells.Add(cell);
+        }
+    }
+
+    public class GridRowObject
+    {
+        private List<DataRowDisplay> rows = new List<DataRowDisplay>();
+
+        public int NumberDataRows {get { return rows.Count; } }
+        public DataRowDisplay Row(int rowNumber)
+        {
+            if ((rowNumber >= 1) && (rowNumber <= rows.Count))
+                return rows[rowNumber - 1];
+
+            return null;
+        }
+
+        public void Add(DataRowDisplay row)
+        {
+            rows.Add(row);
+        }               
+    }
+
     /// <summary>
     /// Summary description for DataGridObjects
     /// </summary>
