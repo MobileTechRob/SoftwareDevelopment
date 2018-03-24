@@ -69,7 +69,62 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
 
         pager.WhereClause = String.Format("PatientId = {0}", Session["PatientId"].ToString());
 
-        patienthistorygridview.DataSource = pager.BuildTable();
+        
+        DataGridObjects.DataCellDisplay cellOfDataToDisplay = new DataCellDisplay();
+        DataGridObjects.DataRowDisplay rowOfDataToDisplay = new DataGridObjects.DataRowDisplay();
+        DataGridObjects.GridRowObject dataFormat = new DataGridObjects.GridRowObject();
+
+        cellOfDataToDisplay = new DataCellDisplay();
+        cellOfDataToDisplay.DatabaseColumnName = "RLU";
+        cellOfDataToDisplay.ColumnOrder = 1;
+
+        rowOfDataToDisplay.Add(cellOfDataToDisplay);
+        
+        cellOfDataToDisplay = new DataCellDisplay();
+        cellOfDataToDisplay.DatabaseColumnName = "SP";
+        cellOfDataToDisplay.ColumnOrder = 2;
+
+        rowOfDataToDisplay.Add(cellOfDataToDisplay);
+
+        cellOfDataToDisplay = new DataCellDisplay();
+        cellOfDataToDisplay.DatabaseColumnName = "KD1";
+        cellOfDataToDisplay.ColumnOrder = 3;
+        
+        rowOfDataToDisplay.Add(cellOfDataToDisplay);
+
+        cellOfDataToDisplay = new DataCellDisplay();
+        cellOfDataToDisplay.DatabaseColumnName = "LHT";
+        cellOfDataToDisplay.ColumnOrder = 4;
+
+        rowOfDataToDisplay.Add(cellOfDataToDisplay);
+
+        cellOfDataToDisplay = new DataCellDisplay();
+        cellOfDataToDisplay.DatabaseColumnName = "LV";
+        cellOfDataToDisplay.ColumnOrder = 5;
+
+        rowOfDataToDisplay.Add(cellOfDataToDisplay);
+
+        cellOfDataToDisplay = new DataCellDisplay();
+        cellOfDataToDisplay.DatabaseColumnName = "KD2";
+        cellOfDataToDisplay.ColumnOrder = 6;
+
+        rowOfDataToDisplay.Add(cellOfDataToDisplay);        
+        dataFormat.Add(rowOfDataToDisplay);
+
+        rowOfDataToDisplay = new DataGridObjects.DataRowDisplay();
+        cellOfDataToDisplay = new DataCellDisplay();
+        cellOfDataToDisplay.DatabaseColumnName = "ImageBeforeTherapy";
+        cellOfDataToDisplay.ColumnOrder = 1;
+        rowOfDataToDisplay.Add(cellOfDataToDisplay);
+
+        cellOfDataToDisplay = new DataCellDisplay();
+        cellOfDataToDisplay.DatabaseColumnName = "ImageAfterTherapy";
+        cellOfDataToDisplay.ColumnOrder = 2;
+
+        rowOfDataToDisplay.Add(cellOfDataToDisplay);               
+        dataFormat.Add(rowOfDataToDisplay);
+
+        patienthistorygridview.DataSource = pager.BuildTable(dataFormat);
         patienthistorygridview.RowDataBound += Patienthistorygridview_RowDataBound;
         patienthistorygridview.SelectedIndexChanged += Patienthistorygridview_SelectedIndexChanged;
         patienthistorygridview.DataBind();        

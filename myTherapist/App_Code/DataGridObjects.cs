@@ -23,8 +23,8 @@ namespace DataGridObjects
 
     public class DataCellDisplay
     {
-        string fieldName { get; set; }    
-        int column { get; set; }
+        public string DatabaseColumnName { get; set; }    
+        public int ColumnOrder { get; set; }
     }
     
     // represents what one row in the grid looks like.

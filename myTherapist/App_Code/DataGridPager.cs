@@ -93,7 +93,7 @@ public class MyDataGridPager
             return 10;
     }
 
-    public DataTable BuildTable()
+    public DataTable BuildTable(DataGridObjects.GridRowObject gridInfo = null)
     {
         StringBuilder sqlCommandString = null;
         StringBuilder sqlSelectClause = null;
