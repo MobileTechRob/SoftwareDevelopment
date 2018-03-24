@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -38,10 +39,11 @@ namespace DataGridObjects
         }
     }
 
-    public class GridRowObject
+    public class GridRowObject : IEnumerable<DataRowDisplay>
     {
         private List<DataRowDisplay> rows = new List<DataRowDisplay>();
 
+        
         public int NumberDataRows {get { return rows.Count; } }
         public DataRowDisplay Row(int rowNumber)
         {
@@ -54,7 +56,17 @@ namespace DataGridObjects
         public void Add(DataRowDisplay row)
         {
             rows.Add(row);
-        }               
+        }
+
+        public IEnumerator<DataRowDisplay> GetEnumerator()
+        {
+            return rows.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+           return rows.GetEnumerator();
+        }
     }
 
     /// <summary>

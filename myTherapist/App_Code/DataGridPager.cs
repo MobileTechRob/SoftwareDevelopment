@@ -191,20 +191,41 @@ public class MyDataGridPager
             DataRow row=null;
             object[] itemArray = null;
             int itemCount = 0;
-            
+            int numberOfColumnsInDataRow = 0;
+            int numberDataRows = 0;
+
             if (databaseReader.HasRows)
             {                           
                 while (databaseReader.Read())
                 {
-                    row = dataGridTable.NewRow();
-                    itemCount = 0;
-                 
-                    itemArray = new object[columnDictionary.Count];
+                    // if there is a gridInfo object then 
 
-                    foreach (DataGridObject.MyDataGridColumn column in columnDictionary.Values)
+                    if (gridInfo != null)
                     {
-                        switch (column.DataType)
+                        IEnumerator<DataRowDisplay> iter = gridInfo.GetEnumerator();
+
+                        while (iter.MoveNext())
                         {
+                            DataRowDisplay rowToDisplay = iter.Current;
+
+                        }                        
+                    }
+                    else
+                    {
+                        // for each row in the grid info object                        
+                        // iterate through the columns and find that column in the the row from the database
+                        // place that value of the column in the row for the data grid object 
+
+                        // else a row from the database is a row in the datagridview
+                        row = dataGridTable.NewRow();
+                        itemCount = 0;
+
+                        itemArray = new object[columnDictionary.Count];
+
+                        foreach (DataGridObject.MyDataGridColumn column in columnDictionary.Values)
+                        {
+                            switch (column.DataType)
+                            {
                             case MyDataTypes.INTEGER:
                                 itemArray[itemCount] = Utilities.ParseInt32(databaseReader, itemCount);
                                 break;
@@ -220,19 +241,18 @@ public class MyDataGridPager
                             case MyDataTypes.GUID:
                                 itemArray[itemCount] = Utilities.ParseGuid(databaseReader, itemCount);
                                 break;
+                            }
+
+                            itemCount++;
                         }
 
-                        itemCount++;
+                        row.ItemArray = itemArray;
+                        dataGridTable.Rows.Add(row);
                     }
-
-                    row.ItemArray = itemArray;
-                    dataGridTable.Rows.Add(row);
-                    
                 }
 
                 databaseReader.Close();
                 databaseConnection.Close();
-
             }
 
             if (fillToCompletePage)
