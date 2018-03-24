@@ -29,13 +29,23 @@ namespace DataGridObjects
     }
     
     // represents what one row in the grid looks like.
-    public class DataRowDisplay
+    public class DataRowDisplay : IEnumerable<DataCellDisplay>
     {
         List<DataCellDisplay> cells = new List<DataCellDisplay>();
 
         public void Add(DataCellDisplay cell)
         {
             cells.Add(cell);
+        }
+
+        public IEnumerator<DataCellDisplay> GetEnumerator()
+        {
+            return cells.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return cells.GetEnumerator();
         }
     }
 
