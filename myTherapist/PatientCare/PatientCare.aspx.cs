@@ -23,9 +23,11 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
             PatientApptControl1.Visible = false;
             PatientHistoryControl1.Visible = false;
 
+            btnCreatePatient.Visible = true;
+            btnUpdatePatient.Visible = true;
             btnSaveAppt.Visible = false;
             btnPatientListing.Visible = false;
-            btnUpdatePatient.Visible = false;
+            
             btnCancelAppt.Visible = false;
             btnSaveChanges.Visible = false;
             btnEditAppt.Visible = false;

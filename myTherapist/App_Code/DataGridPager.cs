@@ -24,9 +24,10 @@ public class MyDataGridPager
     public MyDataSort Sort { get; set; }
     private DataTable dataGridTable;
     private string databaseTableName;
-    private SortedDictionary<int, DataGridObject.MyDataGridColumn> columnDictionary;
+    //private SortedDictionary<int, DataGridObject.MyDataGridColumn> columnDictionary;
     private SortedDictionary<string, int> gridIndexByColumnName;
     private bool fillToCompletePage = false;
+    private DataGridObject dataGridObject;
 
     private System.Data.SqlClient.SqlConnection databaseConnection;
     private System.Data.SqlClient.SqlCommand databaseCommand;
@@ -41,7 +42,9 @@ public class MyDataGridPager
         //
 
         dataGridTable = new DataTable();
-        columnDictionary = new SortedDictionary<int, DataGridObject.MyDataGridColumn>();
+        dataGridObject = new DataGridObject();
+
+        //columnDictionary = new SortedDictionary<int, DataGridObject.MyDataGridColumn>();
         gridIndexByColumnName = new SortedDictionary<string, int>();
         databaseConnection = new System.Data.SqlClient.SqlConnection(connnectionString);
         databaseTableName = tableName;
@@ -62,7 +65,8 @@ public class MyDataGridPager
         column.HeaderWidth = gridWidth;
         column.IncludeInDataGrid = includeInGrid;
 
-        columnDictionary.Add(columnDictionary.Count + 1, column);
+        dataGridObject.AddColumn(column);
+        
         gridIndexByColumnName.Add(databaseColumnName, gridIndexByColumnName.Count);
     }
 
@@ -87,8 +91,8 @@ public class MyDataGridPager
 
     public int ColumnWidth(int column)
     {
-        if (columnDictionary.ContainsKey(column))
-            return columnDictionary[column].HeaderWidth;
+        if (dataGridObject.ContainColumn(column))
+            return dataGridObject.GetDataGridColumn(column).HeaderWidth;
         else
             return 10;
     }
@@ -121,9 +125,16 @@ public class MyDataGridPager
 
             sqlSelectClause.Append("SELECT ");
 
-            foreach (DataGridObject.MyDataGridColumn column in columnDictionary.Values)
+            IEnumerator<DataGridObject.MyDataGridColumn> iter = dataGridObject.GetEnumerator();
+
+            //foreach (DataGridObject.MyDataGridColumn column in columnDictionary.Values)
+
+            while (iter.MoveNext())
             {
                 DataColumn dataColumn = new DataColumn();
+                DataGridObjects.DataGridObject.MyDataGridColumn column;
+                column = iter.Current;
+
                 dataColumn.ColumnName = column.DataGridColumnName;
 
                 if (column.DataType == MyDataTypes.INTEGER)
@@ -202,16 +213,20 @@ public class MyDataGridPager
 
                     if (gridInfo != null)
                     {
-                        IEnumerator<DataRowDisplay> iter = gridInfo.GetEnumerator();
+                        IEnumerator<DataRowDisplay> rowIter = gridInfo.GetEnumerator();
 
-                        while (iter.MoveNext())
+                        while (rowIter.MoveNext())
                         {
-                            DataRowDisplay rowToDisplay = iter.Current;
+                            DataRowDisplay rowToDisplay = rowIter.Current;
 
+                            IEnumerator<DataCellDisplay> columnIter = rowToDisplay.GetEnumerator();
 
+                            while (columnIter.MoveNext())
+                            {
+                                DataCellDisplay cellToDisplay = columnIter.Current;                                
+                            }
 
-
-                        }                        
+                        }
                     }
                     else
                     {
@@ -223,27 +238,36 @@ public class MyDataGridPager
                         row = dataGridTable.NewRow();
                         itemCount = 0;
 
-                        itemArray = new object[columnDictionary.Count];
+                        itemArray = new object[dataGridObject.NumberColumns];
 
-                        foreach (DataGridObject.MyDataGridColumn column in columnDictionary.Values)
+                        iter = dataGridObject.GetEnumerator();
+
+                        //foreach (DataGridObject.MyDataGridColumn column in columnDictionary.Values)
+                        //   foreach (DataGridObject.MyDataGridColumn column in columnDictionary.Values)
+
+                        DataGridObject.MyDataGridColumn column = null;
+
+                        while (iter.MoveNext())
                         {
+                            column = iter.Current;
+
                             switch (column.DataType)
                             {
-                            case MyDataTypes.INTEGER:
-                                itemArray[itemCount] = Utilities.ParseInt32(databaseReader, itemCount);
-                                break;
+                                case MyDataTypes.INTEGER:
+                                    itemArray[itemCount] = Utilities.ParseInt32(databaseReader, itemCount);
+                                    break;
 
-                            case MyDataTypes.STRING:
-                                itemArray[itemCount] = Utilities.ParseStr(databaseReader, itemCount);
-                                break;
+                                case MyDataTypes.STRING:
+                                    itemArray[itemCount] = Utilities.ParseStr(databaseReader, itemCount);
+                                    break;
 
-                            case MyDataTypes.DATETIME:
-                                itemArray[itemCount] = Utilities.ParseDateTime(databaseReader, itemCount);
-                                break;
+                                case MyDataTypes.DATETIME:
+                                    itemArray[itemCount] = Utilities.ParseDateTime(databaseReader, itemCount);
+                                    break;
 
-                            case MyDataTypes.GUID:
-                                itemArray[itemCount] = Utilities.ParseGuid(databaseReader, itemCount);
-                                break;
+                                case MyDataTypes.GUID:
+                                    itemArray[itemCount] = Utilities.ParseGuid(databaseReader, itemCount);
+                                    break;
                             }
 
                             itemCount++;
@@ -264,7 +288,7 @@ public class MyDataGridPager
                 {
                     while (NumberRowsToDisplay != dataGridTable.Rows.Count)
                     {
-                        itemArray = new object[columnDictionary.Count];
+                        itemArray = new object[dataGridObject.NumberColumns];
                         row = dataGridTable.NewRow();
                         row.ItemArray = itemArray;
                         dataGridTable.Rows.Add(row);

@@ -24,11 +24,11 @@ namespace DataGridObjects
 
     public class DataCellDisplay
     {
-        public string DatabaseColumnName { get; set; }    
+        public string DatabaseColumnName { get; set; }
         public int ColumnOrder { get; set; }
     }
-    
-    // represents what one row in the grid looks like.
+
+    // represents what one row of value from the database.
     public class DataRowDisplay : IEnumerable<DataCellDisplay>
     {
         List<DataCellDisplay> cells = new List<DataCellDisplay>();
@@ -49,12 +49,13 @@ namespace DataGridObjects
         }
     }
 
+    // represents what one row in the grid looks like.
     public class GridRowObject : IEnumerable<DataRowDisplay>
     {
         private List<DataRowDisplay> rows = new List<DataRowDisplay>();
 
-        
-        public int NumberDataRows {get { return rows.Count; } }
+
+        public int NumberDataRows { get { return rows.Count; } }
         public DataRowDisplay Row(int rowNumber)
         {
             if ((rowNumber >= 1) && (rowNumber <= rows.Count))
@@ -75,22 +76,15 @@ namespace DataGridObjects
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-           return rows.GetEnumerator();
+            return rows.GetEnumerator();
         }
     }
 
     /// <summary>
     /// Summary description for DataGridObjects
     /// </summary>
-    public class DataGridObject
+    public class DataGridObject : IEnumerable<DataGridObject.MyDataGridColumn>
     {
-        public DataGridObject()
-        {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
-
         public class MyDataGridColumn
         {
             public string DataBaseTableColumnName { get; set; }
@@ -105,6 +99,54 @@ namespace DataGridObjects
 
             }
         }
+
+        private SortedDictionary<int, DataGridObject.MyDataGridColumn> columnDictionary;
+        private List<DataGridObject.MyDataGridColumn> columnList;
+
+        public int NumberColumns { get { return columnDictionary.Count; } }
+
+        public DataGridObject()
+        {
+            //
+            // TODO: Add constructor logic here
+            //
+            columnDictionary = new SortedDictionary<int, DataGridObject.MyDataGridColumn>();
+            columnList = new List<MyDataGridColumn>();
+        }
+
+        public void AddColumn(MyDataGridColumn dataColumn)
+        {
+            columnDictionary.Add(columnDictionary.Count + 1, dataColumn);
+            columnList.Add(dataColumn);
+        }
+
+        public MyDataGridColumn GetDataGridColumn(int column)
+        {
+            MyDataGridColumn col = null;
+
+            columnDictionary.TryGetValue(column, out col);
+
+            return col;
+        }
+
+        public bool ContainColumn(int column)
+        {
+            return columnDictionary.ContainsKey(column);
+        }
+
+        public IEnumerator<MyDataGridColumn> GetEnumerator()
+        {
+            //throw new NotImplementedException();
+            return columnList.GetEnumerator();
+
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return columnList.GetEnumerator();
+        }
     }
 }
+
+
 
