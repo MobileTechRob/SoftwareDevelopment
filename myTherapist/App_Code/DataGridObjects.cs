@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 
 
@@ -26,12 +27,14 @@ namespace DataGridObjects
     {
         public string DatabaseColumnName { get; set; }
         public int ColumnOrder { get; set; }
+        public MyDataTypes MyDataType { get; set; }
     }
 
     // represents what one row of value from the database.
     public class DataRowDisplay : IEnumerable<DataCellDisplay>
     {
-        List<DataCellDisplay> cells = new List<DataCellDisplay>();
+        private List<DataCellDisplay> cells = new List<DataCellDisplay>();
+        public int NumberItems { get { return cells.Count; } }
 
         public void Add(DataCellDisplay cell)
         {
@@ -46,7 +49,7 @@ namespace DataGridObjects
         IEnumerator IEnumerable.GetEnumerator()
         {
             return cells.GetEnumerator();
-        }
+        }        
     }
 
     // represents what one row in the grid looks like.
@@ -91,6 +94,7 @@ namespace DataGridObjects
             public bool IncludeInDataGrid { get; set; }
             public string DataGridColumnName { get; set; }
             public bool OrderByColumn { get; set; }
+            public int Column { get; set; }
             public MyDataTypes DataType { get; set; }
             public int HeaderWidth { get; set; }
 
@@ -103,6 +107,7 @@ namespace DataGridObjects
         private SortedDictionary<int, DataGridObject.MyDataGridColumn> columnDictionary;
         private List<DataGridObject.MyDataGridColumn> columnList;
 
+   
         public int NumberColumns { get { return columnDictionary.Count; } }
 
         public DataGridObject()
@@ -111,7 +116,12 @@ namespace DataGridObjects
             // TODO: Add constructor logic here
             //
             columnDictionary = new SortedDictionary<int, DataGridObject.MyDataGridColumn>();
-            columnList = new List<MyDataGridColumn>();
+            columnList = new List<MyDataGridColumn>();         
+        }
+
+        public SortedDictionary<int, DataGridObject.MyDataGridColumn>.ValueCollection GetColumnObjectCollection()
+        {
+            return columnDictionary.Values;
         }
 
         public void AddColumn(MyDataGridColumn dataColumn)
@@ -135,10 +145,8 @@ namespace DataGridObjects
         }
 
         public IEnumerator<MyDataGridColumn> GetEnumerator()
-        {
-            //throw new NotImplementedException();
+        {            
             return columnList.GetEnumerator();
-
         }
 
         IEnumerator IEnumerable.GetEnumerator()

@@ -64,7 +64,8 @@ public class MyDataGridPager
         column.DataType = dataType;
         column.HeaderWidth = gridWidth;
         column.IncludeInDataGrid = includeInGrid;
-
+        column.Column = dataGridObject.NumberColumns;
+         
         dataGridObject.AddColumn(column);
         
         gridIndexByColumnName.Add(databaseColumnName, gridIndexByColumnName.Count);
@@ -191,8 +192,6 @@ public class MyDataGridPager
                 sqlCommandString.Append(" ROWS ONLY ");
             }
 
-
-            //= "SELECT * FROM TableName ORDER BY id OFFSET 10 ROWS FETCH NEXT 10 ROWS ONLY";=
             databaseCommand.CommandText = sqlCommandString.ToString();
             databaseCommand.Connection = databaseConnection;
             databaseReader = databaseCommand.ExecuteReader();
@@ -202,30 +201,39 @@ public class MyDataGridPager
             DataRow row=null;
             object[] itemArray = null;
             int itemCount = 0;
-            int numberOfColumnsInDataRow = 0;
-            int numberDataRows = 0;
+            DatabaseRowParser rowParser = null;
+            rowParser = new DatabaseRowParser(dataGridObject);
+            DataRowDisplay rowToDisplay = null;
+
 
             if (databaseReader.HasRows)
             {                           
                 while (databaseReader.Read())
                 {
                     // if there is a gridInfo object then 
-
                     if (gridInfo != null)
                     {
                         IEnumerator<DataRowDisplay> rowIter = gridInfo.GetEnumerator();
+                        rowParser.sqlReader = databaseReader;
 
                         while (rowIter.MoveNext())
                         {
-                            DataRowDisplay rowToDisplay = rowIter.Current;
+                            itemCount = 0;
+                            rowToDisplay = rowIter.Current;
 
+                            row = dataGridTable.NewRow();                            
+                            itemArray = new object[rowToDisplay.NumberItems];
+                         
                             IEnumerator<DataCellDisplay> columnIter = rowToDisplay.GetEnumerator();
 
                             while (columnIter.MoveNext())
                             {
-                                DataCellDisplay cellToDisplay = columnIter.Current;                                
+                                DataCellDisplay cellToDisplay = columnIter.Current;
+                            
+                                itemArray[itemArray.Length] = rowParser.GetValue(cellToDisplay.DatabaseColumnName);
                             }
 
+                            row.ItemArray = itemArray;
                         }
                     }
                     else
@@ -239,36 +247,38 @@ public class MyDataGridPager
                         itemCount = 0;
 
                         itemArray = new object[dataGridObject.NumberColumns];
-
                         iter = dataGridObject.GetEnumerator();
 
-                        //foreach (DataGridObject.MyDataGridColumn column in columnDictionary.Values)
-                        //   foreach (DataGridObject.MyDataGridColumn column in columnDictionary.Values)
-
                         DataGridObject.MyDataGridColumn column = null;
+
+                        rowParser = new DatabaseRowParser(dataGridObject);
+                        rowParser.sqlReader = databaseReader;
+
 
                         while (iter.MoveNext())
                         {
                             column = iter.Current;
 
-                            switch (column.DataType)
-                            {
-                                case MyDataTypes.INTEGER:
-                                    itemArray[itemCount] = Utilities.ParseInt32(databaseReader, itemCount);
-                                    break;
+                            itemArray[itemCount] = rowParser.GetValue(column.DataBaseTableColumnName);
 
-                                case MyDataTypes.STRING:
-                                    itemArray[itemCount] = Utilities.ParseStr(databaseReader, itemCount);
-                                    break;
+                            //switch (column.DataType)
+                            //{
+                            //    case MyDataTypes.INTEGER:
+                            //        itemArray[itemCount] = Utilities.ParseInt32(databaseReader, itemCount);
+                            //        break;
 
-                                case MyDataTypes.DATETIME:
-                                    itemArray[itemCount] = Utilities.ParseDateTime(databaseReader, itemCount);
-                                    break;
+                            //    case MyDataTypes.STRING:
+                            //        itemArray[itemCount] = Utilities.ParseStr(databaseReader, itemCount);
+                            //        break;
 
-                                case MyDataTypes.GUID:
-                                    itemArray[itemCount] = Utilities.ParseGuid(databaseReader, itemCount);
-                                    break;
-                            }
+                            //    case MyDataTypes.DATETIME:
+                            //        itemArray[itemCount] = Utilities.ParseDateTime(databaseReader, itemCount);
+                            //        break;
+
+                            //    case MyDataTypes.GUID:
+                            //        itemArray[itemCount] = Utilities.ParseGuid(databaseReader, itemCount);
+                            //        break;
+                            //}
 
                             itemCount++;
                         }
