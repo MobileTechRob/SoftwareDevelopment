@@ -27,7 +27,7 @@ public class MyDataGridPager
     //private SortedDictionary<int, DataGridObject.MyDataGridColumn> columnDictionary;
     private SortedDictionary<string, int> gridIndexByColumnName;
     private bool fillToCompletePage = false;
-    private DataGridObject dataGridObject;
+    private DatabaseRowObject databaseRowObject;
 
     private System.Data.SqlClient.SqlConnection databaseConnection;
     private System.Data.SqlClient.SqlCommand databaseCommand;
@@ -35,14 +35,14 @@ public class MyDataGridPager
     StringBuilder whereClause = null;
 
 
-    public MyDataGridPager(string connnectionString, string tableName, bool fillToCompletePage, int rowsToDisplay = 15)
+    public MyDataGridPager(bool fillToCompletePage, int rowsToDisplay = 15)
     {
         //
         // TODO: Add constructor logic here
         //
 
         dataGridTable = new DataTable();
-        dataGridObject = new DataGridObject();
+        //dataGridObject = new DataGridObject();
 
         //columnDictionary = new SortedDictionary<int, DataGridObject.MyDataGridColumn>();
         gridIndexByColumnName = new SortedDictionary<string, int>();
@@ -55,21 +55,21 @@ public class MyDataGridPager
         this.fillToCompletePage = fillToCompletePage;
     }
 
-    public void AddColumn(string databaseColumnName, string dataGridColumnName, MyDataTypes dataType, bool orderByColumn, int gridWidth, bool includeInGrid = true)
-    {
-        DataGridObject.MyDataGridColumn column = new DataGridObject.MyDataGridColumn();
-        column.DataBaseTableColumnName = databaseColumnName;
-        column.DataGridColumnName = dataGridColumnName;
-        column.OrderByColumn = orderByColumn;
-        column.DataType = dataType;
-        column.HeaderWidth = gridWidth;
-        column.IncludeInDataGrid = includeInGrid;
-        column.Column = dataGridObject.NumberColumns;
+    //public void AddColumn(string databaseColumnName, string dataGridColumnName, MyDataTypes dataType, bool orderByColumn, int gridWidth, bool includeInGrid = true)
+    //{
+    //    //DataGridObject.MyDataGridColumn column = new DataGridObject.MyDataGridColumn();
+    //    column.DataBaseTableColumnName = databaseColumnName;
+    //    column.DataGridColumnName = dataGridColumnName;
+    //    column.OrderByColumn = orderByColumn;
+    //    column.DataType = dataType;
+    //    column.HeaderWidth = gridWidth;
+    //    column.IncludeInDataGrid = includeInGrid;
+    //    column.Column = dataGridObject.NumberColumns;
          
-        dataGridObject.AddColumn(column);
+    //    dataGridObject.AddColumn(column);
         
-        gridIndexByColumnName.Add(databaseColumnName, gridIndexByColumnName.Count);
-    }
+    //    gridIndexByColumnName.Add(databaseColumnName, gridIndexByColumnName.Count);
+    //}
 
     public void AddWhereClauseArgument(string fieldName, string fieldValue)
     {        
@@ -92,8 +92,8 @@ public class MyDataGridPager
 
     public int ColumnWidth(int column)
     {
-        if (dataGridObject.ContainColumn(column))
-            return dataGridObject.GetDataGridColumn(column).HeaderWidth;
+        if (databaseRowObject.ContainColumn(column))
+            return databaseRowObject.GetDataGridColumn(column).HeaderWidth;
         else
             return 10;
     }
@@ -126,14 +126,14 @@ public class MyDataGridPager
 
             sqlSelectClause.Append("SELECT ");
 
-            IEnumerator<DataGridObject.MyDataGridColumn> iter = dataGridObject.GetEnumerator();
+            IEnumerator<DatabaseRowObject.DatabaseColumnObject> iter = databaseRowObject.GetEnumerator();
 
             //foreach (DataGridObject.MyDataGridColumn column in columnDictionary.Values)
 
             while (iter.MoveNext())
             {
                 DataColumn dataColumn = new DataColumn();
-                DataGridObjects.DataGridObject.MyDataGridColumn column;
+                DataGridObjects.DatabaseRowObject.DatabaseColumnObject column;
                 column = iter.Current;
 
                 dataColumn.ColumnName = column.DataGridColumnName;
@@ -202,7 +202,7 @@ public class MyDataGridPager
             object[] itemArray = null;
             int itemCount = 0;
             DatabaseRowParser rowParser = null;
-            rowParser = new DatabaseRowParser(dataGridObject);
+            rowParser = new DatabaseRowParser(databaseRowObject);
             DataRowDisplay rowToDisplay = null;
 
 
@@ -230,10 +230,17 @@ public class MyDataGridPager
                             {
                                 DataCellDisplay cellToDisplay = columnIter.Current;
                             
-                                itemArray[itemArray.Length] = rowParser.GetValue(cellToDisplay.DatabaseColumnName);
+                                if (cellToDisplay.MyDataType == MyDataTypes.DATETIME)
+                                    itemArray[itemCount] = DateTime.Parse(rowParser.GetValue(cellToDisplay.DatabaseColumnName).ToString());
+                                else
+                                    itemArray[itemCount] = rowParser.GetValue(cellToDisplay.DatabaseColumnName);
+
+                                itemCount++;
+
                             }
 
                             row.ItemArray = itemArray;
+                            dataGridTable.Rows.Add(row);
                         }
                     }
                     else

@@ -23,11 +23,53 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
     public void LoadGrid()
     {
         pager = new MyDataGridPager(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString,  "PatientInformation", true);
-        pager.AddColumn("Id", "Id", MyDataTypes.INTEGER, true, 35);
-        pager.AddColumn("FirstName", "First Name", MyDataTypes.STRING, false, 250);
-        pager.AddColumn("LastName", "Last Name", MyDataTypes.STRING, false, 250);
-        pager.AddColumn("EmailAddress", "Email Address", MyDataTypes.STRING, false, 250);
-        pager.AddColumn("TelephoneNumber", "Telephone Number", MyDataTypes.STRING, false, 100);
+
+        DatabaseRowObject rowObject = new DatabaseRowObject();
+        DatabaseRowObject.DatabaseColumnObject column = new DatabaseRowObject.DatabaseColumnObject();
+
+        column.DataBaseTableColumnName = "Id";
+        column.DataGridColumnName = "Id";
+        column.DataType = MyDataTypes.INTEGER;
+        column.HeaderWidth = 15;
+        column.IncludeInDataGrid = true;
+        column.OrderByColumn = true;
+        rowObject.AddColumn(column);
+
+        column = new DatabaseRowObject.DatabaseColumnObject();
+        column.DataBaseTableColumnName = "FirstName";
+        column.DataGridColumnName = "First Name";
+        column.DataType = MyDataTypes.STRING;
+        column.HeaderWidth = 35;
+        column.IncludeInDataGrid = true;
+        column.OrderByColumn = false;
+        rowObject.AddColumn(column);
+
+        column = new DatabaseRowObject.DatabaseColumnObject();
+        column.DataBaseTableColumnName = "LastName";
+        column.DataGridColumnName = "Last Name";
+        column.DataType = MyDataTypes.STRING;
+        column.HeaderWidth = 250;
+        column.IncludeInDataGrid = true;
+        column.OrderByColumn = false;
+        rowObject.AddColumn(column);
+
+        column = new DatabaseRowObject.DatabaseColumnObject();
+        column.DataBaseTableColumnName = "EmailAddress";
+        column.DataGridColumnName = "Email Address";
+        column.DataType = MyDataTypes.STRING;
+        column.HeaderWidth = 250;
+        column.IncludeInDataGrid = true;
+        column.OrderByColumn = false;
+        rowObject.AddColumn(column);
+
+        column = new DatabaseRowObject.DatabaseColumnObject();
+        column.DataBaseTableColumnName = "TelephoneNumber";
+        column.DataGridColumnName = "Telephone Number";
+        column.DataType = MyDataTypes.STRING;
+        column.HeaderWidth = 100;
+        column.IncludeInDataGrid = true;
+        column.OrderByColumn = false;
+        rowObject.AddColumn(column);
 
         if (txtBoxPatientFirstName.Text.Length > 0)
            pager.AddWhereClauseArgument("FirstName", txtBoxPatientFirstName.Text);

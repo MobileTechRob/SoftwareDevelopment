@@ -39,17 +39,24 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
     {
         pager = new MyDataGridPager(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString, "PatientAppointmentInformation", false);
         pager.NumberRowsToDisplay = 10;
-        pager.AddColumn("ApptDate", "Appointment Date", MyDataTypes.DATETIME, true, 35);
-        pager.AddColumn("PatientId", "", MyDataTypes.INTEGER, false, 35);
-        pager.AddColumn("GUID", "", MyDataTypes.GUID, false, 0);
-        pager.AddColumn("RLU", "RLU", MyDataTypes.STRING, false, 0);
-        pager.AddColumn("SP", "SP", MyDataTypes.STRING, false, 0);
-        pager.AddColumn("KD1", "KD", MyDataTypes.STRING, false, 0);
-        pager.AddColumn("LHT", "LHT", MyDataTypes.STRING, false, 0);
-        pager.AddColumn("LV", "LV", MyDataTypes.STRING, false, 0);
-        pager.AddColumn("KD2", "KD ", MyDataTypes.STRING, false, 0);
-        pager.AddColumn("ImageBeforeTherapy", "", MyDataTypes.STRING, false, 0);
-        pager.AddColumn("ImageAfterTherapy", "", MyDataTypes.STRING, false, 0);
+
+        DatabaseRowObject dbRowObject = new DatabaseRowObject();
+
+        DatabaseRowObject.DatabaseColumnObject col = new DatabaseRowObject.DatabaseColumnObject();
+        
+
+
+        dbRowObject.AddColumn("ApptDate", "Appointment Date", MyDataTypes.DATETIME, true, 35);
+        dbRowObject.AddColumn("PatientId", "", MyDataTypes.INTEGER, false, 35);
+        dbRowObject.AddColumn("GUID", "", MyDataTypes.GUID, false, 0);
+        dbRowObject.AddColumn("RLU", "RLU", MyDataTypes.STRING, false, 0);
+        dbRowObject.AddColumn("SP", "SP", MyDataTypes.STRING, false, 0);
+        dbRowObject.AddColumn("KD1", "KD", MyDataTypes.STRING, false, 0);
+        dbRowObject.AddColumn("LHT", "LHT", MyDataTypes.STRING, false, 0);
+        dbRowObject.AddColumn("LV", "LV", MyDataTypes.STRING, false, 0);
+        dbRowObject.AddColumn("KD2", "KD ", MyDataTypes.STRING, false, 0);
+        dbRowObject.AddColumn("ImageBeforeTherapy", "", MyDataTypes.STRING, false, 0);
+        dbRowObject.AddColumn("ImageAfterTherapy", "", MyDataTypes.STRING, false, 0);
 
         if (IsPostBack == false)
         {
@@ -75,38 +82,44 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         DataGridObjects.GridRowObject dataFormat = new DataGridObjects.GridRowObject();
 
         cellOfDataToDisplay = new DataCellDisplay();
+        cellOfDataToDisplay.DatabaseColumnName = "ApptDate";
+        cellOfDataToDisplay.MyDataType = MyDataTypes.DATETIME;
+
+        rowOfDataToDisplay.Add(cellOfDataToDisplay);
+
+        cellOfDataToDisplay = new DataCellDisplay();
         cellOfDataToDisplay.DatabaseColumnName = "RLU";
-        cellOfDataToDisplay.ColumnOrder = 1;
+        cellOfDataToDisplay.MyDataType = MyDataTypes.STRING;
 
         rowOfDataToDisplay.Add(cellOfDataToDisplay);
         
         cellOfDataToDisplay = new DataCellDisplay();
         cellOfDataToDisplay.DatabaseColumnName = "SP";
-        cellOfDataToDisplay.ColumnOrder = 2;
+        cellOfDataToDisplay.MyDataType = MyDataTypes.STRING;
 
         rowOfDataToDisplay.Add(cellOfDataToDisplay);
 
         cellOfDataToDisplay = new DataCellDisplay();
         cellOfDataToDisplay.DatabaseColumnName = "KD1";
-        cellOfDataToDisplay.ColumnOrder = 3;
+        cellOfDataToDisplay.MyDataType = MyDataTypes.STRING; 
         
         rowOfDataToDisplay.Add(cellOfDataToDisplay);
 
         cellOfDataToDisplay = new DataCellDisplay();
         cellOfDataToDisplay.DatabaseColumnName = "LHT";
-        cellOfDataToDisplay.ColumnOrder = 4;
+        cellOfDataToDisplay.MyDataType = MyDataTypes.STRING;
 
         rowOfDataToDisplay.Add(cellOfDataToDisplay);
 
         cellOfDataToDisplay = new DataCellDisplay();
         cellOfDataToDisplay.DatabaseColumnName = "LV";
-        cellOfDataToDisplay.ColumnOrder = 5;
+        cellOfDataToDisplay.MyDataType = MyDataTypes.STRING;
 
         rowOfDataToDisplay.Add(cellOfDataToDisplay);
 
         cellOfDataToDisplay = new DataCellDisplay();
         cellOfDataToDisplay.DatabaseColumnName = "KD2";
-        cellOfDataToDisplay.ColumnOrder = 6;
+        cellOfDataToDisplay.MyDataType = MyDataTypes.STRING;
 
         rowOfDataToDisplay.Add(cellOfDataToDisplay);        
         dataFormat.Add(rowOfDataToDisplay);
@@ -114,14 +127,15 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         rowOfDataToDisplay = new DataGridObjects.DataRowDisplay();
         cellOfDataToDisplay = new DataCellDisplay();
         cellOfDataToDisplay.DatabaseColumnName = "ImageBeforeTherapy";
-        cellOfDataToDisplay.ColumnOrder = 1;
+        cellOfDataToDisplay.MyDataType = MyDataTypes.STRING;
         rowOfDataToDisplay.Add(cellOfDataToDisplay);
 
         cellOfDataToDisplay = new DataCellDisplay();
         cellOfDataToDisplay.DatabaseColumnName = "ImageAfterTherapy";
-        cellOfDataToDisplay.ColumnOrder = 2;
+        cellOfDataToDisplay.MyDataType = MyDataTypes.STRING;
 
-        rowOfDataToDisplay.Add(cellOfDataToDisplay);               
+        rowOfDataToDisplay.Add(cellOfDataToDisplay);
+
         dataFormat.Add(rowOfDataToDisplay);
 
         patienthistorygridview.DataSource = pager.BuildTable(dataFormat);

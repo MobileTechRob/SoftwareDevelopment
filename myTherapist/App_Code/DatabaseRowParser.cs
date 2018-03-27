@@ -11,9 +11,9 @@ using DataGridObjects;
 public class DatabaseRowParser
 {
     public System.Data.SqlClient.SqlDataReader sqlReader { get; set; }
-    private DataGridObjects.DataGridObject dataGridObj;
+    private DataGridObjects.DatabaseRowObject dataGridObj;
     
-    public DatabaseRowParser(DataGridObjects.DataGridObject dataGridObj)
+    public DatabaseRowParser(DataGridObjects.DatabaseRowObject dataGridObj)
     {
         //
         // TODO: Add constructor logic here
@@ -26,8 +26,8 @@ public class DatabaseRowParser
     {
         //var column = from adataColumn in dataGridObj.GetColumnObjectCollection().Where<   select adataColumn.DataBaseTableColumnName == fieldName;
 
-        IEnumerator<DataGridObject.MyDataGridColumn> iter = dataGridObj.GetEnumerator();
-        DataGridObject.MyDataGridColumn col = null;
+        IEnumerator<DatabaseRowObject.DatabaseColumnObject> iter = dataGridObj.GetEnumerator();
+        DatabaseRowObject.DatabaseColumnObject col = null;
 
         while (iter.MoveNext())
         {              
