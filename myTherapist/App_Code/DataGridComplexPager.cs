@@ -25,7 +25,7 @@ public class MyDataGridComplexPager
     public MyDataSort Sort { get; set; }
     private DataTable dataGridTable;
     private string databaseTableName;
-    private SortedDictionary<int, DataGridObject.MyDataGridColumn> columnDictionary;
+    private SortedDictionary<int, DatabaseRowObject.DatabaseColumnObject> columnDictionary;
     private SortedDictionary<string, int> gridIndexByColumnName;
 
     private System.Data.SqlClient.SqlConnection databaseConnection;
@@ -40,7 +40,7 @@ public class MyDataGridComplexPager
         //
 
         dataGridTable = new DataTable();
-        columnDictionary = new SortedDictionary<int, DataGridObject.MyDataGridColumn>();
+        columnDictionary = new SortedDictionary<int, DatabaseRowObject.DatabaseColumnObject>();
         gridIndexByColumnName = new SortedDictionary<string, int>();
         databaseConnection = new System.Data.SqlClient.SqlConnection(connnectionString);
         databaseTableName = tableName;
@@ -52,12 +52,11 @@ public class MyDataGridComplexPager
 
     public void AddColumn(string databaseColumnName, string dataGridColumnName, MyDataTypes dataType, bool orderByColumn, int gridWidth, bool includeInGrid = true)
     {
-        DataGridObject.MyDataGridColumn column = new DataGridObject.MyDataGridColumn();
+        DatabaseRowObject.DatabaseColumnObject column = new DatabaseRowObject.DatabaseColumnObject();
         column.DataBaseTableColumnName = databaseColumnName;
         column.DataGridColumnName = dataGridColumnName;
         column.OrderByColumn = orderByColumn;
-        column.DataType = dataType;
-        column.HeaderWidth = gridWidth;
+        column.DataType = dataType;        
         column.IncludeInDataGrid = includeInGrid;
 
         columnDictionary.Add(columnDictionary.Count + 1, column);
@@ -85,9 +84,9 @@ public class MyDataGridComplexPager
 
     public int ColumnWidth(int column)
     {
-        if (columnDictionary.ContainsKey(column))
-            return columnDictionary[column].HeaderWidth;
-        else
+        //if (columnDictionary.ContainsKey(column))
+        //    return columnDictionary[column].HeaderWidth;
+        //else
             return 10;
     }
 
@@ -119,7 +118,7 @@ public class MyDataGridComplexPager
 
             sqlSelectClause.Append("SELECT ");
 
-            foreach (DataGridObject.MyDataGridColumn column in columnDictionary.Values)
+            foreach (DatabaseRowObject.DatabaseColumnObject column in columnDictionary.Values)
             {
                 DataColumn dataColumn = new DataColumn();
                 dataColumn.ColumnName = column.DataGridColumnName;
@@ -199,7 +198,7 @@ public class MyDataGridComplexPager
                  
                     itemArray = new object[columnDictionary.Count];
 
-                    foreach (DataGridObject.MyDataGridColumn column in columnDictionary.Values)
+                    foreach (DatabaseRowObject.DatabaseColumnObject column in columnDictionary.Values)
                     {
                         switch (column.DataType)
                         {

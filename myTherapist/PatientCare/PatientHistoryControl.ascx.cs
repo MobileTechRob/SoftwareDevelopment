@@ -37,15 +37,14 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
     
     private void BuildGrid()
     {
-        pager = new MyDataGridPager(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString, "PatientAppointmentInformation", false);
+        pager = new MyDataGridPager();
         pager.NumberRowsToDisplay = 10;
 
+        DataGridObject dataGridObj = new DataGridObject(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString, "PatientAppointmentInformation");
         DatabaseRowObject dbRowObject = new DatabaseRowObject();
 
         DatabaseRowObject.DatabaseColumnObject col = new DatabaseRowObject.DatabaseColumnObject();
         
-
-
         dbRowObject.AddColumn("ApptDate", "Appointment Date", MyDataTypes.DATETIME, true, 35);
         dbRowObject.AddColumn("PatientId", "", MyDataTypes.INTEGER, false, 35);
         dbRowObject.AddColumn("GUID", "", MyDataTypes.GUID, false, 0);
@@ -138,7 +137,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
 
         dataFormat.Add(rowOfDataToDisplay);
 
-        patienthistorygridview.DataSource = pager.BuildTable(dataFormat);
+        patienthistorygridview.DataSource = dataGridObj.BuildTable(dataFormat);
         patienthistorygridview.RowDataBound += Patienthistorygridview_RowDataBound;
         patienthistorygridview.SelectedIndexChanged += Patienthistorygridview_SelectedIndexChanged;
         patienthistorygridview.DataBind();        

@@ -8,9 +8,13 @@ using DataGridObjects;
 using System.Web.Configuration;
 using System.Data.SqlClient;
 
+
 public partial class PatientCare_PatientListing : System.Web.UI.UserControl
 {
     MyDataGridPager pager = null;
+    DatabaseRowObject databaseRowObject = null;
+    DataGridObject dataGridObject = null;
+   
 
     protected void Page_Load(object sender, EventArgs e)
     {         
@@ -22,60 +26,66 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
 
     public void LoadGrid()
     {
-        pager = new MyDataGridPager(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString,  "PatientInformation", true);
+        DatabaseRowObject.DatabaseColumnObject databaseColumnObj = null;
 
-        DatabaseRowObject rowObject = new DatabaseRowObject();
-        DatabaseRowObject.DatabaseColumnObject column = new DatabaseRowObject.DatabaseColumnObject();
+        dataGridObject = new DataGridObject(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString, "PatientInformation");        
+        databaseRowObject = new DatabaseRowObject();
+        databaseColumnObj = new DatabaseRowObject.DatabaseColumnObject();
 
-        column.DataBaseTableColumnName = "Id";
-        column.DataGridColumnName = "Id";
-        column.DataType = MyDataTypes.INTEGER;
-        column.HeaderWidth = 15;
-        column.IncludeInDataGrid = true;
-        column.OrderByColumn = true;
-        rowObject.AddColumn(column);
+        databaseColumnObj.DataBaseTableColumnName = "Id";
+        databaseColumnObj.DataGridColumnName = "Id";
+        databaseColumnObj.DataType = MyDataTypes.INTEGER;        
+        databaseColumnObj.IncludeInDataGrid = true;
+        databaseColumnObj.OrderByColumn = true;
+        databaseRowObject.AddColumn(databaseColumnObj);
 
-        column = new DatabaseRowObject.DatabaseColumnObject();
-        column.DataBaseTableColumnName = "FirstName";
-        column.DataGridColumnName = "First Name";
-        column.DataType = MyDataTypes.STRING;
-        column.HeaderWidth = 35;
-        column.IncludeInDataGrid = true;
-        column.OrderByColumn = false;
-        rowObject.AddColumn(column);
+        databaseColumnObj = new DatabaseRowObject.DatabaseColumnObject();
+        databaseColumnObj.DataBaseTableColumnName = "FirstName";
+        databaseColumnObj.DataGridColumnName = "First Name";
+        databaseColumnObj.DataType = MyDataTypes.STRING;        
+        databaseColumnObj.IncludeInDataGrid = true;
+        databaseColumnObj.OrderByColumn = false;
+        databaseRowObject.AddColumn(databaseColumnObj);
 
-        column = new DatabaseRowObject.DatabaseColumnObject();
-        column.DataBaseTableColumnName = "LastName";
-        column.DataGridColumnName = "Last Name";
-        column.DataType = MyDataTypes.STRING;
-        column.HeaderWidth = 250;
-        column.IncludeInDataGrid = true;
-        column.OrderByColumn = false;
-        rowObject.AddColumn(column);
+        databaseColumnObj = new DatabaseRowObject.DatabaseColumnObject();
+        databaseColumnObj.DataBaseTableColumnName = "LastName";
+        databaseColumnObj.DataGridColumnName = "Last Name";
+        databaseColumnObj.DataType = MyDataTypes.STRING;        
+        databaseColumnObj.IncludeInDataGrid = true;
+        databaseColumnObj.OrderByColumn = false;
+        databaseRowObject.AddColumn(databaseColumnObj);
 
-        column = new DatabaseRowObject.DatabaseColumnObject();
-        column.DataBaseTableColumnName = "EmailAddress";
-        column.DataGridColumnName = "Email Address";
-        column.DataType = MyDataTypes.STRING;
-        column.HeaderWidth = 250;
-        column.IncludeInDataGrid = true;
-        column.OrderByColumn = false;
-        rowObject.AddColumn(column);
+        databaseColumnObj = new DatabaseRowObject.DatabaseColumnObject();
+        databaseColumnObj.DataBaseTableColumnName = "EmailAddress";
+        databaseColumnObj.DataGridColumnName = "Email Address";
+        databaseColumnObj.DataType = MyDataTypes.STRING;        
+        databaseColumnObj.IncludeInDataGrid = true;
+        databaseColumnObj.OrderByColumn = false;
+        databaseRowObject.AddColumn(databaseColumnObj);
 
-        column = new DatabaseRowObject.DatabaseColumnObject();
-        column.DataBaseTableColumnName = "TelephoneNumber";
-        column.DataGridColumnName = "Telephone Number";
-        column.DataType = MyDataTypes.STRING;
-        column.HeaderWidth = 100;
-        column.IncludeInDataGrid = true;
-        column.OrderByColumn = false;
-        rowObject.AddColumn(column);
+        databaseColumnObj = new DatabaseRowObject.DatabaseColumnObject();
+        databaseColumnObj.DataBaseTableColumnName = "TelephoneNumber";
+        databaseColumnObj.DataGridColumnName = "Telephone Number";
+        databaseColumnObj.DataType = MyDataTypes.STRING;        
+        databaseColumnObj.IncludeInDataGrid = true;
+        databaseColumnObj.OrderByColumn = false;
+        databaseRowObject.AddColumn(databaseColumnObj);
 
+        dataGridObject.DatabaseRowObject = databaseRowObject;
+
+        pager = new MyDataGridPager();
+
+        pager.AddColumn("Id", 15);
+        pager.AddColumn("First Name", 25);
+        pager.AddColumn("Last Name", 250);
+        pager.AddColumn("Email Address", 250);
+        pager.AddColumn("Telephone Number", 100);
+        
         if (txtBoxPatientFirstName.Text.Length > 0)
-           pager.AddWhereClauseArgument("FirstName", txtBoxPatientFirstName.Text);
+            dataGridObject.AddWhereClauseArgument("FirstName", txtBoxPatientFirstName.Text);
 
         if (txtBoxPatientLastName.Text.Length > 0)
-            pager.AddWhereClauseArgument("LastName", txtBoxPatientLastName.Text);
+            dataGridObject.AddWhereClauseArgument("LastName", txtBoxPatientLastName.Text);
 
         if (IsPostBack == false)
         {
@@ -85,7 +95,7 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         else
             pager.PageNumber = Int32.Parse(Session["PatientList_PageNumber"].ToString());
 
-        patientlistgridview.DataSource = pager.BuildTable();
+        patientlistgridview.DataSource = dataGridObject.BuildTable();
         patientlistgridview.RowDataBound += Patientlistgridview_RowDataBound;        
         patientlistgridview.SelectedIndexChanged += Patientlistgridview_SelectedIndexChanged;
         patientlistgridview.DataBind();

@@ -11,22 +11,22 @@ using DataGridObjects;
 public class DatabaseRowParser
 {
     public System.Data.SqlClient.SqlDataReader sqlReader { get; set; }
-    private DataGridObjects.DatabaseRowObject dataGridObj;
+    private DataGridObjects.DatabaseRowObject databaseRowObj;
     
-    public DatabaseRowParser(DataGridObjects.DatabaseRowObject dataGridObj)
+    public DatabaseRowParser(DataGridObjects.DatabaseRowObject databaseRowObj)
     {
         //
         // TODO: Add constructor logic here
         //
         this.sqlReader = sqlReader;
-        this.dataGridObj = dataGridObj;
+        this.databaseRowObj = databaseRowObj;
     }
     
     public object GetValue(string fieldName)
     {
         //var column = from adataColumn in dataGridObj.GetColumnObjectCollection().Where<   select adataColumn.DataBaseTableColumnName == fieldName;
 
-        IEnumerator<DatabaseRowObject.DatabaseColumnObject> iter = dataGridObj.GetEnumerator();
+        IEnumerator<DatabaseRowObject.DatabaseColumnObject> iter = databaseRowObj.GetEnumerator();
         DatabaseRowObject.DatabaseColumnObject col = null;
 
         while (iter.MoveNext())
@@ -60,3 +60,4 @@ public class DatabaseRowParser
         return columnValue;
     }    
 }
+

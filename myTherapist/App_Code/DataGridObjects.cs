@@ -33,12 +33,15 @@ namespace DataGridObjects
         public MyDataTypes MyDataType { get; set; }
     }
 
+   
+
+
     // represents what one row of value from the database.
     public class DataRowDisplay : IEnumerable<DataCellDisplay>
     {
         private List<DataCellDisplay> cells = new List<DataCellDisplay>();
         public int NumberItems { get { return cells.Count; } }
-
+        
         public void Add(DataCellDisplay cell)
         {
             cells.Add(cell);
@@ -93,13 +96,32 @@ namespace DataGridObjects
         private System.Data.SqlClient.SqlDataReader databaseReader;
         private string databaseTableName;
 
-        StringBuilder whereClause = null;
+        private DataTable dataGridTable = null;
+        private StringBuilder whereClause = null;
+
+        public DatabaseRowObject DatabaseRowObject { get;set;}  
+        public int PageNumber { get; set; }        
+        public MyDataSort Sort { get; set; }
+        public int NumberRowsToDisplay { get; set; }
+        public bool FillToCompletePage { get; set; }        
         public string WhereClause { get; set; }
 
         public DataGridObject(string connnectionString, string tableName)
         {
+            databaseConnection = new SqlConnection(connnectionString);
             databaseTableName = tableName;
+            dataGridTable = new DataTable();
+            whereClause = new StringBuilder();
+        }
 
+        public void AddWhereClauseArgument(string fieldName, string fieldValue)
+        {
+            whereClause.Append(fieldName);
+            whereClause.Append(" LIKE '");
+            whereClause.Append("%");
+            whereClause.Append(fieldValue);
+            whereClause.Append("%");
+            whereClause.Append("' AND ");
         }
 
         public DataTable BuildTable(DataGridObjects.GridRowObject gridInfo = null)
@@ -131,7 +153,7 @@ namespace DataGridObjects
 
                 sqlSelectClause.Append("SELECT ");
 
-                IEnumerator<DatabaseRowObject.DatabaseColumnObject> iter = databaseRowObject.GetEnumerator();
+                IEnumerator<DatabaseRowObject.DatabaseColumnObject> iter = DatabaseRowObject.GetEnumerator();
 
                 //foreach (DataGridObject.MyDataGridColumn column in columnDictionary.Values)
 
@@ -207,10 +229,9 @@ namespace DataGridObjects
                 object[] itemArray = null;
                 int itemCount = 0;
                 DatabaseRowParser rowParser = null;
-                rowParser = new DatabaseRowParser(databaseRowObject);
+                rowParser = new DatabaseRowParser(DatabaseRowObject);
                 DataRowDisplay rowToDisplay = null;
-
-
+                
                 if (databaseReader.HasRows)
                 {
                     while (databaseReader.Read())
@@ -258,12 +279,12 @@ namespace DataGridObjects
                             row = dataGridTable.NewRow();
                             itemCount = 0;
 
-                            itemArray = new object[dataGridObject.NumberColumns];
-                            iter = dataGridObject.GetEnumerator();
+                            itemArray = new object[DatabaseRowObject.NumberColumns];
+                            iter = DatabaseRowObject.GetEnumerator();
 
-                            DataGridObject.MyDataGridColumn column = null;
+                            DatabaseRowObject.DatabaseColumnObject column = null;
 
-                            rowParser = new DatabaseRowParser(dataGridObject);
+                            rowParser = new DatabaseRowParser(DatabaseRowObject);
                             rowParser.sqlReader = databaseReader;
 
 
@@ -304,13 +325,13 @@ namespace DataGridObjects
                     databaseConnection.Close();
                 }
 
-                if (fillToCompletePage)
+                if (FillToCompletePage)
                 {
                     if (dataGridTable.Rows.Count < NumberRowsToDisplay)
                     {
                         while (NumberRowsToDisplay != dataGridTable.Rows.Count)
                         {
-                            itemArray = new object[dataGridObject.NumberColumns];
+                            itemArray = new object[DatabaseRowObject.NumberColumns];
                             row = dataGridTable.NewRow();
                             row.ItemArray = itemArray;
                             dataGridTable.Rows.Add(row);
@@ -339,8 +360,7 @@ namespace DataGridObjects
             public bool OrderByColumn { get; set; }
             public int Column { get; set; }
             public MyDataTypes DataType { get; set; }
-            public int HeaderWidth { get; set; }
-
+            
             public DatabaseColumnObject()
             {
 
@@ -372,8 +392,7 @@ namespace DataGridObjects
             DatabaseColumnObject colObj = new DatabaseColumnObject();
             colObj.DataBaseTableColumnName = databaseColumnName;
             colObj.DataGridColumnName = dataGridColumnName;
-            colObj.DataType = dataType;
-            colObj.HeaderWidth = gridWidth;
+            colObj.DataType = dataType;            
             colObj.IncludeInDataGrid = includeInGrid;
             colObj.OrderByColumn = orderByColumn;
 
