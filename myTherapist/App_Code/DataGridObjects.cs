@@ -95,7 +95,6 @@ namespace DataGridObjects
         private System.Data.SqlClient.SqlCommand databaseCommand;
         private System.Data.SqlClient.SqlDataReader databaseReader;
         private string databaseTableName;
-
         private DataTable dataGridTable = null;
         private StringBuilder whereClause = null;
 
@@ -403,6 +402,7 @@ namespace DataGridObjects
 
         public void AddColumn(DatabaseColumnObject dataColumn)
         {
+            dataColumn.Column = columnDictionary.Count;
             columnDictionary.Add(columnDictionary.Count + 1, dataColumn);
             columnList.Add(dataColumn);
         }

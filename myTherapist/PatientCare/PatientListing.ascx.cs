@@ -8,14 +8,12 @@ using DataGridObjects;
 using System.Web.Configuration;
 using System.Data.SqlClient;
 
-
 public partial class PatientCare_PatientListing : System.Web.UI.UserControl
 {
     MyDataGridPager pager = null;
     DatabaseRowObject databaseRowObject = null;
     DataGridObject dataGridObject = null;
    
-
     protected void Page_Load(object sender, EventArgs e)
     {         
         if (IsPostBack == false)
@@ -72,6 +70,9 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         databaseRowObject.AddColumn(databaseColumnObj);
 
         dataGridObject.DatabaseRowObject = databaseRowObject;
+        dataGridObject.FillToCompletePage = true;
+        dataGridObject.PageNumber = 1;
+        dataGridObject.NumberRowsToDisplay = 15;
 
         pager = new MyDataGridPager();
 
@@ -79,8 +80,8 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         pager.AddColumn("First Name", 25);
         pager.AddColumn("Last Name", 250);
         pager.AddColumn("Email Address", 250);
-        pager.AddColumn("Telephone Number", 100);
-        
+        pager.AddColumn("Telephone Number", 100);       
+       
         if (txtBoxPatientFirstName.Text.Length > 0)
             dataGridObject.AddWhereClauseArgument("FirstName", txtBoxPatientFirstName.Text);
 
@@ -103,7 +104,6 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         if (pager.NumberOfCompletePages == 0)
           btnNextPAge.Enabled = false;        
     }
-
 
     private void Patientlistgridview_SelectedIndexChanged(object sender, EventArgs e)
     {
