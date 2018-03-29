@@ -394,6 +394,7 @@ namespace DataGridObjects
             colObj.DataType = dataType;            
             colObj.IncludeInDataGrid = includeInGrid;
             colObj.OrderByColumn = orderByColumn;
+            colObj.Column = columnDictionary.Count;
 
             columnDictionary.Add(columnDictionary.Count + 1, colObj);
             columnList.Add(colObj);

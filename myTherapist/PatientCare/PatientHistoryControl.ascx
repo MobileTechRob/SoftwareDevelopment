@@ -5,6 +5,8 @@
 <br />
 <asp:Label runat="server" ID="lblNotice" Text=""/>
 <br />
+<asp:Table runat="server" ID="PatientApptData" />
+<br />
 <asp:GridView runat="server" ID="patienthistorygridview" RowStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"  RowStyle-Width="50" ></asp:GridView>
 <br />
 
