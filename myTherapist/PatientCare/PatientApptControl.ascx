@@ -13,17 +13,17 @@
             <div class="trpulseinfoheader">
                 <div class="tdpulseinfoheader">          
                     <asp:Label runat="server" Text="Pulse Information" ID="test"/>      
-                    <asp:Label runat="server" Text="  " Height="15"/>      
+                    <asp:Label runat="server" Text="  " Height="15" ID="lblPulseInformation"/>      
                 </div>
             </div>
             <div class="trpulseinfocolumn">
                 <div class="tdpulseinfocolumn">                
-                    <asp:Label runat="server" Text="  " Height="15"/>      
+                    <asp:Label runat="server" Text="  " Height="15" ID="lblPulseInformation2"/>      
                 </div>
             </div>
             <div class="trpulseinfocolumn">   
                 <div class="tdpulseinfocolumn">          
-                    <asp:Label runat="server" Text="RLU"/>
+                    <asp:Label runat="server" Text="RLU" ID="lblPulseInformation3" />
                         <asp:RadioButtonList runat="server" AutoPostBack="false" ID="RLU">
                             <asp:ListItem Text="No" Value="No"></asp:ListItem>
                             <asp:ListItem Text="Weak" Value="Weak"></asp:ListItem>
@@ -32,7 +32,7 @@
                         </asp:RadioButtonList>
                 </div>
                 <div class="tdpulseinfocolumn">
-                    <asp:Label runat="server" Text="SP"/>
+                    <asp:Label runat="server" Text="SP" ID="lblPulseInformation4"/>
                     <asp:RadioButtonList runat="server" AutoPostBack="false" ID="SP">
                          <asp:ListItem Text="No" Value="No"></asp:ListItem>
                         <asp:ListItem Text="Weak" Value="Weak"></asp:ListItem>
@@ -41,7 +41,7 @@
                     </asp:RadioButtonList>
                 </div>
                 <div class="tdpulseinfocolumn">
-                    <asp:Label runat="server" Text="KD"/>
+                    <asp:Label runat="server" Text="KD" ID="lblPulseInformation5"/>
                         <asp:RadioButtonList runat="server" AutoPostBack="false" ID="KD1">
                             <asp:ListItem Text="No" Value="No"></asp:ListItem>
                             <asp:ListItem Text="Weak" Value="Weak"></asp:ListItem>
@@ -52,12 +52,12 @@
             </div>
             <div class="trpulseinfocolumn">
                 <div class="tdpulseinfocolumn">                
-                    <asp:Label runat="server" Text="  " Height="25" />     
+                    <asp:Label runat="server" Text="  " Height="25" ID="lblPulseInformation6" />     
                 </div>
             </div>
             <div class="trpulseinfocolumn">   
                 <div class="tdpulseinfocolumn">          
-                    <asp:Label runat="server" Text="LHT"/>
+                    <asp:Label runat="server" Text="LHT" ID="lblPulseInformation7"/>
                     <asp:RadioButtonList runat="server" AutoPostBack="false" ID="LHT">
                          <asp:ListItem Text="No" Value="No"></asp:ListItem>
                         <asp:ListItem Text="Weak" Value="Weak"></asp:ListItem>
@@ -66,7 +66,7 @@
                     </asp:RadioButtonList>
                 </div>
                 <div class="tdpulseinfocolumn">
-                    <asp:Label runat="server" Text="LV"/>
+                    <asp:Label runat="server" Text="LV" ID="lblPulseInformation8"/>
                     <asp:RadioButtonList runat="server" AutoPostBack="false" ID="LV">
                          <asp:ListItem Text="No" Value="No"></asp:ListItem>
                          <asp:ListItem Text="Weak" Value="Weak"></asp:ListItem>
@@ -75,7 +75,7 @@
                     </asp:RadioButtonList>
                 </div>
                 <div class="tdpulseinfocolumn">
-                    <asp:Label runat="server" Text="KD"/>
+                    <asp:Label runat="server" Text="KD" ID="lblPulseInformation9" />
                     <asp:RadioButtonList runat="server" AutoPostBack="false" ID="KD2">
                         <asp:ListItem Text="No" Value="No"></asp:ListItem>
                         <asp:ListItem Text="Weak" Value="Weak"></asp:ListItem>
@@ -88,7 +88,7 @@
 
          <div class="tdimagesectionone">
             <div class="trimageinfoheader">                
-                <asp:Label runat="server" Text="Image Before"></asp:Label><asp:FileUpload runat="server" ID="uploadImageBefore" />
+                <asp:Label runat="server" ID="lblImageBefore" Text="Image Before"></asp:Label><asp:FileUpload runat="server" ID="uploadImageBefore" />
                 
                 <div class="tdimagecolumn">     
                    <asp:Image runat="server" Width="250" Height="250" ImageAlign="Middle" ImageUrl="~/Images/photoGoesHere.png" ID="ImageBefore" />                   
@@ -103,7 +103,7 @@
 
          <div class="tdimagesectiontwo">
             <div class="trimageinfoheader">
-                <asp:Label runat="server" Text="Image After"></asp:Label><asp:FileUpload runat="server" ID="uploadImageAfter" />
+                <asp:Label runat="server" ID="lblImageAfter" Text="Image After"></asp:Label><asp:FileUpload runat="server" ID="uploadImageAfter" />
                 
                 <div class="tdimagecolumn">                
                     <asp:Image runat="server" Width="250" Height="250" ImageAlign="Middle" ImageUrl="~/Images/photoGoesHere.png" ID="ImageAfter" />                    

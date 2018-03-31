@@ -20,8 +20,8 @@
         
         <uc1:PatientListing ID="PatientListing1" runat="server" />                
         <uc3:PatientApptControl ID="PatientApptControl1" runat="server" />
-        <uc2:AddEditPatientControl ID="AddEditPatientControl1" runat="server" />
         <uc4:PatientHistoryControl ID="PatientHistoryControl1" runat="server" />
+        <uc2:AddEditPatientControl ID="AddEditPatientControl1" runat="server" />
         <br />
         <asp:Label runat="server" ID="lblWarningText" Text=""/>
         <br />
@@ -31,6 +31,7 @@
                 <div class="td">
                     <asp:Button runat="server" ID="btnCreatePatient" Text="Create Patient" OnClick="btnCreatePatient_Click" />  
                     <asp:Button runat="server" ID="btnUpdatePatient" Text="Update Patient" OnClick="btnUpdatePatient_Click" />  
+                    <asp:Button runat="server" ID="btnPatientInformation" Text="Patient Information" OnClick="btnPatientInformation_Click"/>
                     <asp:Button runat="server" ID="btnSaveAppt" Text="Save Appointment" OnClick="btnSaveAppt_Click" />
                     <asp:Button runat="server" ID="btnCancelAppt" Text="Cancel Appointment" OnClick="btnCancelAppt_Click" />
                     <asp:Button runat="server" ID="btnStartAppt" Text="Start New Appointment" OnClick="btnStartAppt_Click" />                    

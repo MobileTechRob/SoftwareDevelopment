@@ -3,7 +3,7 @@
 
 <h2>Patient Listing</h2>
 
-<asp:Label runat="server" Text="First Name "></asp:Label><asp:TextBox runat="server" ID="txtBoxPatientFirstName"></asp:TextBox>&nbsp&nbsp&nbsp<asp:Label runat="server" Text="Last Name "></asp:Label><asp:TextBox runat="server" ID="txtBoxPatientLastName"></asp:TextBox>&nbsp&nbsp&nbsp<asp:Button runat="server" ID="btnSearch" Text="Search" OnClick="btnSearch_Click" />
+<asp:Label runat="server" ID="lblFirstName" Text="First Name "></asp:Label><asp:TextBox runat="server" ID="txtBoxPatientFirstName"></asp:TextBox>&nbsp&nbsp&nbsp<asp:Label runat="server" ID="lblLastName" Text="Last Name "></asp:Label><asp:TextBox runat="server" ID="txtBoxPatientLastName"></asp:TextBox>&nbsp&nbsp&nbsp<asp:Button runat="server" ID="btnSearch" Text="Search" OnClick="btnSearch_Click" />
 <br />
 <br />
 <asp:GridView runat="server" ID="patientlistgridview" RowStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"  RowStyle-Width="50" ></asp:GridView>

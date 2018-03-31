@@ -123,7 +123,7 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
 
             Session["PatientID"] = patientlistgridview.Rows[selectedIndex].Cells[0].Text;
             Session["PatientFirstName"] = patientlistgridview.Rows[selectedIndex].Cells[1].Text;
-            Session["PatiendLastName"] = patientlistgridview.Rows[selectedIndex].Cells[2].Text;
+            Session["PatientLastName"] = patientlistgridview.Rows[selectedIndex].Cells[2].Text;
         }
     }
 

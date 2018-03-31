@@ -15,6 +15,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
 
         AddEditPatientControl1.patientCareCanceled += AddEditPatientControl1_patientCareCanceled;
         AddEditPatientControl1.patientCareSaved += AddEditPatientControl1_patientCareSaved;
+        PatientHistoryControl1.AppointmentSelected += PatientHistoryControl1_AppointmentSelected;
 
         if (IsPostBack == false)
         {
@@ -29,10 +30,34 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
             btnPatientListing.Visible = false;
             
             btnCancelAppt.Visible = false;
+            btnPatientInformation.Visible = false;
             btnSaveChanges.Visible = false;
             btnEditAppt.Visible = false;
             btnCancelChanges.Visible = false;            
         }                        
+    }
+
+    private void PatientHistoryControl1_AppointmentSelected(object sender, EventArgs e)
+    {
+        string s = "";
+
+        AppointmentSelectedEvent apptSelectedEvent = (AppointmentSelectedEvent)e;
+
+        Session["EditPatient"] = "true";
+        Session["PatientHistoryGuid"] = apptSelectedEvent.appointmentGuid.ToString();
+        PatientApptControl1.LoadPatientAppt();
+
+        PatientHistoryControl1.Visible = false;
+        PatientApptControl1.Visible = true;
+
+        btnUpdatePatient.Visible = false;
+        btnSaveChanges.Visible = true;
+        btnPatientInformation.Visible = true;
+        btnCreatePatient.Visible = false;
+        btnDeletePatient.Visible = false;
+        btnEditAppt.Visible = false;
+        btnPatientHistory.Visible = false;
+        btnStartAppt.Visible = false;
     }
 
     private void AddEditPatientControl1_patientCareSaved(object sender, EventArgs e)
@@ -46,10 +71,18 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
 
     private void AddEditPatientControl1_patientCareCanceled(object sender, EventArgs e)
     {
-        PatientListing1.Visible = true;
         AddEditPatientControl1.Visible = false;
 
-        menuPanel.Visible = true;
+        // go back to patient appointment screen ???
+        if (Session["EditPatientAppointment"] != null)
+        {
+            PatientApptControl1.Visible = true;
+        }
+        else
+        {
+            PatientListing1.Visible = true;
+            menuPanel.Visible = true;
+        }
     }
 
     protected void btnCreatePatient_Click(object sender, EventArgs e)
@@ -107,14 +140,17 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
             AddEditPatientControl1.Visible = false;
             PatientApptControl1.Visible = false;
 
+            // show the list of all appointments
             PatientHistoryControl1.Visible = true;
             PatientHistoryControl1.Refresh();
-
+            
             btnCreatePatient.Visible = false;
+            btnUpdatePatient.Visible = false;
+            btnPatientInformation.Visible = true;
             btnCancelAppt.Visible = false;
             btnSaveAppt.Visible = false;
-            btnEditAppt.Visible = true;
-            btnStartAppt.Visible = true;
+            btnEditAppt.Visible = false;
+            btnStartAppt.Visible = false;
             btnPatientListing.Visible = true;
             btnDeletePatient.Visible = false;
             btnPatientHistory.Visible = false;
@@ -145,6 +181,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         btnCancelAppt.Visible = false;
         btnSaveAppt.Visible = false;
         btnEditAppt.Visible = false;
+        btnUpdatePatient.Visible = false;
         btnPatientHistory.Visible = true;
         btnPatientListing.Visible = false;
         btnDeletePatient.Visible = true;
@@ -267,6 +304,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         {
             PatientListing1.Visible = false;
             menuPanel.Visible = false;
+            PatientHistoryControl1.Visible = false;
             AddEditPatientControl1.SetEditMode();
             AddEditPatientControl1.Visible = true;
         }
@@ -275,5 +313,24 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
             lblWarningText.Text = "Select a Patient";
             lblWarningText.ForeColor = System.Drawing.Color.Red;
         }
+    }
+
+    protected void btnPatientInformation_Click(object sender, EventArgs e)
+    {
+        PatientHistoryControl1.Visible = false;
+        PatientApptControl1.Visible = false;
+        AddEditPatientControl1.SetEditMode();
+        AddEditPatientControl1.Visible = true;
+        
+        btnCancelAppt.Visible = false;
+        btnEditAppt.Visible = true;
+        btnPatientHistory.Visible = false;
+        btnSaveAppt.Visible = false;
+        btnSaveChanges.Visible = false;
+        btnStartAppt.Visible = true;
+        btnPatientInformation.Visible = false;
+        btnStartAppt.Visible = false;
+        btnEditAppt.Visible = false;
+        btnPatientListing.Visible = false;        
     }
 }
