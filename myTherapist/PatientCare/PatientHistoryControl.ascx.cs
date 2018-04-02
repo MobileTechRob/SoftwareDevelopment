@@ -24,7 +24,13 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         lblPatientName.Text = "";
 
         if ((Session["PatientFirstName"] != null) && (Session["PatientLastName"] != null))
-            lblPatientName.Text = String.Format("{0} {1}", Session["PatientFirstName"].ToString() , Session["PatientLastName"].ToString());
+        {        
+            lnkBtnPatientName.Text = String.Format("{0} {1}", Session["PatientFirstName"].ToString(), Session["PatientLastName"].ToString());
+            lnkBtnPatientName.CommandArgument = Session["PatientId"].ToString();
+            
+            lblPatientName.Text = String.Format("{0} {1}", Session["PatientFirstName"].ToString(), Session["PatientLastName"].ToString());
+        }
+        
 
         if (Session["PatientId"] != null)
         {                       
@@ -36,6 +42,16 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
 
     public void Refresh()
     {
+        lblPatientName.Text = "";
+
+        if ((Session["PatientFirstName"] != null) && (Session["PatientLastName"] != null))
+        {
+            lnkBtnPatientName.Text = String.Format("{0} {1}", Session["PatientFirstName"].ToString(), Session["PatientLastName"].ToString());
+            lnkBtnPatientName.CommandArgument = Session["PatientId"].ToString();
+
+            lblPatientName.Text = String.Format("{0} {1}", Session["PatientFirstName"].ToString(), Session["PatientLastName"].ToString());
+        }
+
         BuildGrid();
     }
     
@@ -221,6 +237,12 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             AppointmentSelected(this, apptEvent);
     }
 
+    private void lnkBtnPatientName_Click(object sender, CommandEventArgs e)
+    {
+
+
+    }
+    
     private void LinkButton_Click(object sender, EventArgs e)
     {
         string s = "ast";
