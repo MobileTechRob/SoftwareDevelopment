@@ -12,7 +12,9 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
 {    
     MyDataGridPager pager = null;
     public event EventHandler AppointmentSelected;
-    
+    const int IMAGE_HEIGHT = 200;
+    const int IMAGE_WIDTH = IMAGE_HEIGHT;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (this.Visible == false)
@@ -24,10 +26,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         lblPatientName.Text = "";
 
         if ((Session["PatientFirstName"] != null) && (Session["PatientLastName"] != null))
-        {        
-            lnkBtnPatientName.Text = String.Format("{0} {1}", Session["PatientFirstName"].ToString(), Session["PatientLastName"].ToString());
-            lnkBtnPatientName.CommandArgument = Session["PatientId"].ToString();
-            
+        {                    
             lblPatientName.Text = String.Format("{0} {1}", Session["PatientFirstName"].ToString(), Session["PatientLastName"].ToString());
         }
         
@@ -46,9 +45,6 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
 
         if ((Session["PatientFirstName"] != null) && (Session["PatientLastName"] != null))
         {
-            lnkBtnPatientName.Text = String.Format("{0} {1}", Session["PatientFirstName"].ToString(), Session["PatientLastName"].ToString());
-            lnkBtnPatientName.CommandArgument = Session["PatientId"].ToString();
-
             lblPatientName.Text = String.Format("{0} {1}", Session["PatientFirstName"].ToString(), Session["PatientLastName"].ToString());
         }
 
@@ -56,7 +52,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
     }
     
     private void BuildGrid()
-    {
+    {        
         pager = new MyDataGridPager();
         pager.NumberRowsToDisplay = 10;
 
@@ -93,11 +89,30 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
 
         dataGridObj.AddWhereClauseArgument("PatientId", Session["PatientId"].ToString());
 
-        const int IMAGE_HEIGHT = 200;
-        const int IMAGE_WIDTH = IMAGE_HEIGHT;
-
+        LinkButton linkButtonPatient = null;
+        LinkButton linkButtonApptDate = null;
         TableRow row = new TableRow();
         TableCell cell = new TableCell();
+
+        linkButtonPatient = new LinkButton();
+        
+        if ((Session["PatientFirstName"] != null) && (Session["PatientLastName"] != null))
+        {
+            //lblPatientName.Text = String.Format("{0} {1}", Session["PatientFirstName"].ToString(), Session["PatientLastName"].ToString());
+            linkButtonPatient.Text = String.Format("{0} {1}", Session["PatientFirstName"].ToString(), Session["PatientLastName"].ToString());            
+        }
+
+        linkButtonPatient.Command += linkButtonPatient_Command;
+        linkButtonPatient.CommandArgument = Session["PatientId"].ToString();
+        
+        cell.Controls.Add(linkButtonPatient);
+
+        row.Cells.Add(cell);       
+              
+        PatientApptData.Rows.Add(row);
+
+        row = new TableRow();
+        cell = new TableCell();
         Image img = null;
 
         cell = new TableCell();
@@ -154,12 +169,12 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
 
                 row = new TableRow();
                 cell = new TableCell();
-                LinkButton linkButton = new LinkButton();
-                linkButton.Text = dataRow.ItemArray[0].ToString();
-                linkButton.Command += LinkButton_Command;
-                linkButton.CommandArgument = dataRow.ItemArray[1].ToString();
+                linkButtonApptDate = new LinkButton();
+                linkButtonApptDate.Text = dataRow.ItemArray[0].ToString();
+                linkButtonApptDate.Command += linkButtonApptDate_Command;
+                linkButtonApptDate.CommandArgument = dataRow.ItemArray[1].ToString();
 
-                cell.Controls.Add(linkButton);
+                cell.Controls.Add(linkButtonApptDate);
                 row.Cells.Add(cell);
 
                 cell = new TableCell();
@@ -225,7 +240,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         }
     }
 
-    private void LinkButton_Command(object sender, CommandEventArgs e)
+    private void linkButtonApptDate_Command(object sender, CommandEventArgs e)
     {        
         LinkButton lnk = (LinkButton)sender;
         AppointmentSelectedEvent apptEvent = new AppointmentSelectedEvent(Guid.Parse(lnk.CommandArgument));
@@ -236,8 +251,8 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         if (AppointmentSelected != null)
             AppointmentSelected(this, apptEvent);
     }
-
-    private void lnkBtnPatientName_Click(object sender, CommandEventArgs e)
+    
+    private void linkButtonPatient_Command(object sender, CommandEventArgs e)
     {
 
 
