@@ -12,6 +12,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
 {    
     MyDataGridPager pager = null;
     public event EventHandler AppointmentSelected;
+    public event EventHandler EditPatientEvent;
     const int IMAGE_HEIGHT = 200;
     const int IMAGE_WIDTH = IMAGE_HEIGHT;
 
@@ -254,8 +255,11 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
     
     private void linkButtonPatient_Command(object sender, CommandEventArgs e)
     {
+        LinkButton lnk = (LinkButton)sender;
+        EditPatientEvent patientEvent = new EditPatientEvent(Guid.Parse(lnk.CommandArgument));
 
-
+        if (EditPatientEvent != null)
+            EditPatientEvent(this, patientEvent);
     }
     
     private void LinkButton_Click(object sender, EventArgs e)
