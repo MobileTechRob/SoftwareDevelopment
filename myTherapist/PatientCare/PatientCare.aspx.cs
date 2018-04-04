@@ -77,6 +77,8 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         btnEditAppt.Visible = false;
         btnPatientHistory.Visible = false;
         btnStartAppt.Visible = false;
+        btnPatientListing.Visible = false;
+        btnPatientHistory.Visible = true;
     }
 
     private void AddEditPatientControl1_patientCareSaved(object sender, EventArgs e)
@@ -93,9 +95,12 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         AddEditPatientControl1.Visible = false;
 
         // go back to patient appointment screen ???
-        if (Session["EditPatientAppointment"] != null)
+        if (Session["EditPatientFromHistory"] != null)
         {
-            PatientApptControl1.Visible = true;
+            PatientHistoryControl1.Visible = true;
+            PatientHistoryControl1.Refresh();
+            btnUpdatePatient.Visible = true;
+            btnPatientListing.Visible = true;
         }
         else
         {

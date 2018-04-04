@@ -8,9 +8,9 @@ using System.Web;
 /// </summary>
 public class EditPatientEvent : EventArgs
 {
-    public Guid PatientID { get; set; }
+    public int PatientID { get; set; }
 
-    public EditPatientEvent(Guid patientId)
+    public EditPatientEvent(int patientId)
     {
         //
         // TODO: Add constructor logic here

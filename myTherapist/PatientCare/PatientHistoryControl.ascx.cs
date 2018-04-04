@@ -245,18 +245,18 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
     {        
         LinkButton lnk = (LinkButton)sender;
         AppointmentSelectedEvent apptEvent = new AppointmentSelectedEvent(Guid.Parse(lnk.CommandArgument));
-
-        // set this so when at the patient information screen , the program comes back to patitent appoinment screen
-        Session["EditPatientAppointment"] = "true";
-
+               
         if (AppointmentSelected != null)
             AppointmentSelected(this, apptEvent);
     }
     
     private void linkButtonPatient_Command(object sender, CommandEventArgs e)
     {
+        // set this so when at the patient information screen , the program comes back to patitent appoinment screen
+        Session["EditPatientFromHistory"] = "true";
+
         LinkButton lnk = (LinkButton)sender;
-        EditPatientEvent patientEvent = new EditPatientEvent(Guid.Parse(lnk.CommandArgument));
+        EditPatientEvent patientEvent = new EditPatientEvent(Convert.ToInt32(lnk.CommandArgument));
 
         if (EditPatientEvent != null)
             EditPatientEvent(this, patientEvent);
