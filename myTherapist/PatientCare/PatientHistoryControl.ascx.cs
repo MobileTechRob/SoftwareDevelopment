@@ -23,15 +23,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             Session["PatientHistorySortOrder"] = "DESC";
             return;
         }
-
-        lblPatientName.Text = "";
-
-        if ((Session["PatientFirstName"] != null) && (Session["PatientLastName"] != null))
-        {                    
-            lblPatientName.Text = String.Format("{0} {1}", Session["PatientFirstName"].ToString(), Session["PatientLastName"].ToString());
-        }
-        
-
+       
         if (Session["PatientId"] != null)
         {                       
             BuildGrid();
@@ -42,13 +34,6 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
 
     public void Refresh()
     {
-        lblPatientName.Text = "";
-
-        if ((Session["PatientFirstName"] != null) && (Session["PatientLastName"] != null))
-        {
-            lblPatientName.Text = String.Format("{0} {1}", Session["PatientFirstName"].ToString(), Session["PatientLastName"].ToString());
-        }
-
         BuildGrid();
     }
     
@@ -245,7 +230,9 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
     {        
         LinkButton lnk = (LinkButton)sender;
         AppointmentSelectedEvent apptEvent = new AppointmentSelectedEvent(Guid.Parse(lnk.CommandArgument));
-               
+
+        Session["EditPatientAppt"] = "true";
+
         if (AppointmentSelected != null)
             AppointmentSelected(this, apptEvent);
     }

@@ -61,33 +61,41 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         string s = "";
 
         AppointmentSelectedEvent apptSelectedEvent = (AppointmentSelectedEvent)e;
-
-        Session["EditPatient"] = "true";
+        
         Session["PatientHistoryGuid"] = apptSelectedEvent.appointmentGuid.ToString();
         PatientApptControl1.LoadPatientAppt();
 
         PatientHistoryControl1.Visible = false;
         PatientApptControl1.Visible = true;
 
-        btnUpdatePatient.Visible = false;
+        AllButtonsInvisible();
+
         btnSaveChanges.Visible = true;
-        btnPatientInformation.Visible = true;
-        btnCreatePatient.Visible = false;
-        btnDeletePatient.Visible = false;
-        btnEditAppt.Visible = false;
-        btnPatientHistory.Visible = false;
-        btnStartAppt.Visible = false;
-        btnPatientListing.Visible = false;
         btnPatientHistory.Visible = true;
     }
 
     private void AddEditPatientControl1_patientCareSaved(object sender, EventArgs e)
     {
-        PatientListing1.LoadGrid();
-        PatientListing1.Visible = true;
         AddEditPatientControl1.Visible = false;
 
-        menuPanel.Visible = true;
+        if ((Session["EditPatientAppt"] != null) || (Session["EditPatientFromHistory"] != null))
+        {
+            // go back to patient history for a single patient            
+            PatientApptControl1.Visible = false;
+            PatientHistoryControl1.Visible = true;
+            PatientHistoryControl1.Refresh();
+
+            AllButtonsInvisible();
+            
+            btnPatientListing.Visible = true;
+            btnPatientInformation.Visible = true;
+        }
+        else
+        {
+            PatientListing1.LoadGrid();
+            PatientListing1.Visible = true;         
+            menuPanel.Visible = true;
+        }        
     }
 
     private void AddEditPatientControl1_patientCareCanceled(object sender, EventArgs e)
@@ -95,8 +103,8 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         AddEditPatientControl1.Visible = false;
 
         // go back to patient appointment screen ???
-        if (Session["EditPatientFromHistory"] != null)
-        {
+        if ((Session["EditPatientFromHistory"] != null) || (Session["EditPatientAppt"] != null))
+        {            
             PatientHistoryControl1.Visible = true;
             PatientHistoryControl1.Refresh();
             btnUpdatePatient.Visible = true;
@@ -201,15 +209,12 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         PatientApptControl1.Visible = false;
         PatientHistoryControl1.Visible = false;
 
+        AllButtonsInvisible();        
+
         btnCreatePatient.Visible = true;
-        btnCancelAppt.Visible = false;
-        btnSaveAppt.Visible = false;
-        btnEditAppt.Visible = false;
-        btnUpdatePatient.Visible = false;
         btnPatientHistory.Visible = true;
-        btnPatientListing.Visible = false;
         btnDeletePatient.Visible = true;
-        btnSaveChanges.Visible = false;
+
     }
 
     protected void btnDeletePatient_Click(object sender, EventArgs e)
@@ -304,8 +309,9 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
             PatientHistoryControl1.Refresh();
             PatientApptControl1.Visible = false;
             PatientHistoryControl1.Visible = true;
-            btnEditAppt.Visible = true;
+            btnEditAppt.Visible = false;
             btnSaveChanges.Visible = false;
+            btnPatientHistory.Visible = false;
             btnCancelChanges.Visible = false;
             btnPatientListing.Visible = true;
         }        
@@ -356,5 +362,21 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         btnStartAppt.Visible = false;
         btnEditAppt.Visible = false;
         btnPatientListing.Visible = false;        
+    }
+
+    private void AllButtonsInvisible()
+    {
+        btnCreatePatient.Visible = false;
+        btnUpdatePatient.Visible = false;
+        btnPatientInformation.Visible = false;
+        btnSaveAppt.Visible = false;
+        btnCancelAppt.Visible = false;
+        btnStartAppt.Visible = false;
+        btnEditAppt.Visible = false;
+        btnSaveChanges.Visible = false;
+        btnCancelChanges.Visible = false;
+        btnPatientListing.Visible = false;
+        btnPatientHistory.Visible = false;
+        btnDeletePatient.Visible = false;
     }
 }

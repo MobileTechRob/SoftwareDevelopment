@@ -11,11 +11,8 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["PatientName"] != null)
-            patientHeader.Text = Session["PatientName"].ToString();
-
-        //if (!String.IsNullOrEmpty(uploadImageBeforea.FileName))
-          //  ImageFiller1a.ImageUrl = "c:\\PatientImages\\" + uploadImageBeforea.FileName;
+        if ((Session["PatientFirstName"] != null) && (Session["PatientLastName"] != null))
+            patientNameHeader.Text = String.Format("{0} {1}", Session["PatientFirstName"].ToString(), Session["PatientLastName"].ToString());
 
         if (IsPostBack)
         {
@@ -80,13 +77,7 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
                 else
                 {                    
                 }
-            }
-            
-
-
-
-
-
+            }            
         }
     }
     
@@ -132,9 +123,7 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
             ImageAfter.ImageUrl = patientRecord1.ImageAfterTherapy;
 
             txtBoxTherapyPerformed.Text = patientRecord1.TherapyPerformed;
-            txtBoxSessionGoals.Text = patientRecord1.SessionGoals;
-
-            
+            txtBoxSessionGoals.Text = patientRecord1.SessionGoals;            
         }
     }
 
