@@ -61,6 +61,36 @@ public static class Utilities
         return data;
     }
 
+    public static string DateAsString(DateTime dte)
+    {
+        string dt = "";
+        
+        string mm = "";
+        string dd = "";
+                
+        dt = dte.ToString().Split(' ')[0];        
+        mm = dt.Split(new char[] { '/' })[0];
+        dd = dt.Split(new char[] { '/' })[1];
+        
+        return mm + "/" + dd + "/" + dte.Year.ToString();
+    }
+
+    public static string ParseDateAsString(System.Data.SqlClient.SqlDataReader rdr, int index)
+    {
+        DateTime data = DateTime.Now;
+
+        try
+        {
+            data =  rdr.GetDateTime(index);
+            return DateAsString(data);
+        }
+        catch (Exception ex)
+        {
+            data = DateTime.MinValue;
+            return DateAsString(data);
+        }        
+    }
+
     public static Guid ParseGuid(System.Data.SqlClient.SqlDataReader rdr, int index)
     {
         Guid data = Guid.Empty;

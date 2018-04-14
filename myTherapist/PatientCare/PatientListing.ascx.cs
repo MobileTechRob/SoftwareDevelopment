@@ -54,6 +54,14 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         databaseRowObject.AddColumn(databaseColumnObj);
 
         databaseColumnObj = new DatabaseRowObject.DatabaseColumnObject();
+        databaseColumnObj.DataBaseTableColumnName = "BirthDate";
+        databaseColumnObj.DataGridColumnName = "BirthDate";
+        databaseColumnObj.DataType = MyDataTypes.DATESTRING;
+        databaseColumnObj.IncludeInDataGrid = true;
+        databaseColumnObj.OrderByColumn = false;
+        databaseRowObject.AddColumn(databaseColumnObj);
+
+        databaseColumnObj = new DatabaseRowObject.DatabaseColumnObject();
         databaseColumnObj.DataBaseTableColumnName = "EmailAddress";
         databaseColumnObj.DataGridColumnName = "Email Address";
         databaseColumnObj.DataType = MyDataTypes.STRING;        

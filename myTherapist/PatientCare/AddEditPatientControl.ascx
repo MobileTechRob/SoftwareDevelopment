@@ -1,8 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="AddEditPatientControl.ascx.cs" Inherits="PatientCare_AddEditPatientControl" %>
 <link rel="stylesheet" runat="server" href="../stylesheets/sitestyles.css" id="stylesheetlink" /> 
 
-<h2>New Patient </h2>
-
+<h2 id="hdrPatientHeader">New Patient </h2>
 
 <div class="menubuttontable">
   <div class="tr">
@@ -13,6 +12,12 @@
       <div class="tda">
           &nbsp&nbsp<asp:Label runat="server" Text="Last Name" Width="75" ID="lblLastName"/>
           <asp:TextBox runat="server" ID="txtboxLastName" Width="250" Text=""/>
+      </div>
+  </div>
+  <div class="tr">
+      <div class="tda">
+          <asp:Label runat="server" Text="Birth Date" Width="75" ID="lblBirthDate"/>
+          <asp:TextBox runat="server" TextMode="Date" ID="datePicker"></asp:TextBox>          
       </div>
   </div>
   <div class="tr">

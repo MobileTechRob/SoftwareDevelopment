@@ -38,6 +38,11 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
 
         txtboxFirstName.Text = pi.FirstName;
         txtboxLastName.Text = pi.LastName;
+        
+        DateTime dt = pi.BirthDate.Value;
+
+        //datePicker.Text = new DateTime(2012, 4, 7).ToString();
+        
         txtboxPhone.Text= pi.TelephoneNumber;
         txtboxEmailAddress.Text = pi.EmailAddress;        
     }
@@ -51,6 +56,7 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
         {
             pi.FirstName = txtboxFirstName.Text;
             pi.LastName = txtboxLastName.Text;
+            pi.BirthDate = DateTime.Parse(datePicker.Text);
             pi.TelephoneNumber = txtboxPhone.Text;
             pi.EmailAddress = txtboxEmailAddress.Text;
 
@@ -75,6 +81,7 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
             pi = apatient.Single<PatientInformation>();
             pi.FirstName = txtboxFirstName.Text;
             pi.LastName = txtboxLastName.Text;
+            pi.BirthDate = DateTime.Parse(datePicker.Text);
             pi.TelephoneNumber = txtboxPhone.Text;
             pi.EmailAddress = txtboxEmailAddress.Text;
 

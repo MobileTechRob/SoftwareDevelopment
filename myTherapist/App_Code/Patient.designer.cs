@@ -21,7 +21,7 @@ using System.Reflection;
 
 
 
-[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="myTherapist")]
+[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="MyTherapist")]
 public partial class PatientDataContext : System.Data.Linq.DataContext
 {
 	
@@ -35,7 +35,7 @@ public partial class PatientDataContext : System.Data.Linq.DataContext
   #endregion
 	
 	public PatientDataContext() : 
-			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["myTherapistConnectionString"].ConnectionString, mappingSource)
+			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString, mappingSource)
 	{
 		OnCreated();
 	}
@@ -89,6 +89,8 @@ public partial class PatientInformation : INotifyPropertyChanging, INotifyProper
 	
 	private string _LastName;
 	
+	private System.Nullable<System.DateTime> _BirthDate;
+	
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -103,6 +105,8 @@ public partial class PatientInformation : INotifyPropertyChanging, INotifyProper
     partial void OnTelephoneNumberChanged();
     partial void OnLastNameChanging(string value);
     partial void OnLastNameChanged();
+    partial void OnBirthDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnBirthDateChanged();
     #endregion
 	
 	public PatientInformation()
@@ -206,6 +210,26 @@ public partial class PatientInformation : INotifyPropertyChanging, INotifyProper
 				this._LastName = value;
 				this.SendPropertyChanged("LastName");
 				this.OnLastNameChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BirthDate", DbType="Date")]
+	public System.Nullable<System.DateTime> BirthDate
+	{
+		get
+		{
+			return this._BirthDate;
+		}
+		set
+		{
+			if ((this._BirthDate != value))
+			{
+				this.OnBirthDateChanging(value);
+				this.SendPropertyChanging();
+				this._BirthDate = value;
+				this.SendPropertyChanged("BirthDate");
+				this.OnBirthDateChanged();
 			}
 		}
 	}

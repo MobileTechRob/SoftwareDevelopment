@@ -16,6 +16,7 @@ namespace DataGridObjects
         INTEGER,
         STRING,
         DATETIME,
+        DATESTRING,
         GUID,
         IMAGE
     }
@@ -167,10 +168,10 @@ namespace DataGridObjects
                     if (column.DataType == MyDataTypes.INTEGER)
                         dataColumn.DataType = System.Type.GetType("System.Int32");
 
-                    if (column.DataType == MyDataTypes.STRING)
+                    if ((column.DataType == MyDataTypes.STRING) || (column.DataType == MyDataTypes.DATESTRING))
                         dataColumn.DataType = System.Type.GetType("System.String");
 
-                    if (column.DataType == MyDataTypes.DATETIME)
+                    if ((column.DataType == MyDataTypes.DATETIME))
                         dataColumn.DataType = System.Type.GetType("System.DateTime");
 
                     if (column.DataType == MyDataTypes.GUID)

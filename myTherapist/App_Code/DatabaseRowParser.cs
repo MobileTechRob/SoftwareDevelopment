@@ -52,6 +52,10 @@ public class DatabaseRowParser
                 columnValue = Utilities.ParseDateTime(sqlReader, col.Column);                 
                 break;
 
+            case MyDataTypes.DATESTRING:
+                columnValue = Utilities.ParseDateAsString(sqlReader, col.Column);
+                break;
+
             case MyDataTypes.GUID:
                 columnValue = Utilities.ParseGuid(sqlReader, col.Column);
                 break;
