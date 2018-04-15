@@ -123,6 +123,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         AddEditPatientControl1.Visible = true;
 
         menuPanel.Visible = false;
+        lblWarningText.Visible = false;
         Response.Clear();
     }
 
@@ -131,18 +132,17 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         if (Session["PatientID"] != null)
         {
             PatientListing1.Visible = false;
-            AddEditPatientControl1.Visible = false;
-            PatientApptControl1.Visible = true;
+            AddEditPatientControl1.Visible = false;            
             PatientHistoryControl1.Visible = false;
 
-            btnStartAppt.Visible = false;
-            btnEditAppt.Visible = false;
+            PatientApptControl1.Visible = true;
+
+            AllButtonsInvisible();
+
             btnSaveAppt.Visible = true;
             btnCancelAppt.Visible = true;
-            btnUpdatePatient.Visible = false;
-            btnDeletePatient.Visible = false;
-            btnCreatePatient.Visible = false;
             btnPatientListing.Visible = true;
+            btnPatientHistory.Visible = true;
         }
         else
         {

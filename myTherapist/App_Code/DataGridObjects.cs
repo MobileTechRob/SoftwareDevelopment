@@ -409,6 +409,22 @@ namespace DataGridObjects
             columnList.Add(dataColumn);
         }
 
+        public int ColumnIndex(string columnName)
+        {
+            List<DatabaseColumnObject>.Enumerator iter;
+
+            iter = columnList.GetEnumerator();
+
+            while (iter.MoveNext())
+            {
+                if (iter.Current.DataBaseTableColumnName == columnName)
+                    return iter.Current.Column;                                    
+            }
+
+            return -1;
+        }
+
+
         public DatabaseColumnObject GetDataGridColumn(int column)
         {
             DatabaseColumnObject col = null;

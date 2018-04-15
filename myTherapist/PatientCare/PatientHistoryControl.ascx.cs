@@ -55,7 +55,17 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         dbRowObject.AddColumn("KD2", "KD ", MyDataTypes.STRING, false, 0);
         dbRowObject.AddColumn("ImageBeforeTherapy", "", MyDataTypes.STRING, false, 0);
         dbRowObject.AddColumn("ImageAfterTherapy", "", MyDataTypes.STRING, false, 0);
+        dbRowObject.AddColumn("TherapyPerformed", "", MyDataTypes.STRING, false, 0);
+        dbRowObject.AddColumn("SessionGoals", "", MyDataTypes.STRING, false, 0);
+       
         dataGridObj.DatabaseRowObject = dbRowObject;
+
+
+
+
+
+
+
 
         if (IsPostBack == false)
         {
@@ -83,10 +93,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         linkButtonPatient = new LinkButton();
         
         if ((Session["PatientFirstName"] != null) && (Session["PatientLastName"] != null))
-        {
-            //lblPatientName.Text = String.Format("{0} {1}", Session["PatientFirstName"].ToString(), Session["PatientLastName"].ToString());
-            linkButtonPatient.Text = String.Format("{0} {1}", Session["PatientFirstName"].ToString(), Session["PatientLastName"].ToString());            
-        }
+            linkButtonPatient.Text = String.Format("{0} {1} {2}", Session["PatientFirstName"].ToString(), Session["PatientLastName"].ToString(), Session["PatientBirthDate"].ToString());
 
         linkButtonPatient.Command += linkButtonPatient_Command;
         linkButtonPatient.CommandArgument = Session["PatientId"].ToString();
@@ -95,6 +102,14 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
 
         row.Cells.Add(cell);       
               
+        PatientApptData.Rows.Add(row);
+
+        // spacer
+        row = new TableRow();
+        cell = new TableCell();
+        cell.Text = "  ";
+        cell.ColumnSpan = 7;
+        row.Cells.Add(cell);
         PatientApptData.Rows.Add(row);
 
         row = new TableRow();
@@ -158,33 +173,33 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
                 linkButtonApptDate = new LinkButton();
                 linkButtonApptDate.Text = dataRow.ItemArray[0].ToString();
                 linkButtonApptDate.Command += linkButtonApptDate_Command;
-                linkButtonApptDate.CommandArgument = dataRow.ItemArray[1].ToString();
+                linkButtonApptDate.CommandArgument = dataRow.ItemArray[dbRowObject.ColumnIndex("ApptDate")].ToString();
 
                 cell.Controls.Add(linkButtonApptDate);
                 row.Cells.Add(cell);
 
                 cell = new TableCell();
-                cell.Text = dataRow.ItemArray[2].ToString();
+                cell.Text = dataRow.ItemArray[dbRowObject.ColumnIndex("RLU")].ToString();
                 row.Cells.Add(cell);
 
                 cell = new TableCell();
-                cell.Text = dataRow.ItemArray[3].ToString();
+                cell.Text = dataRow.ItemArray[dbRowObject.ColumnIndex("SP")].ToString();
                 row.Cells.Add(cell);
 
                 cell = new TableCell();
-                cell.Text = dataRow.ItemArray[4].ToString();
+                cell.Text = dataRow.ItemArray[dbRowObject.ColumnIndex("KD1")].ToString();
                 row.Cells.Add(cell);
 
                 cell = new TableCell();
-                cell.Text = dataRow.ItemArray[5].ToString();
+                cell.Text = dataRow.ItemArray[dbRowObject.ColumnIndex("LHT")].ToString();
                 row.Cells.Add(cell);
 
                 cell = new TableCell();
-                cell.Text = dataRow.ItemArray[6].ToString();
+                cell.Text = dataRow.ItemArray[dbRowObject.ColumnIndex("LV")].ToString();
                 row.Cells.Add(cell);
 
                 cell = new TableCell();
-                cell.Text = dataRow.ItemArray[7].ToString();
+                cell.Text = dataRow.ItemArray[dbRowObject.ColumnIndex("KD2")].ToString();
                 row.Cells.Add(cell);
 
                 PatientApptData.Rows.Add(row);
@@ -192,11 +207,11 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
                 row = new TableRow();
                 cell = new TableCell();
                 row.Cells.Add(cell);
-
+               
                 cell = new TableCell();
                 cell.ColumnSpan = 3;
                 img = new Image();
-                img.ImageUrl = dataRow.ItemArray[8].ToString();
+                img.ImageUrl = dataRow.ItemArray[dbRowObject.ColumnIndex("ImageBeforeTherapy")].ToString();
                 img.ImageAlign = ImageAlign.Middle;
                 img.Width = IMAGE_WIDTH;
                 img.Height = IMAGE_HEIGHT;
@@ -207,7 +222,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
                 cell = new TableCell();
                 cell.ColumnSpan = 3;
                 img = new Image();
-                img.ImageUrl = dataRow.ItemArray[9].ToString();
+                img.ImageUrl = dataRow.ItemArray[dbRowObject.ColumnIndex("ImageAfterTherapy")].ToString();
                 img.ImageAlign = ImageAlign.Middle;
                 img.Width = IMAGE_WIDTH;
                 img.Height = IMAGE_HEIGHT;
@@ -216,12 +231,29 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
                 row.Cells.Add(cell);
                 PatientApptData.Rows.Add(row);
 
+                // spacer 
                 row = new TableRow();
                 cell = new TableCell();
                 cell.Text = "  ";
                 cell.ColumnSpan = 7;
                 row.Cells.Add(cell);
                 PatientApptData.Rows.Add(row);
+
+                ///  therapy performed
+                row = new TableRow();
+                cell = new TableCell();
+                cell.Text = dataRow.ItemArray[dbRowObject.ColumnIndex("TherapyPerformed")].ToString(); 
+                cell.ColumnSpan = 7;
+                row.Cells.Add(cell);                
+                PatientApptData.Rows.Add(row);
+
+                // session goals
+                row = new TableRow();
+                cell = new TableCell();
+                cell.Text = dataRow.ItemArray[dbRowObject.ColumnIndex("SessionGoals")].ToString();
+                cell.ColumnSpan = 7;
+                row.Cells.Add(cell);
+                PatientApptData.Rows.Add(row);                
             }
         }
     }
@@ -254,111 +286,6 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         string s = "ast";
         LinkButton lnk = (LinkButton)sender;
     }
-
-    //private void Patienthistorygridview_SelectedIndexChanged(object sender, EventArgs e)
-    //{
-    //    GridView gridView = (GridView)sender;
-    //    int selectedIndex = gridView.SelectedIndex;
-
-    //    if (selectedIndex == -1)
-    //    {
-    //        if (Session["PatientHistorySortOrder"] != null)
-    //        {
-    //            if (Session["PatientHistorySortOrder"].ToString() == "DESC")             
-    //                Session["PatientHistorySortOrder"] = "ASC";                                   
-    //            else                
-    //                Session["PatientHistorySortOrder"] = "DESC";
-
-    //            BuildGrid();
-    //        }
-    //    }
-    //    //else if (selectedIndex != -1)
-    //    //{
-    //    //    for (int index = 0; index < patienthistorygridview.Rows.Count; index++)
-    //    //        patienthistorygridview.Rows[index].BackColor = System.Drawing.ColorTranslator.FromHtml("#F4A460");
-    //    //    patienthistorygridview.Rows[selectedIndex].BackColor = System.Drawing.ColorTranslator.FromHtml("#F9cda8");
-    //    //    string date = patienthistorygridview.Rows[selectedIndex].Cells[0].Text;
-    //    //    string id = patienthistorygridview.Rows[selectedIndex].Cells[1].Text;
-    //    //    Session["PatientHistoryAppointmentDate"] = patienthistorygridview.Rows[selectedIndex].Cells[0].Text;
-    //    //    Session["PatientHistoryPatientId"] = patienthistorygridview.Rows[selectedIndex].Cells[1].Text;
-    //    //    Session["PatientHistoryGuid"] = patienthistorygridview.Rows[selectedIndex].Cells[2].Text;
-    //    //}
-    //}
-
-    //private void Patienthistorygridview_RowDataBound(object sender, GridViewRowEventArgs e)
-    //{
-    //    TableCell cell = null;
-    //    Image img = null;
-    //    const int IMAGE_HEIGHT = 200;
-    //    const int IMAGE_WIDTH = IMAGE_HEIGHT;
-
-    //    if (e.Row.RowType == DataControlRowType.Header)
-    //    {
-    //        e.Row.Cells[0].Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(patienthistorygridview, "Select$-1");            
-    //        e.Row.Cells[0].Style["text-decoration"]="underline";            
-    //        e.Row.Cells[1].Visible = false;
-    //        e.Row.Cells[2].Visible = false;
-
-    //        int indexBeforeTherapy = pager.GridIndexByColumnName("ImageBeforeTherapy");
-    //        int indexAfterTherapy = pager.GridIndexByColumnName("ImageAfterTherapy");
-
-    //        e.Row.Cells[indexBeforeTherapy].Visible = false;
-    //        e.Row.Cells[indexAfterTherapy].Visible = false;
-            
-    //        if (e.Row.FindControl("Image Before Therapy") == null)
-    //        {
-    //            cell = new TableCell();
-    //            cell.ID = "Image Before Therapy";
-    //            cell.Text = "Image Before Therapy";
-    //            cell.Font.Bold = true;
-    //            e.Row.Cells.Add(cell);
-
-    //            cell = new TableCell();
-    //            cell.Text = "Image After Therapy";
-    //            cell.Font.Bold = true;
-    //            e.Row.Cells.Add(cell);
-    //        }
-
-    //    }
-    //    else if (e.Row.RowType == DataControlRowType.DataRow)
-    //    {
-    //        e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(patienthistorygridview, "Select$" + e.Row.RowIndex);
-    //        e.Row.Cells[1].Visible = false;
-    //        e.Row.Cells[2].Visible = false;
-
-    //        int indexBeforeTherapy = pager.GridIndexByColumnName("ImageBeforeTherapy");
-    //        int indexAfterTherapy = pager.GridIndexByColumnName("ImageAfterTherapy");
-
-    //        e.Row.Cells[indexBeforeTherapy].Visible = false;
-    //        e.Row.Cells[indexAfterTherapy].Visible = false;
-            
-    //        // Tongue Image wont be there so have to create it
-    //        if (e.Row.FindControl("TongueImage") == null)
-    //        {
-
-    //            cell = new TableCell();
-    //            cell.ID = "TongueImage";               
-    //            img = new Image();
-    //            img.ImageUrl = e.Row.Cells[indexBeforeTherapy].Text;
-    //            img.ImageAlign = ImageAlign.Middle;
-    //            img.Width = IMAGE_WIDTH;
-    //            img.Height = IMAGE_HEIGHT;
-    //            cell.HorizontalAlign = HorizontalAlign.Left;
-    //            cell.Controls.Add(img);
-    //            e.Row.Cells.Add(cell);
-
-    //            cell = new TableCell();
-    //            img = new Image();
-    //            img.ImageUrl = e.Row.Cells[indexAfterTherapy].Text;
-    //            img.ImageAlign = ImageAlign.Middle;
-    //            img.Width = IMAGE_WIDTH;
-    //            img.Height = IMAGE_HEIGHT;
-    //            cell.HorizontalAlign = HorizontalAlign.Left;
-    //            cell.Controls.Add(img);
-    //            e.Row.Cells.Add(cell);
-    //        }
-    //    }
-    //}
 
     public bool ShowIndividualAppt()
     {

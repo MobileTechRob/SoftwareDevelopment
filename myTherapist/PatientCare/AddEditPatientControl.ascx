@@ -1,24 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="AddEditPatientControl.ascx.cs" Inherits="PatientCare_AddEditPatientControl" %>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript" lang="javascript">
-
-    $(
-    function getMyDate() { alert("hello!"); };
-    );
-
-
-    //$(function () {
-    //    $("#datepicker").datepicker({ changeYear: true, changeMonth: true });
-    //});
-
-    
-</script>
 <link rel="stylesheet" runat="server" href="../stylesheets/sitestyles.css" id="stylesheetlink" /> 
 
-<h2 id="hdrPatientHeader">New Patient </h2>
+<asp:Label ID="hdrPatientHeader" runat="server" Text="Patient Information" Font-Size="X-Large" Font-Bold="true"></asp:Label>
+<br />
+<br />
 
 <div class="menubuttontable">
   <div class="tr">
@@ -33,8 +18,10 @@
   </div>
   <div class="tr">
       <div class="tda">
-          <asp:Label runat="server" Text="Birth Date" Width="75" ID="lblBirthDate"/>          
-          <input type="text" id="datepicker" />          
+          <asp:Label runat="server" Text="Birth Date" Width="75" ID="lblBirthDate"/>                    
+          <asp:DropDownList runat="server" id="datepickerMonth" AutoPostBack="false" />          
+          <asp:DropDownList runat="server" id="datepickerDay" AutoPostBack="false"  />          
+          <asp:DropDownList runat="server" id="datepickerYear" AutoPostBack="false"  />          
       </div>
   </div>
   <div class="tr">

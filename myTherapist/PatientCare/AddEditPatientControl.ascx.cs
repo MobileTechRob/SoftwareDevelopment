@@ -13,30 +13,37 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
     public event EventHandler patientCareCanceled;
     public event EventHandler patientCareSaved;
 
+    public string[] months = { "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec",""};
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        string s = "";
+        int count = 0;
 
-        ScriptManager.RegisterStartupScript(this, typeof(PatientCare_AddEditPatientControl), "hi", "alert('hi'); ", true);
-        
+        if (datepickerMonth.Items.Count == 0)
+        {
+            while (String.IsNullOrEmpty(months[count]) == false)
+                datepickerMonth.Items.Add(new ListItem(months[count++]));
+        }
+
+        if (datepickerDay.Items.Count == 0)
+        {
+            for (count = 1; count <= 31; count++)
+              datepickerDay.Items.Add(new ListItem(count.ToString()));
+        }
+
+        if (datepickerYear.Items.Count == 0)
+        {
+            for (count = 1900; count <= 2050; count++)
+                datepickerYear.Items.Add(new ListItem(count.ToString()));
+        }
 
         if (IsPostBack == false)
-        {
-        
-
-            if (Session["Testing123"] != null)
-            {
-                s = "ere";
-            }
-
+        {        
             txtboxFirstName.Text = "";
             txtboxLastName.Text = "";
             txtboxPhone.Text = "";
             txtboxEmailAddress.Text = "";
         }
-
-
-
     }
 
     public void SetEditMode()
@@ -56,8 +63,10 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
         
         DateTime dt = pi.BirthDate.Value;
 
-        //datePicker.Text = new DateTime(2012, 4, 7).ToString();
-        
+        datepickerMonth.Text = months[DateTime.Parse(pi.BirthDate.ToString()).Month];
+        datepickerDay.Text = DateTime.Parse(pi.BirthDate.ToString()).Day.ToString();
+        datepickerYear.Text = DateTime.Parse(pi.BirthDate.ToString()).Year.ToString();
+
         txtboxPhone.Text= pi.TelephoneNumber;
         txtboxEmailAddress.Text = pi.EmailAddress;        
     }
@@ -71,11 +80,7 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
         {
             pi.FirstName = txtboxFirstName.Text;
             pi.LastName = txtboxLastName.Text;
-            
-
-            
-
-            //pi.BirthDate = datepicker.Text;
+            pi.BirthDate = DateTime.Parse(String.Format("{0}/{1}/{2} 00:00:00", datepickerMonth.SelectedValue, datepickerDay.SelectedValue, datepickerYear.SelectedValue));
             pi.TelephoneNumber = txtboxPhone.Text;
             pi.EmailAddress = txtboxEmailAddress.Text;
 
@@ -99,13 +104,8 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
             IQueryable<PatientInformation> apatient = from patients in patientDC.PatientInformations where (patients.Id == patientID) select patients;
             pi = apatient.Single<PatientInformation>();
             pi.FirstName = txtboxFirstName.Text;
-            pi.LastName = txtboxLastName.Text;
-
-            
-
-
-
-            //pi.BirthDate = DateTime.Parse(datePicker.Text);
+            pi.LastName = txtboxLastName.Text;          
+            pi.BirthDate = DateTime.Parse(String.Format("{0}/{1}/{2} 00:00:00", datepickerMonth.SelectedValue, datepickerDay.SelectedValue, datepickerYear.SelectedValue));
             pi.TelephoneNumber = txtboxPhone.Text;
             pi.EmailAddress = txtboxEmailAddress.Text;
 
