@@ -15,13 +15,28 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        string s = "";
+
+        ScriptManager.RegisterStartupScript(this, typeof(PatientCare_AddEditPatientControl), "hi", "alert('hi'); ", true);
+        
+
         if (IsPostBack == false)
         {
+        
+
+            if (Session["Testing123"] != null)
+            {
+                s = "ere";
+            }
+
             txtboxFirstName.Text = "";
             txtboxLastName.Text = "";
             txtboxPhone.Text = "";
             txtboxEmailAddress.Text = "";
         }
+
+
+
     }
 
     public void SetEditMode()
@@ -56,7 +71,11 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
         {
             pi.FirstName = txtboxFirstName.Text;
             pi.LastName = txtboxLastName.Text;
-            pi.BirthDate = DateTime.Parse(datePicker.Text);
+            
+
+            
+
+            //pi.BirthDate = datepicker.Text;
             pi.TelephoneNumber = txtboxPhone.Text;
             pi.EmailAddress = txtboxEmailAddress.Text;
 
@@ -81,7 +100,12 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
             pi = apatient.Single<PatientInformation>();
             pi.FirstName = txtboxFirstName.Text;
             pi.LastName = txtboxLastName.Text;
-            pi.BirthDate = DateTime.Parse(datePicker.Text);
+
+            
+
+
+
+            //pi.BirthDate = DateTime.Parse(datePicker.Text);
             pi.TelephoneNumber = txtboxPhone.Text;
             pi.EmailAddress = txtboxEmailAddress.Text;
 
