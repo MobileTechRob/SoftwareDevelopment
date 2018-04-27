@@ -38,12 +38,19 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
         }
 
         if (IsPostBack == false)
-        {        
-            txtboxFirstName.Text = "";
-            txtboxLastName.Text = "";
-            txtboxPhone.Text = "";
-            txtboxEmailAddress.Text = "";
-        }
+            ClearControl();
+    }
+
+    public void ClearControl()
+    {
+        txtboxFirstName.Text = "";
+        txtboxLastName.Text = "";
+        txtboxPhone.Text = "";
+        txtboxEmailAddress.Text = "";
+
+        datepickerMonth.SelectedIndex = 0;
+        datepickerDay.SelectedIndex = 0;
+        datepickerYear.SelectedIndex = 0;
     }
 
     public void SetEditMode()

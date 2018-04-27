@@ -98,19 +98,21 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
 
         if (IsPostBack == false)
         {
-            pager.PageNumber = 1;
+            dataGridObject.PageNumber = 1;
             Session["PatientList_PageNumber"] = "1";
         }
         else
-            pager.PageNumber = Int32.Parse(Session["PatientList_PageNumber"].ToString());
+            dataGridObject.PageNumber = Int32.Parse(Session["PatientList_PageNumber"].ToString());
 
         patientlistgridview.DataSource = dataGridObject.BuildTable();
         patientlistgridview.RowDataBound += Patientlistgridview_RowDataBound;        
         patientlistgridview.SelectedIndexChanged += Patientlistgridview_SelectedIndexChanged;
         patientlistgridview.DataBind();
 
-        if (pager.NumberOfCompletePages == 0)
-          btnNextPAge.Enabled = false;        
+        if (dataGridObject.NumberOfCompletedPages == 0)
+          btnNextPAge.Enabled = false;     
+        else
+          btnNextPAge.Enabled = true;
     }
 
     private void Patientlistgridview_SelectedIndexChanged(object sender, EventArgs e)

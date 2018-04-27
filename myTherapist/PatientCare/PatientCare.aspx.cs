@@ -121,6 +121,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
     {
         PatientListing1.Visible = false;
         AddEditPatientControl1.Visible = true;
+        AddEditPatientControl1.ClearControl();
 
         menuPanel.Visible = false;
         lblWarningText.Visible = false;
@@ -136,6 +137,7 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
             PatientHistoryControl1.Visible = false;
 
             PatientApptControl1.Visible = true;
+            Response.Clear();
 
             AllButtonsInvisible();
 

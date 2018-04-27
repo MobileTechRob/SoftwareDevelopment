@@ -59,14 +59,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         dbRowObject.AddColumn("SessionGoals", "", MyDataTypes.STRING, false, 0);
        
         dataGridObj.DatabaseRowObject = dbRowObject;
-
-
-
-
-
-
-
-
+        
         if (IsPostBack == false)
         {
             Session["PatientHistorySortOrder"] = "DESC";
@@ -173,7 +166,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
                 linkButtonApptDate = new LinkButton();
                 linkButtonApptDate.Text = dataRow.ItemArray[0].ToString();
                 linkButtonApptDate.Command += linkButtonApptDate_Command;
-                linkButtonApptDate.CommandArgument = dataRow.ItemArray[dbRowObject.ColumnIndex("ApptDate")].ToString();
+                linkButtonApptDate.CommandArgument = dataRow.ItemArray[dbRowObject.ColumnIndex("GUID")].ToString();
 
                 cell.Controls.Add(linkButtonApptDate);
                 row.Cells.Add(cell);
@@ -253,7 +246,23 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
                 cell.Text = dataRow.ItemArray[dbRowObject.ColumnIndex("SessionGoals")].ToString();
                 cell.ColumnSpan = 7;
                 row.Cells.Add(cell);
-                PatientApptData.Rows.Add(row);                
+                PatientApptData.Rows.Add(row);
+
+                // spacer 
+                row = new TableRow();
+                cell = new TableCell();
+                cell.Text = "  ";
+                cell.ColumnSpan = 7;
+                row.Cells.Add(cell);
+                PatientApptData.Rows.Add(row);
+
+                // spacer 
+                row = new TableRow();
+                cell = new TableCell();
+                cell.Text = "  ";
+                cell.ColumnSpan = 7;
+                row.Cells.Add(cell);
+                PatientApptData.Rows.Add(row);
             }
         }
     }

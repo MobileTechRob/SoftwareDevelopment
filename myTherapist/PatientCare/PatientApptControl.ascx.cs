@@ -87,7 +87,7 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
         long id = 0;
         Guid patientGuid = Guid.Empty;
 
-        if ((Session["EditPatient"] != null) && (Session["EditPatient"].ToString() == "true"))
+        if ((Session["EditPatientAppt"] != null) && (Session["EditPatientAppt"].ToString() == "true"))
         {
             PatientAppointmentInfomationDataContext piDC = new PatientAppointmentInfomationDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);                       
             PatientAppointmentInformation patientRecord1 = null;
