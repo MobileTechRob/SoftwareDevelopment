@@ -22,7 +22,6 @@ namespace DatabaseObjects
         {
 
         }
-
     }
 
     /// <summary>

@@ -6,14 +6,14 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Configuration;
 using System.Data.SqlClient;
+using DatabaseObjects;
 
 public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserControl
 {
-
     public event EventHandler patientCareCanceled;
     public event EventHandler patientCareSaved;
 
-    public string[] months = { "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec",""};
+    public string[] months = {"", "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec", null};
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -21,8 +21,13 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
 
         if (datepickerMonth.Items.Count == 0)
         {
-            while (String.IsNullOrEmpty(months[count]) == false)
-                datepickerMonth.Items.Add(new ListItem(months[count++]));
+            while (months[count] != null)
+            {
+                if (months[count].Length > 0)
+                    datepickerMonth.Items.Add(new ListItem(months[count++]));
+                else
+                    count++;
+            }
         }
 
         if (datepickerDay.Items.Count == 0)
@@ -57,79 +62,95 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
     {
         Session["EditPatientInformation"] = "true";
 
-        PatientInformation pi = new PatientInformation();
-        PatientDataContext patientDC = new PatientDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);
+        Patient patient = new Patient();
+        patient.Id= Int32.Parse(Session["PatientID"].ToString());
 
-        int patientID = Int32.Parse(Session["PatientID"].ToString());
+        PatientInformationTableManager patientTableMgr = new PatientInformationTableManager();
 
-        IQueryable<PatientInformation> apatient = from patients in patientDC.PatientInformations where (patients.Id == patientID) select patients;
-        pi = apatient.Single<PatientInformation>();
+        patient = patientTableMgr.FindPatient(patient);
 
-        txtboxFirstName.Text = pi.FirstName;
-        txtboxLastName.Text = pi.LastName;
-        
-        DateTime dt = pi.BirthDate.Value;
+        //PatientInformation pi = new PatientInformation();
+        //PatientDataContext patientDC = new PatientDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);
+        //IQueryable<PatientInformation> apatient = from patients in patientDC.PatientInformations where (patients.Id == patientID) select patients;
+        //pi = apatient.Single<PatientInformation>();
 
-        datepickerMonth.Text = months[DateTime.Parse(pi.BirthDate.ToString()).Month];
-        datepickerDay.Text = DateTime.Parse(pi.BirthDate.ToString()).Day.ToString();
-        datepickerYear.Text = DateTime.Parse(pi.BirthDate.ToString()).Year.ToString();
+        txtboxFirstName.Text = patient.FirstName;
+        txtboxLastName.Text = patient.LastName;
 
-        txtboxPhone.Text= pi.TelephoneNumber;
-        txtboxEmailAddress.Text = pi.EmailAddress;        
+        int m = DateTime.Parse(patient.Birthday.ToString()).Month;
+
+        datepickerMonth.Text = months[m];
+        datepickerDay.Text = DateTime.Parse(patient.Birthday.ToString()).Day.ToString();
+        datepickerYear.Text = DateTime.Parse(patient.Birthday.ToString()).Year.ToString();
+
+        txtboxPhone.Text= patient.PhoneNumber;
+        txtboxEmailAddress.Text = patient.Email;        
     }
 
     protected void btnSavePatient_Click(object sender, EventArgs e)
     {
+        int patientId = 0;
         PatientInformation pi = new PatientInformation();
         PatientDataContext patientDC = new PatientDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);
+        
+        PatientInformationTableManager patientTableMgr = new PatientInformationTableManager();
+        DatabaseObjects.Patient patientInformation = new DatabaseObjects.Patient();
 
-        if (Session["EditPatientInformation"] == null)
-        {
-            pi.FirstName = txtboxFirstName.Text;
-            pi.LastName = txtboxLastName.Text;
-            pi.BirthDate = DateTime.Parse(String.Format("{0}/{1}/{2} 00:00:00", datepickerMonth.SelectedValue, datepickerDay.SelectedValue, datepickerYear.SelectedValue));
-            pi.TelephoneNumber = txtboxPhone.Text;
-            pi.EmailAddress = txtboxEmailAddress.Text;
+        patientInformation.Id = 0;
 
-            try
-            {
-                patientDC.PatientInformations.InsertOnSubmit(pi);
-                patientDC.SubmitChanges();
+        if ((Session["PatientID"] != null) && (Int32.TryParse(Session["PatientID"].ToString(), out patientId)))
+            patientInformation.Id = patientId;
 
-                if (patientCareSaved != null)
-                    patientCareSaved(this, new EventArgs());
+        patientInformation.FirstName = txtboxFirstName.Text;
+        patientInformation.LastName = txtboxLastName.Text;
+        patientInformation.Birthday = DateTime.Parse(String.Format("{0}/{1}/{2} 00:00:00", datepickerMonth.SelectedValue, datepickerDay.SelectedValue, datepickerYear.SelectedValue));
+        patientInformation.PhoneNumber = txtboxPhone.Text;
+        patientInformation.Email = txtboxEmailAddress.Text;
 
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-        else
-        {
-            int patientID = Int32.Parse(Session["PatientID"].ToString());
+        patientTableMgr.Update(patientInformation);
 
-            IQueryable<PatientInformation> apatient = from patients in patientDC.PatientInformations where (patients.Id == patientID) select patients;
-            pi = apatient.Single<PatientInformation>();
-            pi.FirstName = txtboxFirstName.Text;
-            pi.LastName = txtboxLastName.Text;          
-            pi.BirthDate = DateTime.Parse(String.Format("{0}/{1}/{2} 00:00:00", datepickerMonth.SelectedValue, datepickerDay.SelectedValue, datepickerYear.SelectedValue));
-            pi.TelephoneNumber = txtboxPhone.Text;
-            pi.EmailAddress = txtboxEmailAddress.Text;
+        if (patientCareSaved != null)
+            patientCareSaved(this, new EventArgs());
 
-            try
-            {
-                patientDC.SubmitChanges();
-
-                Session["EditPatientInformation"] = null;
-
-                if (patientCareSaved != null)
-                    patientCareSaved(this, new EventArgs());
-            }
-            catch (Exception ex)
-            {
-            }            
-        }
-
+        //if (Session["EditPatientInformation"] == null)
+        //{
+        //    pi.FirstName = ;
+        //    pi.LastName = txtboxLastName.Text;
+        //    pi.BirthDate = DateTime.Parse(String.Format("{0}/{1}/{2} 00:00:00", datepickerMonth.SelectedValue, datepickerDay.SelectedValue, datepickerYear.SelectedValue));
+        //    pi.TelephoneNumber = txtboxPhone.Text;
+        //    pi.EmailAddress = txtboxEmailAddress.Text;
+        //    try
+        //    {
+        //        patientDC.PatientInformations.InsertOnSubmit(pi);
+        //        patientDC.SubmitChanges();
+        //        if (patientCareSaved != null)
+        //            patientCareSaved(this, new EventArgs());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //    }
+        //}
+        //else
+        //{
+        //    int patientID = Int32.Parse(Session["PatientID"].ToString());
+        //    IQueryable<PatientInformation> apatient = from patients in patientDC.PatientInformations where (patients.Id == patientID) select patients;
+        //    pi = apatient.Single<PatientInformation>();
+        //    pi.FirstName = txtboxFirstName.Text;
+        //    pi.LastName = txtboxLastName.Text;          
+        //    pi.BirthDate = DateTime.Parse(String.Format("{0}/{1}/{2} 00:00:00", datepickerMonth.SelectedValue, datepickerDay.SelectedValue, datepickerYear.SelectedValue));
+        //    pi.TelephoneNumber = txtboxPhone.Text;
+        //    pi.EmailAddress = txtboxEmailAddress.Text;
+        //    try
+        //    {
+        //        patientDC.SubmitChanges();
+        //        Session["EditPatientInformation"] = null;
+        //        if (patientCareSaved != null)
+        //            patientCareSaved(this, new EventArgs());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //    }            
+        //}
     }
 
     protected void btnCancel_Click(object sender, EventArgs e)
