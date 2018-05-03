@@ -55,22 +55,54 @@ namespace DatabaseObjects
         public void Update(PatientAppointment patientAppt)
         {
             PatientAppointmentInformation patientRecord1 = null;
+            bool insert = false;
 
-            var appointmentquery = from patients in patientApptDataContext.PatientAppointmentInformations where patients.GUID == patientAppt.ApptId select patients;
-            patientRecord1 = appointmentquery.First();
+            try
+            {
+                var appointmentquery = from patients in patientApptDataContext.PatientAppointmentInformations where patients.GUID == patientAppt.ApptId select patients;
+                patientRecord1 = appointmentquery.First();
 
-            patientRecord1.LV = patientAppt.PulseLV;
-            patientRecord1.RLU = patientAppt.PulseRLU;
-            patientRecord1.KD1 = patientAppt.PulseKD1;
-            patientRecord1.SP = patientAppt.PulseSP;
-            patientRecord1.LHT = patientAppt.PulseLHT;
-            patientRecord1.KD2 = patientAppt.PulseKD2; 
+                patientRecord1.LV = patientAppt.PulseLV;
+                patientRecord1.RLU = patientAppt.PulseRLU;
+                patientRecord1.KD1 = patientAppt.PulseKD1;
+                patientRecord1.SP = patientAppt.PulseSP;
+                patientRecord1.LHT = patientAppt.PulseLHT;
+                patientRecord1.KD2 = patientAppt.PulseKD2;
 
-            patientRecord1.ImageBeforeTherapy = patientAppt.ImageBefore;
-            patientRecord1.ImageAfterTherapy = patientAppt.ImageAfter;
+                patientRecord1.ImageBeforeTherapy = patientAppt.ImageBefore;
+                patientRecord1.ImageAfterTherapy = patientAppt.ImageAfter;
 
-            patientRecord1.TherapyPerformed = patientAppt.OilsAndTherapy;
-            patientRecord1.SessionGoals = patientAppt.SessionGoals;
+                patientRecord1.TherapyPerformed = patientAppt.OilsAndTherapy;
+                patientRecord1.SessionGoals = patientAppt.SessionGoals;           
+            }
+            catch (Exception ex)
+            {
+                ex.GetHashCode();
+                insert = true;
+            }
+
+            if (insert)
+            {
+                patientRecord1 = new PatientAppointmentInformation();
+                patientRecord1.GUID = Guid.NewGuid();
+
+                patientRecord1.LV = patientAppt.PulseLV;
+                patientRecord1.RLU = patientAppt.PulseRLU;
+                patientRecord1.KD1 = patientAppt.PulseKD1;
+                patientRecord1.SP = patientAppt.PulseSP;
+                patientRecord1.LHT = patientAppt.PulseLHT;
+                patientRecord1.KD2 = patientAppt.PulseKD2;
+
+                patientRecord1.ImageBeforeTherapy = patientAppt.ImageBefore;
+                patientRecord1.ImageAfterTherapy = patientAppt.ImageAfter;
+                
+                patientRecord1.TherapyPerformed = patientAppt.OilsAndTherapy;
+                patientRecord1.SessionGoals = patientAppt.SessionGoals;
+
+                patientApptDataContext.PatientAppointmentInformations.InsertOnSubmit(patientRecord1);
+            }
+
+            patientApptDataContext.SubmitChanges();
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Globalization;
 using System.Web.Configuration;
+using DatabaseObjects;
 
 public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
 {
@@ -147,69 +148,92 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
         string therapy = txtBoxTherapyPerformed.Text;                
         string sessionGoals = txtBoxSessionGoals.Text;
 
-        PatientAppointmentInfomationDataContext patientApptDataContext = new PatientAppointmentInfomationDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);
-        PatientAppointmentInformation patientAppointmentInformation = new PatientAppointmentInformation();
+        //PatientAppointmentInfomationDataContext patientApptDataContext = new PatientAppointmentInfomationDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);
+        //PatientAppointmentInformation patientAppointmentInformation = new PatientAppointmentInformation();
+        
+        PatientAppointment patientAppointmentInformation = new PatientAppointment();
+        PatientAppointmentInformationTableManager patApptMgr = new PatientAppointmentInformationTableManager();
+
+        patientAppointmentInformation.ApptId = Guid.Empty;
+
+        if (Session["PatientHistoryGuid"] != null)
+            patientAppointmentInformation.ApptId = Guid.Parse(Session["PatientHistoryGuid"].ToString());
+        
+        patientAppointmentInformation.AppointmentDate = DateTime.Parse(Session["PatientApptStartDateTime"].ToString());
+        patientAppointmentInformation.ImageAfter = "";
+        patientAppointmentInformation.ImageBefore = "";
+        patientAppointmentInformation.OilsAndTherapy = "";
+        patientAppointmentInformation.SessionGoals = "";
+        patientAppointmentInformation.PulseKD1 = "";
+        patientAppointmentInformation.PulseKD2 = "";
+        patientAppointmentInformation.PulseLHT = "";
+        patientAppointmentInformation.PulseLV = "";
+        patientAppointmentInformation.PulseRLU= "";
+        patientAppointmentInformation.PulseSP= "";
+        
+        patApptMgr.Update(patientAppointmentInformation);
+        
 
         // new appointment
-        if (Session["EditPatient"] == null)
-        {
-            string apptDateStr = DateTime.Now.ToShortDateString() + " " + DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();
-            DateTime apptDate = DateTime.Parse(apptDateStr);
-            Guid patientAppt = Guid.NewGuid();
+        //if (Session["EditPatient"] == null)
+        //{
+            //string apptDateStr = DateTime.Now.ToShortDateString() + " " + DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();
+            //DateTime apptDate = DateTime.Parse(apptDateStr);
+            //Guid patientAppt = Guid.NewGuid();
 
-            patientAppointmentInformation.ApptDate = apptDate;
-            patientAppointmentInformation.PatientId = long.Parse(Session["PatientID"].ToString());
-            patientAppointmentInformation.GUID = patientAppt;
+            //patientAppointmentInformation.ApptDate = apptDate;
+            //patientAppointmentInformation.PatientId = long.Parse(Session["PatientID"].ToString());
+            //patientAppointmentInformation.GUID = patientAppt;
 
-            patientAppointmentInformation.ImageBeforeTherapy = ImageBefore.ImageUrl;
-            patientAppointmentInformation.ImageAfterTherapy = ImageAfter.ImageUrl;
+            //patientAppointmentInformation.ImageBeforeTherapy = ImageBefore.ImageUrl;
+            //patientAppointmentInformation.ImageAfterTherapy = ImageAfter.ImageUrl;
 
-            patientAppointmentInformation.RLU = rlu;
-            patientAppointmentInformation.SP = sp;
-            patientAppointmentInformation.KD1 = kd1;
+            //patientAppointmentInformation.RLU = rlu;
+            //patientAppointmentInformation.SP = sp;
+            //patientAppointmentInformation.KD1 = kd1;
 
-            patientAppointmentInformation.LHT = lht;
-            patientAppointmentInformation.LV = lv;
-            patientAppointmentInformation.KD2 = kd2;
+            //patientAppointmentInformation.LHT = lht;
+            //patientAppointmentInformation.LV = lv;
+            //patientAppointmentInformation.KD2 = kd2;
 
-            patientAppointmentInformation.TherapyPerformed = therapy;
-            patientAppointmentInformation.SessionGoals = sessionGoals;
+            //patientAppointmentInformation.TherapyPerformed = therapy;
+            //patientAppointmentInformation.SessionGoals = sessionGoals;
 
-            patientApptDataContext.PatientAppointmentInformations.InsertOnSubmit(patientAppointmentInformation);
-            patientApptDataContext.SubmitChanges();
+            //patientApptDataContext.PatientAppointmentInformations.InsertOnSubmit(patientAppointmentInformation);
+            //patientApptDataContext.SubmitChanges();
 
-            string[] p = { ",", " ", "\r\n" };
+            //string[] p = { ",", " ", "\r\n" };
 
-        }
-        else
-        {
-            PatientAppointmentInfomationDataContext piDC = new PatientAppointmentInfomationDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);
-            PatientAppointmentInformation patientRecord1 = null;
-            Guid patientGuid = Guid.Empty;
+        //}
+        //else
+        //{
+        //    PatientAppointmentInfomationDataContext piDC = new PatientAppointmentInfomationDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);
+        //    PatientAppointmentInformation patientRecord1 = null;
+        //    Guid patientGuid = Guid.Empty;
 
-            if (Session["PatientHistoryGuid"] != null)
-            {
-                string guidstring = Session["PatientHistoryGuid"].ToString();
-                patientGuid = Guid.Parse(guidstring);
-            }
+        //    if (Session["PatientHistoryGuid"] != null)
+        //    {
+        //        string guidstring = Session["PatientHistoryGuid"].ToString();
+        //        patientGuid = Guid.Parse(guidstring);
+        //    }
 
-            var appointmentquery = from patients in piDC.PatientAppointmentInformations where patients.GUID == patientGuid select patients;
-            patientRecord1 = appointmentquery.First();
+        //    var appointmentquery = from patients in piDC.PatientAppointmentInformations where patients.GUID == patientGuid select patients;
+        //    patientRecord1 = appointmentquery.First();
 
-            patientRecord1.LV = LV.Text;
-            patientRecord1.RLU = RLU.Text;
-            patientRecord1.KD1 = KD1.Text;
-            patientRecord1.SP = SP.Text;
-            patientRecord1.LHT = LHT.Text;            
-            patientRecord1.KD2 = KD2.Text;
+        //    patientRecord1.LV = LV.Text;
+        //    patientRecord1.RLU = RLU.Text;
+        //    patientRecord1.KD1 = KD1.Text;
+        //    patientRecord1.SP = SP.Text;
+        //    patientRecord1.LHT = LHT.Text;            
+        //    patientRecord1.KD2 = KD2.Text;
 
-            patientRecord1.ImageBeforeTherapy = ImageBefore.ImageUrl;
-            patientRecord1.ImageAfterTherapy = ImageAfter.ImageUrl;
+        //    patientRecord1.ImageBeforeTherapy = ImageBefore.ImageUrl;
+        //    patientRecord1.ImageAfterTherapy = ImageAfter.ImageUrl;
 
-            patientRecord1.TherapyPerformed = txtBoxTherapyPerformed.Text;
-            patientRecord1.SessionGoals = txtBoxSessionGoals.Text;
+        //    patientRecord1.TherapyPerformed = txtBoxTherapyPerformed.Text;
+        //    patientRecord1.SessionGoals = txtBoxSessionGoals.Text;
             
-            piDC.SubmitChanges();
-        }
+        //    piDC.SubmitChanges();
+        //}
     }
 }

@@ -136,6 +136,8 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
             AddEditPatientControl1.Visible = false;            
             PatientHistoryControl1.Visible = false;
 
+            Session["PatientApptStartDateTime"] = DateTime.Now;
+
             PatientApptControl1.Visible = true;
             Response.Clear();
 
