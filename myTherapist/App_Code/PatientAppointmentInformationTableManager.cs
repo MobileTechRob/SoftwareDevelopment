@@ -52,6 +52,11 @@ namespace DatabaseObjects
 
         }
 
+        public PatientAppointment FindPatientAppointment(PatientAppointment patientAppt)
+        {
+            return patientAppt;
+        }
+
         public void Update(PatientAppointment patientAppt)
         {
             PatientAppointmentInformation patientRecord1 = null;
