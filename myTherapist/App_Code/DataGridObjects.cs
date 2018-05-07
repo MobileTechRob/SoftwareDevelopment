@@ -150,7 +150,7 @@ namespace DataGridObjects
                 _totalNumberOfTableRows = (int)databaseCommand.ExecuteScalar();
                 sqlSelectClause.Clear();
 
-                NumberOfCompletedPages = _totalNumberOfTableRows / NumberRowsToDisplay;
+                NumberOfCompletedPages = _totalNumberOfTableRows / Math.Max(NumberRowsToDisplay, 10);
 
                 sqlSelectClause.Append("SELECT ");
 

@@ -93,43 +93,32 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
 
         if ((Session["EditPatientAppt"] != null) && (Session["EditPatientAppt"].ToString() == "true"))
         {
-            //PatientAppointmentInfomationDataContext piDC = new PatientAppointmentInfomationDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);   
-            //PatientAppointmentInformation patientRecord1 = null;
+            patientAppointmentInformation.ApptId = Guid.Parse(Session[CommonDefinitions.CommonDefinitions.PATIENT_HISTORY_GUID].ToString());
+            patientAppointmentInformation = patApptMgr.FindPatientAppointment(patientAppointmentInformation);
 
-            patientAppointmentInformation.ApptId = Guid.Parse(Session["PatientHistoryGuid"].ToString());
+            if (!string.IsNullOrEmpty(patientAppointmentInformation.PulseRLU.Trim()))
+                RLU.SelectedValue = patientAppointmentInformation.PulseRLU.Trim();
 
-            //if (Session["PatientHistoryGuid"] != null)
-            //{
-              //  string guidstring = Session["PatientHistoryGuid"].ToString();
-              //  patientGuid = Guid.Parse(guidstring);
-            //}
+            if (!string.IsNullOrEmpty(patientAppointmentInformation.PulseSP.Trim()))
+                SP.SelectedValue = patientAppointmentInformation.PulseSP.Trim();
 
-            var appointmentquery = from patients in piDC.PatientAppointmentInformations where patients.GUID == patientGuid  select patients;
-            patientRecord1 = appointmentquery.First();
+            if (!string.IsNullOrEmpty(patientAppointmentInformation.PulseKD1.Trim()))
+                KD1.SelectedValue = patientAppointmentInformation.PulseKD1.Trim();
 
-            if (!string.IsNullOrEmpty(patientRecord1.RLU.Trim()))
-                RLU.SelectedValue = patientRecord1.RLU.Trim();
+            if (!string.IsNullOrEmpty(patientAppointmentInformation.PulseLHT.Trim()))
+                LHT.SelectedValue = patientAppointmentInformation.PulseLHT.Trim();
 
-            if (!string.IsNullOrEmpty(patientRecord1.SP.Trim()))
-                SP.SelectedValue = patientRecord1.SP.Trim();
+            if (!string.IsNullOrEmpty(patientAppointmentInformation.PulseLV.Trim()))
+                LV.SelectedValue = patientAppointmentInformation.PulseLV.Trim();
 
-            if (!string.IsNullOrEmpty(patientRecord1.KD1.Trim()))
-                KD1.SelectedValue = patientRecord1.KD1.Trim();
+            if (!string.IsNullOrEmpty(patientAppointmentInformation.PulseKD2.Trim()))
+                KD2.SelectedValue = patientAppointmentInformation.PulseKD2.Trim();
 
-            if (!string.IsNullOrEmpty(patientRecord1.LHT.Trim()))
-                LHT.SelectedValue = patientRecord1.LHT.Trim();
+            ImageBefore.ImageUrl = patientAppointmentInformation.ImageBeforeTherapy;
+            ImageAfter.ImageUrl = patientAppointmentInformation.ImageAfterTherapy;
 
-            if (!string.IsNullOrEmpty(patientRecord1.LV.Trim()))
-                LV.SelectedValue = patientRecord1.LV.Trim();
-
-            if (!string.IsNullOrEmpty(patientRecord1.KD2.Trim()))
-                KD2.SelectedValue = patientRecord1.KD2.Trim();
-
-            ImageBefore.ImageUrl = patientRecord1.ImageBeforeTherapy;
-            ImageAfter.ImageUrl = patientRecord1.ImageAfterTherapy;
-
-            txtBoxTherapyPerformed.Text = patientRecord1.TherapyPerformed;
-            txtBoxSessionGoals.Text = patientRecord1.SessionGoals;            
+            txtBoxTherapyPerformed.Text = patientAppointmentInformation.OilsAndTherapy;
+            txtBoxSessionGoals.Text = patientAppointmentInformation.SessionGoals;            
         }
     }
 
@@ -140,12 +129,13 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
 
         patientAppointmentInformation.ApptId = Guid.Empty;
 
-        if (Session["PatientHistoryGuid"] != null)
-            patientAppointmentInformation.ApptId = Guid.Parse(Session["PatientHistoryGuid"].ToString());
-        
-        patientAppointmentInformation.AppointmentDate = DateTime.Parse(Session["PatientApptStartDateTime"].ToString());
-        patientAppointmentInformation.ImageBefore = uploadImageBefore.FileName;
-        patientAppointmentInformation.ImageAfter = uploadImageAfter.FileName;        
+        if (Session[CommonDefinitions.CommonDefinitions.PATIENT_HISTORY_GUID] != null)
+            patientAppointmentInformation.ApptId = Guid.Parse(Session[CommonDefinitions.CommonDefinitions.PATIENT_HISTORY_GUID].ToString());
+       
+        patientAppointmentInformation.PatientId = Int32.Parse(Session[CommonDefinitions.CommonDefinitions.PATIENT_ID].ToString());
+        patientAppointmentInformation.AppointmentDate = DateTime.Parse(Session[CommonDefinitions.CommonDefinitions.PATIENT_APPT_START_DATE_TIME].ToString());
+        patientAppointmentInformation.ImageBeforeTherapy = uploadImageBefore.FileName;
+        patientAppointmentInformation.ImageAfterTherapy = uploadImageAfter.FileName;        
         patientAppointmentInformation.OilsAndTherapy = txtBoxTherapyPerformed.Text; 
         patientAppointmentInformation.SessionGoals = txtBoxSessionGoals.Text;
         patientAppointmentInformation.PulseKD1 = KD1.Text;

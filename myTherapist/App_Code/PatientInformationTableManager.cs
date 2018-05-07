@@ -36,6 +36,8 @@ namespace DatabaseObjects
             //
             pi = new PatientInformation();
             patientDC = new PatientDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);
+
+
         }
 
         public void Update(Patient patient)
@@ -72,6 +74,14 @@ namespace DatabaseObjects
 
         public void Delete(Patient patient)
         {
+            PatientDataContext patientDC = new PatientDataContext("Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf; Integrated Security = True");
+            PatientInformation patientToDelete = new PatientInformation();
+
+
+            patientToDelete = patientDC.PatientInformations.Single(patientRecord => patientRecord.Id == patient.Id);
+            patientDC.PatientInformations.DeleteOnSubmit(patientToDelete);
+            patientDC.SubmitChanges();
+           
 
         }
 

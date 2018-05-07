@@ -8,6 +8,7 @@ namespace DatabaseObjects
 {
     public class PatientAppointment
     {
+        public int PatientId { get; set; }
         public Guid ApptId { get; set; }
         public DateTime AppointmentDate { get; set; }
 
@@ -18,8 +19,8 @@ namespace DatabaseObjects
         public string PulseLHT { get; set; }
         public string PulseLV { get; set; }
         
-        public string ImageBefore { get; set; }
-        public string ImageAfter { get; set; }
+        public string ImageBeforeTherapy { get; set; }
+        public string ImageAfterTherapy { get; set; }
 
         public string OilsAndTherapy { get; set; }
         public string SessionGoals { get; set; }
@@ -47,9 +48,16 @@ namespace DatabaseObjects
             patientAppointmentInformation = new PatientAppointmentInformation();
         }
 
-        public void Delete(PatientAppointment patientAppt)
+        public void Delete(PatientAppointment patientApptInfo)
         {
+            var patientApptsToDelete = patientApptDataContext.PatientAppointmentInformations.Select(patientAppt => patientAppt.ApptId == patientApptInfo.ApptId);
 
+            if (patientApptsToDelete.Count() > 0)
+            {
+                IEnumerable<PatientAppointmentInformation> patientApptDelete = (from patientAppts in patientApptDataContext.PatientAppointmentInformations where patientAppts.PatientId == patientApptInfo.PatientId select patientAppts);
+                patientApptDataContext.PatientAppointmentInformations.DeleteAllOnSubmit(patientApptDelete);
+                patientApptDataContext.SubmitChanges();
+            }
         }
 
         public PatientAppointment FindPatientAppointment(PatientAppointment patientAppt)
@@ -64,7 +72,7 @@ namespace DatabaseObjects
 
             try
             {
-                var appointmentquery = from patients in patientApptDataContext.PatientAppointmentInformations where patients.GUID == patientAppt.ApptId select patients;
+                var appointmentquery = from patients in patientApptDataContext.PatientAppointmentInformations where patients.ApptId == patientAppt.ApptId select patients;
                 patientRecord1 = appointmentquery.First();
 
                 patientRecord1.LV = patientAppt.PulseLV;
@@ -74,8 +82,8 @@ namespace DatabaseObjects
                 patientRecord1.LHT = patientAppt.PulseLHT;
                 patientRecord1.KD2 = patientAppt.PulseKD2;
 
-                patientRecord1.ImageBeforeTherapy = patientAppt.ImageBefore;
-                patientRecord1.ImageAfterTherapy = patientAppt.ImageAfter;
+                patientRecord1.ImageBeforeTherapy = patientAppt.ImageBeforeTherapy;
+                patientRecord1.ImageAfterTherapy = patientAppt.ImageAfterTherapy;
 
                 patientRecord1.TherapyPerformed = patientAppt.OilsAndTherapy;
                 patientRecord1.SessionGoals = patientAppt.SessionGoals;           
@@ -89,8 +97,9 @@ namespace DatabaseObjects
             if (insert)
             {
                 patientRecord1 = new PatientAppointmentInformation();
-                patientRecord1.GUID = Guid.NewGuid();
-
+                patientRecord1.PatientId = patientAppt.PatientId;
+                patientRecord1.ApptId = Guid.NewGuid();
+                patientRecord1.ApptDate = patientAppt.AppointmentDate;
                 patientRecord1.LV = patientAppt.PulseLV;
                 patientRecord1.RLU = patientAppt.PulseRLU;
                 patientRecord1.KD1 = patientAppt.PulseKD1;
@@ -98,8 +107,8 @@ namespace DatabaseObjects
                 patientRecord1.LHT = patientAppt.PulseLHT;
                 patientRecord1.KD2 = patientAppt.PulseKD2;
 
-                patientRecord1.ImageBeforeTherapy = patientAppt.ImageBefore;
-                patientRecord1.ImageAfterTherapy = patientAppt.ImageAfter;
+                patientRecord1.ImageBeforeTherapy = patientAppt.ImageBeforeTherapy;
+                patientRecord1.ImageAfterTherapy = patientAppt.ImageAfterTherapy;
                 
                 patientRecord1.TherapyPerformed = patientAppt.OilsAndTherapy;
                 patientRecord1.SessionGoals = patientAppt.SessionGoals;

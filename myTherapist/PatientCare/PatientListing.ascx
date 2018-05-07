@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="PatientListing.ascx.cs" Inherits="PatientCare_PatientListing" %>
 <link rel="stylesheet" runat="server" href="sitestyles.css" id="stylesheetlink" /> 
 
-<h2>Patient Listing</h2>
+<h3>Patient Listing</h3>
 
 <asp:Label runat="server" ID="lblFirstName" Text="First Name "></asp:Label><asp:TextBox runat="server" ID="txtBoxPatientFirstName"></asp:TextBox>&nbsp&nbsp&nbsp<asp:Label runat="server" ID="lblLastName" Text="Last Name "></asp:Label><asp:TextBox runat="server" ID="txtBoxPatientLastName"></asp:TextBox>&nbsp&nbsp&nbsp<asp:Button runat="server" ID="btnSearch" Text="Search" OnClick="btnSearch_Click" />
 <br />

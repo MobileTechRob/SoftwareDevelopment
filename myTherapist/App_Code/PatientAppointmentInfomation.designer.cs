@@ -21,7 +21,7 @@ using System.Reflection;
 
 
 
-[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="myTherapist")]
+[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="MyTherapist")]
 public partial class PatientAppointmentInfomationDataContext : System.Data.Linq.DataContext
 {
 	
@@ -35,7 +35,7 @@ public partial class PatientAppointmentInfomationDataContext : System.Data.Linq.
   #endregion
 	
 	public PatientAppointmentInfomationDataContext() : 
-			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["myTherapistConnectionString"].ConnectionString, mappingSource)
+			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString, mappingSource)
 	{
 		OnCreated();
 	}
@@ -105,7 +105,7 @@ public partial class PatientAppointmentInformation : INotifyPropertyChanging, IN
 	
 	private string _ImageAfterTherapy;
 	
-	private System.Guid _GUID;
+	private System.Guid _ApptId;
 	
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -137,8 +137,8 @@ public partial class PatientAppointmentInformation : INotifyPropertyChanging, IN
     partial void OnImageBeforeTherapyChanged();
     partial void OnImageAfterTherapyChanging(string value);
     partial void OnImageAfterTherapyChanged();
-    partial void OnGUIDChanging(System.Guid value);
-    partial void OnGUIDChanged();
+    partial void OnApptIdChanging(System.Guid value);
+    partial void OnApptIdChanged();
     #endregion
 	
 	public PatientAppointmentInformation()
@@ -146,7 +146,7 @@ public partial class PatientAppointmentInformation : INotifyPropertyChanging, IN
 		OnCreated();
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApptDate", DbType="DateTime NOT NULL", IsPrimaryKey=true)]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApptDate", DbType="DateTime NOT NULL")]
 	public System.DateTime ApptDate
 	{
 		get
@@ -166,7 +166,7 @@ public partial class PatientAppointmentInformation : INotifyPropertyChanging, IN
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PatientId", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PatientId", DbType="BigInt NOT NULL")]
 	public long PatientId
 	{
 		get
@@ -406,22 +406,22 @@ public partial class PatientAppointmentInformation : INotifyPropertyChanging, IN
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GUID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-	public System.Guid GUID
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApptId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+	public System.Guid ApptId
 	{
 		get
 		{
-			return this._GUID;
+			return this._ApptId;
 		}
 		set
 		{
-			if ((this._GUID != value))
+			if ((this._ApptId != value))
 			{
-				this.OnGUIDChanging(value);
+				this.OnApptIdChanging(value);
 				this.SendPropertyChanging();
-				this._GUID = value;
-				this.SendPropertyChanged("GUID");
-				this.OnGUIDChanged();
+				this._ApptId = value;
+				this.SendPropertyChanged("ApptId");
+				this.OnApptIdChanged();
 			}
 		}
 	}

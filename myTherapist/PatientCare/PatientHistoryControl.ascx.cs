@@ -46,7 +46,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         DatabaseRowObject dbRowObject = new DatabaseRowObject();
                 
         dbRowObject.AddColumn("ApptDate", "Appointment Date", MyDataTypes.DATETIME, true, 35);
-        dbRowObject.AddColumn("GUID", "", MyDataTypes.GUID, true, 35);
+        dbRowObject.AddColumn("ApptId", "", MyDataTypes.GUID, true, 35);
         dbRowObject.AddColumn("RLU", "RLU", MyDataTypes.STRING, false, 0);
         dbRowObject.AddColumn("SP", "SP", MyDataTypes.STRING, false, 0);
         dbRowObject.AddColumn("KD1", "KD", MyDataTypes.STRING, false, 0);
@@ -76,7 +76,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
             }
         }
 
-        dataGridObj.AddWhereClauseArgument("PatientId", Session["PatientId"].ToString());
+        dataGridObj.AddWhereClauseArgument("PatientId", Session[CommonDefinitions.CommonDefinitions.PATIENT_ID].ToString());
 
         LinkButton linkButtonPatient = null;
         LinkButton linkButtonApptDate = null;
@@ -92,9 +92,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         linkButtonPatient.CommandArgument = Session["PatientId"].ToString();
         
         cell.Controls.Add(linkButtonPatient);
-
-        row.Cells.Add(cell);       
-              
+        row.Cells.Add(cell);                     
         PatientApptData.Rows.Add(row);
 
         // spacer
@@ -105,70 +103,77 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         row.Cells.Add(cell);
         PatientApptData.Rows.Add(row);
 
-        row = new TableRow();
-        cell = new TableCell();
-        Image img = null;
-
-        cell = new TableCell();
-        cell.Text = " ";
-        row.Cells.Add(cell);
-
-        cell = new TableCell();
-        cell.Style["font-weight"] = "bold";
-        cell.Text = "RLU";
-        row.Cells.Add(cell);
-
-        cell = new TableCell();
-        cell.Text = "SP";
-        cell.Style["font-weight"] = "bold";
-        row.Cells.Add(cell);
-
-        cell = new TableCell();
-        cell.Style["font-weight"] = "bold";
-        cell.Text = "KD1";
-        row.Cells.Add(cell);
-
-        cell = new TableCell();
-        cell.Style["font-weight"] = "bold";
-        cell.Text = "LHT";
-        row.Cells.Add(cell);
-
-        cell = new TableCell();
-        cell.Style["font-weight"] = "bold";
-        cell.Text = "LV";
-        row.Cells.Add(cell);
-
-        cell = new TableCell();
-        cell.Style["font-weight"] = "bold";
-        cell.Text = "KD2";
-        row.Cells.Add(cell);
-
-        PatientApptData.Rows.Add(row);
-
         DataTable appointmentInfo = dataGridObj.BuildTable();
+        DataRow dataRow = null;
 
         System.Collections.IEnumerator iter = null;
 
         if (appointmentInfo.Rows.Count == 0)
         {
-
+            row = new TableRow();
+            cell = new TableCell();
+            Label label = new Label();
+            label.Text = "No Appointments Found";
+            cell.Controls.Add(label);
+            row.Cells.Add(cell);
+            PatientApptData.Rows.Add(row);
         }
         else
         {
+            row = new TableRow();
+            cell = new TableCell();
+            Image img = null;
+
+            cell = new TableCell();
+            cell.Text = " ";
+            row.Cells.Add(cell);
+
+            cell = new TableCell();
+            cell.Style["font-weight"] = "bold";
+            cell.Text = "RLU";
+            row.Cells.Add(cell);
+
+            cell = new TableCell();
+            cell.Text = "SP";
+            cell.Style["font-weight"] = "bold";
+            row.Cells.Add(cell);
+
+            cell = new TableCell();
+            cell.Style["font-weight"] = "bold";
+            cell.Text = "KD1";
+            row.Cells.Add(cell);
+
+            cell = new TableCell();
+            cell.Style["font-weight"] = "bold";
+            cell.Text = "LHT";
+            row.Cells.Add(cell);
+
+            cell = new TableCell();
+            cell.Style["font-weight"] = "bold";
+            cell.Text = "LV";
+            row.Cells.Add(cell);
+
+            cell = new TableCell();
+            cell.Style["font-weight"] = "bold";
+            cell.Text = "KD2";
+            row.Cells.Add(cell);
+
+            PatientApptData.Rows.Add(row);
+
             iter = appointmentInfo.Rows.GetEnumerator();
 
             while (iter.MoveNext())
             {
-                DataRow dataRow = (DataRow)iter.Current;
+                dataRow = (DataRow)iter.Current;
 
                 row = new TableRow();
                 cell = new TableCell();
                 linkButtonApptDate = new LinkButton();
                 linkButtonApptDate.Text = dataRow.ItemArray[0].ToString();
                 linkButtonApptDate.Command += linkButtonApptDate_Command;
-                linkButtonApptDate.CommandArgument = dataRow.ItemArray[dbRowObject.ColumnIndex("GUID")].ToString();
+                linkButtonApptDate.CommandArgument = dataRow.ItemArray[dbRowObject.ColumnIndex("ApptId")].ToString();
 
-                cell.Controls.Add(linkButtonApptDate);
+                cell.Controls.Add(linkButtonApptDate); 
                 row.Cells.Add(cell);
 
                 cell = new TableCell();
