@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Net.Security;
+using System.Security.Cryptography;
 
 namespace DataEncryption
 {
@@ -15,6 +17,12 @@ namespace DataEncryption
             //
             // TODO: Add constructor logic here
             //
+            Aes managedCrypt = AesManaged.Create();
+
+            Aes crypt = Aes.Create("SHA-512");
+
+            //crypt.CreateEncryptor()
+
         }
 
         public static string EncryptString()

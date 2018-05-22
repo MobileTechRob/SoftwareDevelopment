@@ -1,20 +1,24 @@
-﻿CREATE TABLE [dbo].[PatientInformation] (
-    [Id]              INT            IDENTITY (1, 1) NOT NULL,
-    [FirstName]       NVARCHAR (50)  NULL,
-    [EmailAddress]    NVARCHAR (MAX) NULL,
-    [TelephoneNumber] NVARCHAR (50)  NULL,
-    [LastName]        NVARCHAR (50)  NULL,
-    [BirthDate] DATE NULL, 
-    PRIMARY KEY CLUSTERED ([Id] ASC)
-);
-
-
+USE [MyTherapist]
 GO
-CREATE NONCLUSTERED INDEX [IX_PatientInformation_FirstName]
-    ON [dbo].[PatientInformation]([FirstName] ASC);
 
-
+/****** Object:  Table [dbo].[PatientInformation]    Script Date: 5/10/18 8:24:29 PM ******/
+SET ANSI_NULLS ON
 GO
-CREATE NONCLUSTERED INDEX [IX_PatientInformation_LastName]
-    ON [dbo].[PatientInformation]([LastName] ASC);
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[PatientInformation](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[FirstName] [nvarchar](50) NULL,
+	[EmailAddress] [nvarchar](max) NULL,
+	[TelephoneNumber] [nvarchar](50) NULL,
+	[LastName] [nvarchar](50) NULL,
+	[BirthDate] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
 
