@@ -21,7 +21,9 @@ namespace DataEncryption
 
             Aes crypt = Aes.Create("SHA-512");
 
-            //crypt.CreateEncryptor()
+            crypt.CreateEncryptor();
+
+
 
         }
 
