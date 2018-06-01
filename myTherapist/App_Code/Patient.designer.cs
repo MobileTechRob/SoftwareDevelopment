@@ -35,7 +35,7 @@ public partial class PatientDataContext : System.Data.Linq.DataContext
   #endregion
 	
 	public PatientDataContext() : 
-			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString, mappingSource)
+			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["MyTherapistConnectionString1"].ConnectionString, mappingSource)
 	{
 		OnCreated();
 	}
@@ -89,7 +89,7 @@ public partial class PatientInformation : INotifyPropertyChanging, INotifyProper
 	
 	private string _LastName;
 	
-	private System.Nullable<System.DateTime> _BirthDate;
+	private string _BirthDate;
 	
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -105,7 +105,7 @@ public partial class PatientInformation : INotifyPropertyChanging, INotifyProper
     partial void OnTelephoneNumberChanged();
     partial void OnLastNameChanging(string value);
     partial void OnLastNameChanged();
-    partial void OnBirthDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnBirthDateChanging(string value);
     partial void OnBirthDateChanged();
     #endregion
 	
@@ -214,8 +214,8 @@ public partial class PatientInformation : INotifyPropertyChanging, INotifyProper
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BirthDate", DbType="Date")]
-	public System.Nullable<System.DateTime> BirthDate
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BirthDate", DbType="NVarChar(50)")]
+	public string BirthDate
 	{
 		get
 		{

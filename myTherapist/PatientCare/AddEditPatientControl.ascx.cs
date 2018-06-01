@@ -69,11 +69,6 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
 
         patient = patientTableMgr.FindPatient(patient);
 
-        //PatientInformation pi = new PatientInformation();
-        //PatientDataContext patientDC = new PatientDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);
-        //IQueryable<PatientInformation> apatient = from patients in patientDC.PatientInformations where (patients.Id == patientID) select patients;
-        //pi = apatient.Single<PatientInformation>();
-
         txtboxFirstName.Text = patient.FirstName;
         txtboxLastName.Text = patient.LastName;
 
@@ -103,7 +98,7 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
 
         patientInformation.FirstName = txtboxFirstName.Text;
         patientInformation.LastName = txtboxLastName.Text;
-        patientInformation.Birthday = DateTime.Parse(String.Format("{0}/{1}/{2} 00:00:00", datepickerMonth.SelectedValue, datepickerDay.SelectedValue, datepickerYear.SelectedValue));
+        patientInformation.Birthday = String.Format("{0}/{1}/{2} 00:00:00", datepickerMonth.SelectedValue, datepickerDay.SelectedValue, datepickerYear.SelectedValue);
         patientInformation.PhoneNumber = txtboxPhone.Text;
         patientInformation.Email = txtboxEmailAddress.Text;
 
@@ -112,45 +107,6 @@ public partial class PatientCare_AddEditPatientControl : System.Web.UI.UserContr
         if (patientCareSaved != null)
             patientCareSaved(this, new EventArgs());
 
-        //if (Session["EditPatientInformation"] == null)
-        //{
-        //    pi.FirstName = ;
-        //    pi.LastName = txtboxLastName.Text;
-        //    pi.BirthDate = DateTime.Parse(String.Format("{0}/{1}/{2} 00:00:00", datepickerMonth.SelectedValue, datepickerDay.SelectedValue, datepickerYear.SelectedValue));
-        //    pi.TelephoneNumber = txtboxPhone.Text;
-        //    pi.EmailAddress = txtboxEmailAddress.Text;
-        //    try
-        //    {
-        //        patientDC.PatientInformations.InsertOnSubmit(pi);
-        //        patientDC.SubmitChanges();
-        //        if (patientCareSaved != null)
-        //            patientCareSaved(this, new EventArgs());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //    }
-        //}
-        //else
-        //{
-        //    int patientID = Int32.Parse(Session["PatientID"].ToString());
-        //    IQueryable<PatientInformation> apatient = from patients in patientDC.PatientInformations where (patients.Id == patientID) select patients;
-        //    pi = apatient.Single<PatientInformation>();
-        //    pi.FirstName = txtboxFirstName.Text;
-        //    pi.LastName = txtboxLastName.Text;          
-        //    pi.BirthDate = DateTime.Parse(String.Format("{0}/{1}/{2} 00:00:00", datepickerMonth.SelectedValue, datepickerDay.SelectedValue, datepickerYear.SelectedValue));
-        //    pi.TelephoneNumber = txtboxPhone.Text;
-        //    pi.EmailAddress = txtboxEmailAddress.Text;
-        //    try
-        //    {
-        //        patientDC.SubmitChanges();
-        //        Session["EditPatientInformation"] = null;
-        //        if (patientCareSaved != null)
-        //            patientCareSaved(this, new EventArgs());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //    }            
-        //}
     }
 
     protected void btnCancel_Click(object sender, EventArgs e)

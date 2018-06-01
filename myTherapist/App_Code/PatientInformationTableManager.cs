@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
+using MyTherapistEncryption;
 
 namespace DatabaseObjects
 {
-
     public class Patient
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime Birthday { get; set; }
+        public string Birthday { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
 
@@ -28,6 +28,7 @@ namespace DatabaseObjects
     {
         private PatientInformation pi = null;
         private PatientDataContext patientDC = null;
+        private MyTherapistEncryption.SecurityController dataEncryptionAlgorithm = null;
 
         public PatientInformationTableManager()
         {
@@ -36,8 +37,7 @@ namespace DatabaseObjects
             //
             pi = new PatientInformation();
             patientDC = new PatientDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);
-
-
+            dataEncryptionAlgorithm = new MyTherapistEncryption.SecurityController();
         }
 
         public void Update(Patient patient)
@@ -57,9 +57,10 @@ namespace DatabaseObjects
 
             pi.FirstName = patient.FirstName;
             pi.LastName = patient.LastName;
-            pi.BirthDate = patient.Birthday;
-            pi.TelephoneNumber = patient.PhoneNumber;
-            pi.EmailAddress = patient.Email;
+
+            pi.BirthDate = dataEncryptionAlgorithm.EncryptData(patient.Birthday);
+            pi.TelephoneNumber = dataEncryptionAlgorithm.EncryptData(patient.PhoneNumber);
+            pi.EmailAddress = dataEncryptionAlgorithm.EncryptData(patient.Email);
 
             if (insert)
             {
@@ -74,15 +75,13 @@ namespace DatabaseObjects
 
         public void Delete(Patient patient)
         {
-            PatientDataContext patientDC = new PatientDataContext("Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = C:\\SoftwareDevelopmentProjects\\WebProjects\\myTherapist\\myTherapist\\App_Data\\myTherapist.mdf; Integrated Security = True");
+            PatientDataContext patientDC = new PatientDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);
             PatientInformation patientToDelete = new PatientInformation();
 
 
             patientToDelete = patientDC.PatientInformations.Single(patientRecord => patientRecord.Id == patient.Id);
             patientDC.PatientInformations.DeleteOnSubmit(patientToDelete);
-            patientDC.SubmitChanges();
-           
-
+            patientDC.SubmitChanges();           
         }
 
         public Patient FindPatient(Patient patient)
@@ -94,9 +93,9 @@ namespace DatabaseObjects
                 pi = apatient.Single<PatientInformation>();
                 patient.FirstName = pi.FirstName;
                 patient.LastName = pi.LastName;
-                patient.Birthday = DateTime.Parse(pi.BirthDate.Value.ToShortDateString());
-                patient.PhoneNumber = pi.TelephoneNumber;
-                patient.Email = pi.EmailAddress;
+                patient.Birthday = dataEncryptionAlgorithm.DecryptData(pi.BirthDate);
+                patient.PhoneNumber = dataEncryptionAlgorithm.DecryptData(pi.TelephoneNumber);
+                patient.Email = dataEncryptionAlgorithm.DecryptData(pi.EmailAddress);
             }
             catch (Exception ex)
             {

@@ -35,6 +35,7 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         databaseColumnObj.DataType = MyDataTypes.INTEGER;        
         databaseColumnObj.IncludeInDataGrid = true;
         databaseColumnObj.OrderByColumn = true;
+        databaseColumnObj.Encrypted = false;
         databaseRowObject.AddColumn(databaseColumnObj);
 
         databaseColumnObj = new DatabaseRowObject.DatabaseColumnObject();
@@ -43,6 +44,7 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         databaseColumnObj.DataType = MyDataTypes.STRING;        
         databaseColumnObj.IncludeInDataGrid = true;
         databaseColumnObj.OrderByColumn = false;
+        databaseColumnObj.Encrypted = false;
         databaseRowObject.AddColumn(databaseColumnObj);
 
         databaseColumnObj = new DatabaseRowObject.DatabaseColumnObject();
@@ -51,14 +53,16 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         databaseColumnObj.DataType = MyDataTypes.STRING;        
         databaseColumnObj.IncludeInDataGrid = true;
         databaseColumnObj.OrderByColumn = false;
+        databaseColumnObj.Encrypted = false;
         databaseRowObject.AddColumn(databaseColumnObj);
 
         databaseColumnObj = new DatabaseRowObject.DatabaseColumnObject();
         databaseColumnObj.DataBaseTableColumnName = "BirthDate";
         databaseColumnObj.DataGridColumnName = "BirthDate";
-        databaseColumnObj.DataType = MyDataTypes.DATESTRING;
+        databaseColumnObj.DataType = MyDataTypes.STRING;
         databaseColumnObj.IncludeInDataGrid = true;
         databaseColumnObj.OrderByColumn = false;
+        databaseColumnObj.Encrypted = true;
         databaseRowObject.AddColumn(databaseColumnObj);
 
         databaseColumnObj = new DatabaseRowObject.DatabaseColumnObject();
@@ -67,6 +71,7 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         databaseColumnObj.DataType = MyDataTypes.STRING;        
         databaseColumnObj.IncludeInDataGrid = true;
         databaseColumnObj.OrderByColumn = false;
+        databaseColumnObj.Encrypted = true;
         databaseRowObject.AddColumn(databaseColumnObj);
 
         databaseColumnObj = new DatabaseRowObject.DatabaseColumnObject();
@@ -75,6 +80,7 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         databaseColumnObj.DataType = MyDataTypes.STRING;        
         databaseColumnObj.IncludeInDataGrid = true;
         databaseColumnObj.OrderByColumn = false;
+        databaseColumnObj.Encrypted = true;
         databaseRowObject.AddColumn(databaseColumnObj);
 
         dataGridObject.DatabaseRowObject = databaseRowObject;

@@ -4,11 +4,21 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Encryption
+namespace MyTherapistEncryption
 {
-    class SecurityController
+    class SecurityIds
     {
-        public string Encrypt(string key, string data)
+        public static string key = "3CA2708D800441B59392C7A97A1FF53C";    
+    }
+
+    public class SecurityController
+    {
+        public string EncryptData(string data)
+        {
+            return Encrypt(SecurityIds.key, data);
+        }
+
+        private string Encrypt(string key, string data)
         {
             string encData = null;
             byte[][] keys = GetHashKeys(key);
@@ -23,7 +33,17 @@ namespace Encryption
             return encData;
         }
 
-        public string Decrypt(string key, string data)
+        public string DecryptObj(object data)
+        {
+            return Decrypt(SecurityIds.key, data.ToString());
+        }
+
+        public string DecryptData(string data)
+        {
+            return Decrypt(SecurityIds.key, data);
+        }
+
+        private string Decrypt(string key, string data)
         {
             string decData = null;
             byte[][] keys = GetHashKeys(key);

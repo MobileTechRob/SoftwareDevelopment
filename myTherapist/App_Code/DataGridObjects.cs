@@ -95,6 +95,8 @@ namespace DataGridObjects
         private System.Data.SqlClient.SqlConnection databaseConnection;
         private System.Data.SqlClient.SqlCommand databaseCommand;
         private System.Data.SqlClient.SqlDataReader databaseReader;
+        private MyTherapistEncryption.SecurityController dataEncryptionAlgorithm = null;
+
         private string databaseTableName;
         private DataTable dataGridTable = null;
         private StringBuilder whereClause = null;
@@ -113,6 +115,8 @@ namespace DataGridObjects
             databaseTableName = tableName;
             dataGridTable = new DataTable();
             whereClause = new StringBuilder();
+
+            dataEncryptionAlgorithm = new MyTherapistEncryption.SecurityController();
         }
 
         public void AddWhereClauseArgument(string fieldName, string fieldValue)
@@ -155,9 +159,7 @@ namespace DataGridObjects
                 sqlSelectClause.Append("SELECT ");
 
                 IEnumerator<DatabaseRowObject.DatabaseColumnObject> iter = DatabaseRowObject.GetEnumerator();
-
-                //foreach (DataGridObject.MyDataGridColumn column in columnDictionary.Values)
-
+                
                 while (iter.MoveNext())
                 {
                     DataColumn dataColumn = new DataColumn();
@@ -230,7 +232,7 @@ namespace DataGridObjects
                 object[] itemArray = null;
                 int itemCount = 0;
                 DatabaseRowParser rowParser = null;
-                rowParser = new DatabaseRowParser(DatabaseRowObject);
+                rowParser = new DatabaseRowParser(DatabaseRowObject, dataEncryptionAlgorithm);
                 DataRowDisplay rowToDisplay = null;
                 
                 if (databaseReader.HasRows)
@@ -285,7 +287,7 @@ namespace DataGridObjects
 
                             DatabaseRowObject.DatabaseColumnObject column = null;
 
-                            rowParser = new DatabaseRowParser(DatabaseRowObject);
+                            rowParser = new DatabaseRowParser(DatabaseRowObject, dataEncryptionAlgorithm);
                             rowParser.sqlReader = databaseReader;
 
 
@@ -294,25 +296,6 @@ namespace DataGridObjects
                                 column = iter.Current;
 
                                 itemArray[itemCount] = rowParser.GetValue(column.DataBaseTableColumnName);
-
-                                //switch (column.DataType)
-                                //{
-                                //    case MyDataTypes.INTEGER:
-                                //        itemArray[itemCount] = Utilities.ParseInt32(databaseReader, itemCount);
-                                //        break;
-
-                                //    case MyDataTypes.STRING:
-                                //        itemArray[itemCount] = Utilities.ParseStr(databaseReader, itemCount);
-                                //        break;
-
-                                //    case MyDataTypes.DATETIME:
-                                //        itemArray[itemCount] = Utilities.ParseDateTime(databaseReader, itemCount);
-                                //        break;
-
-                                //    case MyDataTypes.GUID:
-                                //        itemArray[itemCount] = Utilities.ParseGuid(databaseReader, itemCount);
-                                //        break;
-                                //}
 
                                 itemCount++;
                             }
@@ -361,6 +344,7 @@ namespace DataGridObjects
             public bool OrderByColumn { get; set; }
             public int Column { get; set; }
             public MyDataTypes DataType { get; set; }
+            public bool Encrypted { get; set; }
             
             public DatabaseColumnObject()
             {
@@ -388,7 +372,7 @@ namespace DataGridObjects
             return columnDictionary.Values;
         }
 
-        public void AddColumn(string databaseColumnName, string dataGridColumnName, MyDataTypes dataType, bool orderByColumn, int gridWidth, bool includeInGrid = true)
+        public void AddColumn(string databaseColumnName, string dataGridColumnName, MyDataTypes dataType, bool orderByColumn, int gridWidth, bool encrypted, bool includeInGrid = true)
         {
             DatabaseColumnObject colObj = new DatabaseColumnObject();
             colObj.DataBaseTableColumnName = databaseColumnName;

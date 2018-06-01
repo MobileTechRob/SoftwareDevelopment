@@ -45,18 +45,18 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         DataGridObject dataGridObj = new DataGridObject(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString, "PatientAppointmentInformation");
         DatabaseRowObject dbRowObject = new DatabaseRowObject();
                 
-        dbRowObject.AddColumn("ApptDate", "Appointment Date", MyDataTypes.DATETIME, true, 35);
-        dbRowObject.AddColumn("ApptId", "", MyDataTypes.GUID, true, 35);
-        dbRowObject.AddColumn("RLU", "RLU", MyDataTypes.STRING, false, 0);
-        dbRowObject.AddColumn("SP", "SP", MyDataTypes.STRING, false, 0);
-        dbRowObject.AddColumn("KD1", "KD", MyDataTypes.STRING, false, 0);
-        dbRowObject.AddColumn("LHT", "LHT", MyDataTypes.STRING, false, 0);
-        dbRowObject.AddColumn("LV", "LV", MyDataTypes.STRING, false, 0);
-        dbRowObject.AddColumn("KD2", "KD ", MyDataTypes.STRING, false, 0);
-        dbRowObject.AddColumn("ImageBeforeTherapy", "", MyDataTypes.STRING, false, 0);
-        dbRowObject.AddColumn("ImageAfterTherapy", "", MyDataTypes.STRING, false, 0);
-        dbRowObject.AddColumn("TherapyPerformed", "", MyDataTypes.STRING, false, 0);
-        dbRowObject.AddColumn("SessionGoals", "", MyDataTypes.STRING, false, 0);
+        dbRowObject.AddColumn("ApptDate", "Appointment Date", MyDataTypes.DATETIME, true, 35, false);
+        dbRowObject.AddColumn("ApptId", "", MyDataTypes.GUID, true, 35, false);
+        dbRowObject.AddColumn("RLU", "RLU", MyDataTypes.STRING, false, 0,true);
+        dbRowObject.AddColumn("SP", "SP", MyDataTypes.STRING, false, 0, true);
+        dbRowObject.AddColumn("KD1", "KD", MyDataTypes.STRING, false, 0, true);
+        dbRowObject.AddColumn("LHT", "LHT", MyDataTypes.STRING, false, 0, true);
+        dbRowObject.AddColumn("LV", "LV", MyDataTypes.STRING, false, 0, true);
+        dbRowObject.AddColumn("KD2", "KD ", MyDataTypes.STRING, false, 0, true);
+        dbRowObject.AddColumn("ImageBeforeTherapy", "", MyDataTypes.STRING, false, 0, true);
+        dbRowObject.AddColumn("ImageAfterTherapy", "", MyDataTypes.STRING, false, 0, true);
+        dbRowObject.AddColumn("TherapyPerformed", "", MyDataTypes.STRING, false, 0, true);
+        dbRowObject.AddColumn("SessionGoals", "", MyDataTypes.STRING, false, 0, true);
        
         dataGridObj.DatabaseRowObject = dbRowObject;
         

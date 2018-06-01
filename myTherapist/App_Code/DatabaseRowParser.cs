@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
 using DataGridObjects;
+using MyTherapistEncryption;
 
 /// <summary>
 /// Summary description for DatabaseRowParser
@@ -12,14 +13,16 @@ public class DatabaseRowParser
 {
     public System.Data.SqlClient.SqlDataReader sqlReader { get; set; }
     private DataGridObjects.DatabaseRowObject databaseRowObj;
-    
-    public DatabaseRowParser(DataGridObjects.DatabaseRowObject databaseRowObj)
+    private MyTherapistEncryption.SecurityController dataEncryptionAlgorithm;
+
+    public DatabaseRowParser(DataGridObjects.DatabaseRowObject databaseRowObj, MyTherapistEncryption.SecurityController dataEncryptionAlgorithm)
     {
         //
         // TODO: Add constructor logic here
         //
         this.sqlReader = sqlReader;
         this.databaseRowObj = databaseRowObj;
+        this.dataEncryptionAlgorithm = dataEncryptionAlgorithm;
     }
     
     public object GetValue(string fieldName)
@@ -48,20 +51,15 @@ public class DatabaseRowParser
                 columnValue = Utilities.ParseStr(sqlReader, col.Column);
                 break;
 
-            case MyDataTypes.DATETIME:
-                columnValue = Utilities.ParseDateTime(sqlReader, col.Column);                 
-                break;
-
-            case MyDataTypes.DATESTRING:
-                columnValue = Utilities.ParseDateAsString(sqlReader, col.Column);
-                break;
-
             case MyDataTypes.GUID:
                 columnValue = Utilities.ParseGuid(sqlReader, col.Column);
                 break;
         }
 
-        return columnValue;
+        if (col.Encrypted)
+            return dataEncryptionAlgorithm.DecryptObj(columnValue);
+        else
+            return columnValue;
     }    
 }
 
