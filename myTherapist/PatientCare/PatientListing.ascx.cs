@@ -60,6 +60,7 @@ public partial class PatientCare_PatientListing : System.Web.UI.UserControl
         databaseColumnObj.DataBaseTableColumnName = "BirthDate";
         databaseColumnObj.DataGridColumnName = "BirthDate";
         databaseColumnObj.DataType = MyDataTypes.STRING;
+        databaseColumnObj.DisplayType = MyDisplayTypes.DATE;
         databaseColumnObj.IncludeInDataGrid = true;
         databaseColumnObj.OrderByColumn = false;
         databaseColumnObj.Encrypted = true;

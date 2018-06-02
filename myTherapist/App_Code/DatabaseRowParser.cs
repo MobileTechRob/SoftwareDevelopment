@@ -27,8 +27,6 @@ public class DatabaseRowParser
     
     public object GetValue(string fieldName)
     {
-        //var column = from adataColumn in dataGridObj.GetColumnObjectCollection().Where<   select adataColumn.DataBaseTableColumnName == fieldName;
-
         IEnumerator<DatabaseRowObject.DatabaseColumnObject> iter = databaseRowObj.GetEnumerator();
         DatabaseRowObject.DatabaseColumnObject col = null;
 
@@ -39,6 +37,7 @@ public class DatabaseRowParser
         }
 
         col = iter.Current;
+        object retValue = null;
         object columnValue = null;
 
         switch (col.DataType)
@@ -51,13 +50,27 @@ public class DatabaseRowParser
                 columnValue = Utilities.ParseStr(sqlReader, col.Column);
                 break;
 
+            case MyDataTypes.DATETIME:
+                columnValue = Utilities.ParseDateTime(sqlReader, col.Column);
+                break;
+                
             case MyDataTypes.GUID:
                 columnValue = Utilities.ParseGuid(sqlReader, col.Column);
                 break;
         }
-
+        
         if (col.Encrypted)
-            return dataEncryptionAlgorithm.DecryptObj(columnValue);
+        {
+            retValue = dataEncryptionAlgorithm.DecryptObj(columnValue);
+
+            if (col.DisplayType == MyDisplayTypes.DATE)
+            {
+                string date = retValue.ToString().Split(new char[] {' '})[0];
+                retValue = (object)date;
+            }
+
+            return retValue;
+        }            
         else
             return columnValue;
     }    

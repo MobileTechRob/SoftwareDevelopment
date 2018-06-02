@@ -129,9 +129,6 @@ public class MyDataGridComplexPager
                 if (column.DataType == MyDataTypes.STRING)
                     dataColumn.DataType = System.Type.GetType("System.String");
 
-                if (column.DataType == MyDataTypes.DATETIME)
-                    dataColumn.DataType = System.Type.GetType("System.DateTime");
-
                 if (column.DataType == MyDataTypes.GUID)
                     dataColumn.DataType = System.Type.GetType("System.Guid");
                                                 
@@ -208,10 +205,6 @@ public class MyDataGridComplexPager
 
                             case MyDataTypes.STRING:
                                 itemArray[itemCount] = Utilities.ParseStr(databaseReader, itemCount);
-                                break;
-
-                            case MyDataTypes.DATETIME:
-                                itemArray[itemCount] = Utilities.ParseDateTime(databaseReader, itemCount);
                                 break;
 
                             case MyDataTypes.GUID:

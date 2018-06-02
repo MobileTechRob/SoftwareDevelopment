@@ -16,9 +16,16 @@ namespace DataGridObjects
         INTEGER,
         STRING,
         DATETIME,
-        DATESTRING,
         GUID,
         IMAGE
+    }
+
+    public enum MyDisplayTypes
+    {
+        INTEGER,
+        STRING,
+        DATE,
+        DATETIME
     }
 
     public enum MyDataSort
@@ -171,11 +178,8 @@ namespace DataGridObjects
                     if (column.DataType == MyDataTypes.INTEGER)
                         dataColumn.DataType = System.Type.GetType("System.Int32");
 
-                    if ((column.DataType == MyDataTypes.STRING) || (column.DataType == MyDataTypes.DATESTRING))
+                    if (column.DataType == MyDataTypes.STRING)  
                         dataColumn.DataType = System.Type.GetType("System.String");
-
-                    if ((column.DataType == MyDataTypes.DATETIME))
-                        dataColumn.DataType = System.Type.GetType("System.DateTime");
 
                     if (column.DataType == MyDataTypes.GUID)
                         dataColumn.DataType = System.Type.GetType("System.Guid");
@@ -240,39 +244,39 @@ namespace DataGridObjects
                     while (databaseReader.Read())
                     {
                         // if there is a gridInfo object then 
-                        if (gridInfo != null)
-                        {
-                            IEnumerator<DataRowDisplay> rowIter = gridInfo.GetEnumerator();
-                            rowParser.sqlReader = databaseReader;
+                        //if (gridInfo != null)
+                        //{
+                        //    IEnumerator<DataRowDisplay> rowIter = gridInfo.GetEnumerator();
+                        //    rowParser.sqlReader = databaseReader;
 
-                            while (rowIter.MoveNext())
-                            {
-                                itemCount = 0;
-                                rowToDisplay = rowIter.Current;
+                        //    while (rowIter.MoveNext())
+                        //    {
+                        //        itemCount = 0;
+                        //        rowToDisplay = rowIter.Current;
 
-                                row = dataGridTable.NewRow();
-                                itemArray = new object[rowToDisplay.NumberItems];
+                        //        row = dataGridTable.NewRow();
+                        //        itemArray = new object[rowToDisplay.NumberItems];
 
-                                IEnumerator<DataCellDisplay> columnIter = rowToDisplay.GetEnumerator();
+                        //        IEnumerator<DataCellDisplay> columnIter = rowToDisplay.GetEnumerator();
 
-                                while (columnIter.MoveNext())
-                                {
-                                    DataCellDisplay cellToDisplay = columnIter.Current;
+                        //        while (columnIter.MoveNext())
+                        //        {
+                        //            DataCellDisplay cellToDisplay = columnIter.Current;
 
-                                    if (cellToDisplay.MyDataType == MyDataTypes.DATETIME)
-                                        itemArray[itemCount] = DateTime.Parse(rowParser.GetValue(cellToDisplay.DatabaseColumnName).ToString());
-                                    else
-                                        itemArray[itemCount] = rowParser.GetValue(cellToDisplay.DatabaseColumnName);
+                        //            if (cellToDisplay.MyDataType == MyDataTypes.DATETIME)
+                        //                itemArray[itemCount] = DateTime.Parse(rowParser.GetValue(cellToDisplay.DatabaseColumnName).ToString());
+                        //            else
+                        //                itemArray[itemCount] = rowParser.GetValue(cellToDisplay.DatabaseColumnName);
 
-                                    itemCount++;
+                        //            itemCount++;
 
-                                }
+                        //        }
 
-                                row.ItemArray = itemArray;
-                                dataGridTable.Rows.Add(row);
-                            }
-                        }
-                        else
+                        //        row.ItemArray = itemArray;
+                        //        dataGridTable.Rows.Add(row);
+                        //    }
+                        //}
+                        //else
                         {
                             // for each row in the grid info object                        
                             // iterate through the columns and find that column in the the row from the database
@@ -343,7 +347,27 @@ namespace DataGridObjects
             public string DataGridColumnName { get; set; }
             public bool OrderByColumn { get; set; }
             public int Column { get; set; }
-            public MyDataTypes DataType { get; set; }
+
+            private MyDataTypes _dataType;
+            public MyDataTypes DataType
+            {
+                get { return _dataType; }   
+                set
+                {
+                    _dataType = value;
+
+                    if (value == MyDataTypes.INTEGER)
+                    {
+                        DisplayType = MyDisplayTypes.INTEGER;
+                    }
+                    else if (value == MyDataTypes.STRING)
+                    {
+                        DisplayType = MyDisplayTypes.STRING;
+                    }
+                }
+            }
+
+            public MyDisplayTypes DisplayType { get; set; }
             public bool Encrypted { get; set; }
             
             public DatabaseColumnObject()
