@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="MyTherapist" Class="PatientAppointmentInfomationDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=.\SQLEXPRESS;Initial Catalog=MyTherapist;Integrated Security=True;MultipleActiveResultSets=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="MyTherapistDatabaseConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=ROBHERMANN6C00\SQLEXPRESS;Initial Catalog=MyTherapist;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="MyTherapistConnectionString2" Provider="System.Data.SqlClient" />
   <Table Name="dbo.PatientAppointmentInformation" Member="PatientAppointmentInformations">
     <Type Name="PatientAppointmentInformation">
       <Column Name="ApptDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="PatientId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="RLU" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="SP" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="KD1" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="LHT" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="LV" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="KD2" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="RLU" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SP" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="KD1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LHT" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LV" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="KD2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="TherapyPerformed" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="OilsUsed" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="SessionGoals" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />

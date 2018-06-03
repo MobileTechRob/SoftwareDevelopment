@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
+using MyTherapistEncryption;
 
 namespace DatabaseObjects
 {
@@ -38,7 +39,8 @@ namespace DatabaseObjects
     {
         PatientAppointmentInfomationDataContext patientApptDataContext = null;
         PatientAppointmentInformation patientAppointmentInformation = null;
-
+        MyTherapistEncryption.SecurityController dataEncryptionAlgorithm = null;
+               
         public PatientAppointmentInformationTableManager()
         {
             //
@@ -46,6 +48,7 @@ namespace DatabaseObjects
             //
             patientApptDataContext = new PatientAppointmentInfomationDataContext(WebConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString);
             patientAppointmentInformation = new PatientAppointmentInformation();
+            dataEncryptionAlgorithm = new MyTherapistEncryption.SecurityController();
         }
 
         public void Delete(PatientAppointment patientApptInfo)
@@ -75,18 +78,18 @@ namespace DatabaseObjects
                 var appointmentquery = from patients in patientApptDataContext.PatientAppointmentInformations where patients.ApptId == patientAppt.ApptId select patients;
                 patientRecord1 = appointmentquery.First();
 
-                patientRecord1.LV = patientAppt.PulseLV;
-                patientRecord1.RLU = patientAppt.PulseRLU;
-                patientRecord1.KD1 = patientAppt.PulseKD1;
-                patientRecord1.SP = patientAppt.PulseSP;
-                patientRecord1.LHT = patientAppt.PulseLHT;
-                patientRecord1.KD2 = patientAppt.PulseKD2;
+                patientRecord1.LV = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseLV);
+                patientRecord1.RLU = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseRLU);
+                patientRecord1.KD1 = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseKD1);
+                patientRecord1.SP = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseSP);
+                patientRecord1.LHT = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseLHT);
+                patientRecord1.KD2 = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseKD2);
 
-                patientRecord1.ImageBeforeTherapy = patientAppt.ImageBeforeTherapy;
-                patientRecord1.ImageAfterTherapy = patientAppt.ImageAfterTherapy;
+                patientRecord1.ImageBeforeTherapy = dataEncryptionAlgorithm.EncryptData(patientAppt.ImageBeforeTherapy);
+                patientRecord1.ImageAfterTherapy = dataEncryptionAlgorithm.EncryptData(patientAppt.ImageAfterTherapy);
 
-                patientRecord1.TherapyPerformed = patientAppt.OilsAndTherapy;
-                patientRecord1.SessionGoals = patientAppt.SessionGoals;           
+                patientRecord1.TherapyPerformed = dataEncryptionAlgorithm.EncryptData(patientAppt.OilsAndTherapy);
+                patientRecord1.SessionGoals = dataEncryptionAlgorithm.EncryptData(patientAppt.SessionGoals);           
             }
             catch (Exception ex)
             {
@@ -100,18 +103,19 @@ namespace DatabaseObjects
                 patientRecord1.PatientId = patientAppt.PatientId;
                 patientRecord1.ApptId = Guid.NewGuid();
                 patientRecord1.ApptDate = patientAppt.AppointmentDate;
-                patientRecord1.LV = patientAppt.PulseLV;
-                patientRecord1.RLU = patientAppt.PulseRLU;
-                patientRecord1.KD1 = patientAppt.PulseKD1;
-                patientRecord1.SP = patientAppt.PulseSP;
-                patientRecord1.LHT = patientAppt.PulseLHT;
-                patientRecord1.KD2 = patientAppt.PulseKD2;
 
-                patientRecord1.ImageBeforeTherapy = patientAppt.ImageBeforeTherapy;
-                patientRecord1.ImageAfterTherapy = patientAppt.ImageAfterTherapy;
+                patientRecord1.LV = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseLV);
+                patientRecord1.RLU = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseRLU);
+                patientRecord1.KD1 = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseKD1);
+                patientRecord1.SP = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseSP);
+                patientRecord1.LHT = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseLHT);
+                patientRecord1.KD2 = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseKD2);
+
+                patientRecord1.ImageBeforeTherapy = dataEncryptionAlgorithm.EncryptData(patientAppt.ImageBeforeTherapy);
+                patientRecord1.ImageAfterTherapy = dataEncryptionAlgorithm.EncryptData(patientAppt.ImageAfterTherapy);
                 
-                patientRecord1.TherapyPerformed = patientAppt.OilsAndTherapy;
-                patientRecord1.SessionGoals = patientAppt.SessionGoals;
+                patientRecord1.TherapyPerformed = dataEncryptionAlgorithm.EncryptData(patientAppt.OilsAndTherapy);
+                patientRecord1.SessionGoals = dataEncryptionAlgorithm.EncryptData(patientAppt.SessionGoals);
 
                 patientApptDataContext.PatientAppointmentInformations.InsertOnSubmit(patientRecord1);
             }

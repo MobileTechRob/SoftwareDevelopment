@@ -65,8 +65,8 @@ public class DatabaseRowParser
 
             if (col.DisplayType == MyDisplayTypes.DATE)
             {
-                string date = retValue.ToString().Split(new char[] {' '})[0];
-                retValue = (object)date;
+                DateTime dt = DateTime.Parse(retValue.ToString());
+                retValue = (object)String.Format("{0}/{1}/{2}", dt.Month.ToString(), dt.Day.ToString(), dt.Year.ToString()); ;
             }
 
             return retValue;

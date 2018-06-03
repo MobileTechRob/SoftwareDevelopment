@@ -35,7 +35,7 @@ public partial class PatientAppointmentInfomationDataContext : System.Data.Linq.
   #endregion
 	
 	public PatientAppointmentInfomationDataContext() : 
-			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["MyTherapistDatabaseConnectionString"].ConnectionString, mappingSource)
+			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["MyTherapistConnectionString2"].ConnectionString, mappingSource)
 	{
 		OnCreated();
 	}
@@ -186,7 +186,7 @@ public partial class PatientAppointmentInformation : INotifyPropertyChanging, IN
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RLU", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RLU", DbType="NVarChar(50)")]
 	public string RLU
 	{
 		get
@@ -206,7 +206,7 @@ public partial class PatientAppointmentInformation : INotifyPropertyChanging, IN
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SP", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SP", DbType="NVarChar(50)")]
 	public string SP
 	{
 		get
@@ -226,7 +226,7 @@ public partial class PatientAppointmentInformation : INotifyPropertyChanging, IN
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KD1", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KD1", DbType="NVarChar(50)")]
 	public string KD1
 	{
 		get
@@ -246,7 +246,7 @@ public partial class PatientAppointmentInformation : INotifyPropertyChanging, IN
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LHT", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LHT", DbType="NVarChar(50)")]
 	public string LHT
 	{
 		get
@@ -266,7 +266,7 @@ public partial class PatientAppointmentInformation : INotifyPropertyChanging, IN
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LV", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LV", DbType="NVarChar(50)")]
 	public string LV
 	{
 		get
@@ -286,7 +286,7 @@ public partial class PatientAppointmentInformation : INotifyPropertyChanging, IN
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KD2", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KD2", DbType="NVarChar(50)")]
 	public string KD2
 	{
 		get

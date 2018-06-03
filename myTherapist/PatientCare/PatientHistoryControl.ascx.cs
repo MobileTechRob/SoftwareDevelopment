@@ -38,7 +38,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
     }
     
     private void BuildGrid()
-    {        
+    {                
         pager = new MyDataGridPager();
         pager.NumberRowsToDisplay = 10;
 
