@@ -405,6 +405,7 @@ namespace DataGridObjects
             colObj.IncludeInDataGrid = includeInGrid;
             colObj.OrderByColumn = orderByColumn;
             colObj.Column = columnDictionary.Count;
+            colObj.Encrypted = encrypted;
 
             columnDictionary.Add(columnDictionary.Count + 1, colObj);
             columnList.Add(colObj);
