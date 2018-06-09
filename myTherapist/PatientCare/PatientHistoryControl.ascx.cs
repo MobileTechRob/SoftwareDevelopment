@@ -200,6 +200,22 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
                 cell.Text = dataRow.ItemArray[dbRowObject.ColumnIndex("KD2")].ToString();
                 row.Cells.Add(cell);
 
+                cell = new TableCell();                
+                cell.Text = " ";
+                row.Cells.Add(cell);
+
+                cell = new TableCell();
+                cell.Text = " ";
+                row.Cells.Add(cell);
+
+                cell = new TableCell();
+                cell.Text = " ";
+                row.Cells.Add(cell);
+
+                cell = new TableCell();
+                cell.Text = " ";
+                row.Cells.Add(cell);
+
                 PatientApptData.Rows.Add(row);
 
                 row = new TableRow();
@@ -216,6 +232,10 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
                 cell.HorizontalAlign = HorizontalAlign.Left;
                 cell.Controls.Add(img);
                 row.Cells.Add(cell);
+
+                cell = new TableCell();
+                cell.ColumnSpan = 3;
+                cell.Text = " ";
 
                 cell = new TableCell();
                 cell.ColumnSpan = 3;
@@ -245,36 +265,33 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
 
                 cell = new TableCell();
                 cell.Text = "Therapy Performed";                
-                cell.ColumnSpan = 1;
+                cell.ColumnSpan = 5;
                 cell.Style["font-weight"] = "bold";
                 row.Cells.Add(cell);
-                PatientApptData.Rows.Add(row);
 
-                row = new TableRow();
-                cell = new TableCell();
-                cell.Text = dataRow.ItemArray[dbRowObject.ColumnIndex("TherapyPerformed")].ToString(); 
-                cell.ColumnSpan = 7;
-                row.Cells.Add(cell);                
-                PatientApptData.Rows.Add(row);
-
-                // session goals
-                row = new TableRow();
-                cell = new TableCell();
-                cell.Text = "  ";
-                cell.ColumnSpan = 1;
-                row.Cells.Add(cell);
-                                
                 cell = new TableCell();
                 cell.Text = "Session Goals";
-                cell.ColumnSpan = 1;
+                cell.ColumnSpan = 5;
                 cell.Style["font-weight"] = "bold";
                 row.Cells.Add(cell);
+
                 PatientApptData.Rows.Add(row);
 
                 row = new TableRow();
+
+                cell = new TableCell();
+                cell.Text = "  ";
+                row.Cells.Add(cell);
+
+                cell = new TableCell();
+                cell.Text = dataRow.ItemArray[dbRowObject.ColumnIndex("TherapyPerformed")].ToString(); 
+                cell.ColumnSpan = 5;
+                row.Cells.Add(cell);
+
+
                 cell = new TableCell();
                 cell.Text = dataRow.ItemArray[dbRowObject.ColumnIndex("SessionGoals")].ToString();
-                cell.ColumnSpan = 7;
+                cell.ColumnSpan = 5;
                 row.Cells.Add(cell);
                 PatientApptData.Rows.Add(row);
 
@@ -282,7 +299,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
                 row = new TableRow();
                 cell = new TableCell();
                 cell.Text = "  ";
-                cell.ColumnSpan = 7;
+                cell.ColumnSpan = 10;
                 row.Cells.Add(cell);
                 PatientApptData.Rows.Add(row);
 
@@ -290,7 +307,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
                 row = new TableRow();
                 cell = new TableCell();
                 cell.Text = "  ";
-                cell.ColumnSpan = 7;
+                cell.ColumnSpan = 10;
                 row.Cells.Add(cell);
                 PatientApptData.Rows.Add(row);
             }
