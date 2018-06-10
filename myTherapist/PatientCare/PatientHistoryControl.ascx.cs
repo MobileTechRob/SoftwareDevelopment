@@ -120,50 +120,50 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         }
         else
         {
-            row = new TableRow();
-            cell = new TableCell();
-            Image img = null;
-
-            cell = new TableCell();
-            cell.Text = " ";
-            row.Cells.Add(cell);
-
-            cell = new TableCell();
-            cell.Style["font-weight"] = "bold";
-            cell.Text = "RLU";
-            row.Cells.Add(cell);
-
-            cell = new TableCell();
-            cell.Text = "SP";
-            cell.Style["font-weight"] = "bold";
-            row.Cells.Add(cell);
-
-            cell = new TableCell();
-            cell.Style["font-weight"] = "bold";
-            cell.Text = "KD1";
-            row.Cells.Add(cell);
-
-            cell = new TableCell();
-            cell.Style["font-weight"] = "bold";
-            cell.Text = "LHT";
-            row.Cells.Add(cell);
-
-            cell = new TableCell();
-            cell.Style["font-weight"] = "bold";
-            cell.Text = "LV";
-            row.Cells.Add(cell);
-
-            cell = new TableCell();
-            cell.Style["font-weight"] = "bold";
-            cell.Text = "KD2";
-            row.Cells.Add(cell);
-
-            PatientApptData.Rows.Add(row);
-
             iter = appointmentInfo.Rows.GetEnumerator();
 
             while (iter.MoveNext())
             {
+                row = new TableRow();
+                cell = new TableCell();
+                Image img = null;
+
+                cell = new TableCell();
+                cell.Text = " ";
+                row.Cells.Add(cell);
+
+                cell = new TableCell();
+                cell.Style["font-weight"] = "bold";
+                cell.Text = "RLU";
+                row.Cells.Add(cell);
+
+                cell = new TableCell();
+                cell.Text = "SP";
+                cell.Style["font-weight"] = "bold";
+                row.Cells.Add(cell);
+
+                cell = new TableCell();
+                cell.Style["font-weight"] = "bold";
+                cell.Text = "KD1";
+                row.Cells.Add(cell);
+
+                cell = new TableCell();
+                cell.Style["font-weight"] = "bold";
+                cell.Text = "LHT";
+                row.Cells.Add(cell);
+
+                cell = new TableCell();
+                cell.Style["font-weight"] = "bold";
+                cell.Text = "LV";
+                row.Cells.Add(cell);
+
+                cell = new TableCell();
+                cell.Style["font-weight"] = "bold";
+                cell.Text = "KD2";
+                row.Cells.Add(cell);
+
+                PatientApptData.Rows.Add(row);
+
                 dataRow = (DataRow)iter.Current;
 
                 row = new TableRow();
@@ -296,20 +296,15 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
                 PatientApptData.Rows.Add(row);
 
                 // spacer 
-                row = new TableRow();
-                cell = new TableCell();
-                cell.Text = "  ";
-                cell.ColumnSpan = 10;
-                row.Cells.Add(cell);
-                PatientApptData.Rows.Add(row);
-
-                // spacer 
-                row = new TableRow();
-                cell = new TableCell();
-                cell.Text = "  ";
-                cell.ColumnSpan = 10;
-                row.Cells.Add(cell);
-                PatientApptData.Rows.Add(row);
+                for (int spacercount = 1; spacercount <= 2 ; spacercount++)
+                {                    
+                    row = new TableRow();
+                    cell = new TableCell();
+                    cell.Text = "&nbsp";
+                    cell.ColumnSpan = 10;
+                    row.Cells.Add(cell);
+                    PatientApptData.Rows.Add(row);
+                }                
             }
         }
     }

@@ -65,7 +65,28 @@ namespace DatabaseObjects
 
         public PatientAppointment FindPatientAppointment(PatientAppointment patientAppt)
         {
-            return patientAppt;
+            PatientAppointmentInformation patientApptRecord = null; ;
+            PatientAppointment patientAppt1 = new PatientAppointment();
+
+            var appointmentquery = from patients in patientApptDataContext.PatientAppointmentInformations where patients.ApptId == patientAppt.ApptId select patients;
+
+            patientApptRecord = appointmentquery.First();
+
+            patientAppt1.AppointmentDate = patientApptRecord.ApptDate;
+            patientAppt1.ApptId = patientApptRecord.ApptId;
+            patientAppt1.ImageAfterTherapy = dataEncryptionAlgorithm.DecryptData(patientApptRecord.ImageAfterTherapy);
+            patientAppt1.ImageBeforeTherapy = dataEncryptionAlgorithm.DecryptData(patientApptRecord.ImageBeforeTherapy);
+            patientAppt1.OilsAndTherapy = dataEncryptionAlgorithm.DecryptData(patientApptRecord.TherapyPerformed);
+            patientAppt1.SessionGoals = dataEncryptionAlgorithm.DecryptData(patientApptRecord.SessionGoals);
+            
+            patientAppt1.PulseKD1 = dataEncryptionAlgorithm.DecryptData(patientApptRecord.KD1);
+            patientAppt1.PulseKD2 = dataEncryptionAlgorithm.DecryptData(patientApptRecord.KD2);
+            patientAppt1.PulseLHT = dataEncryptionAlgorithm.DecryptData(patientApptRecord.LHT);
+            patientAppt1.PulseLV = dataEncryptionAlgorithm.DecryptData(patientApptRecord.LV);
+            patientAppt1.PulseRLU = dataEncryptionAlgorithm.DecryptData(patientApptRecord.RLU);
+            patientAppt1.PulseSP = dataEncryptionAlgorithm.DecryptData(patientApptRecord.SP);
+            
+            return patientAppt1;
         }
 
         public void Update(PatientAppointment patientAppt)
