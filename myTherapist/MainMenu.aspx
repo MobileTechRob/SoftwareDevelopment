@@ -21,13 +21,12 @@
                 </div>
             </div>
             <div class="tr">
-                 <div class="td">
-                    <asp:Button runat="server" Text="Login" />
+                 <div class="td">                
                 </div>
             </div>        
             <div class="tr">
                  <div class="td">                    
-                    <asp:LinkButton runat="server"  ID="LinkButton2" Text="Patient Care" Font-Size="XX-Large" OnClick="btnPatientCare_Click"></asp:LinkButton>
+                    <asp:LinkButton runat="server" ID="lnkBtnPatientCare" Text="Patient Care" Font-Size="XX-Large" OnClick="btnPatientCare_Click"></asp:LinkButton>
                     <asp:Label runat="server" ID="Label2" Text="    " Font-Size="Large" />                               
                 </div>
             </div>
