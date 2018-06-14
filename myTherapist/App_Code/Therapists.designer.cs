@@ -29,6 +29,9 @@ public partial class TherapistsDataContext : System.Data.Linq.DataContext
 	
   #region Extensibility Method Definitions
   partial void OnCreated();
+  partial void InsertTherapist(Therapist instance);
+  partial void UpdateTherapist(Therapist instance);
+  partial void DeleteTherapist(Therapist instance);
   #endregion
 	
 	public TherapistsDataContext() : 
@@ -71,46 +74,111 @@ public partial class TherapistsDataContext : System.Data.Linq.DataContext
 }
 
 [global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Therapists")]
-public partial class Therapist
+public partial class Therapist : INotifyPropertyChanging, INotifyPropertyChanged
 {
 	
-	private System.Guid _TherapistId;
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 	
-	private string _TherapistName;
+	private System.Guid _Id;
+	
+	private string _Name;
+	
+	private string _Password;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnPasswordChanging(string value);
+    partial void OnPasswordChanged();
+    #endregion
 	
 	public Therapist()
 	{
+		OnCreated();
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TherapistId", DbType="UniqueIdentifier NOT NULL")]
-	public System.Guid TherapistId
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+	public System.Guid Id
 	{
 		get
 		{
-			return this._TherapistId;
+			return this._Id;
 		}
 		set
 		{
-			if ((this._TherapistId != value))
+			if ((this._Id != value))
 			{
-				this._TherapistId = value;
+				this.OnIdChanging(value);
+				this.SendPropertyChanging();
+				this._Id = value;
+				this.SendPropertyChanged("Id");
+				this.OnIdChanged();
 			}
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TherapistName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-	public string TherapistName
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+	public string Name
 	{
 		get
 		{
-			return this._TherapistName;
+			return this._Name;
 		}
 		set
 		{
-			if ((this._TherapistName != value))
+			if ((this._Name != value))
 			{
-				this._TherapistName = value;
+				this.OnNameChanging(value);
+				this.SendPropertyChanging();
+				this._Name = value;
+				this.SendPropertyChanged("Name");
+				this.OnNameChanged();
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+	public string Password
+	{
+		get
+		{
+			return this._Password;
+		}
+		set
+		{
+			if ((this._Password != value))
+			{
+				this.OnPasswordChanging(value);
+				this.SendPropertyChanging();
+				this._Password = value;
+				this.SendPropertyChanged("Password");
+				this.OnPasswordChanged();
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }
