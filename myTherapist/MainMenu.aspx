@@ -4,7 +4,7 @@
 <link rel="stylesheet" runat="server" href="stylesheets/sitestyles.css"/> 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">    
-    <title>myTherapist</title>
+    <title>MyTherapist</title>
 </head>
 
 <body class="bodystyle">
@@ -15,18 +15,25 @@
                     <asp:Image runat="server" ImageUrl="~/Images/PamCare.PNG" ID="PamCareImage" ImageAlign="Middle" />
                 </div>
             </div>
+            <br />            
             <div class="tr">
                 <div class="td">
+                    <asp:Label runat="server" ID="lblUserName" Text="Therapist"/>
+                    <asp:Label runat="server" ID="lblSpacer" Text="&nbsp&nbsp&nbsp"/>
                     <asp:TextBox runat="server" ID="txtBoxUserName"  />                    
                 </div>
             </div>
-            <div class="tr">
-                 <div class="td">                
+            <div class="tr">                
+                <div class="td">
+                    <asp:Label runat="server" ID="lblPassword" Text="Password"/>
+                    <asp:Label runat="server" ID="lblSpacer2" Text="&nbsp&nbsp"/>
+                    <asp:TextBox runat="server" ID="txtBoxPassword" />                    
                 </div>
-            </div>        
+            </div>
+            <br />            
             <div class="tr">
                  <div class="td">                    
-                    <asp:LinkButton runat="server" ID="lnkBtnPatientCare" Text="Patient Care" Font-Size="XX-Large" OnClick="btnPatientCare_Click"></asp:LinkButton>
+                    <asp:LinkButton runat="server" ID="lnkBtnPatientCare" Text="Login" Font-Size="Large" OnClick="btnPatientCare_Click"></asp:LinkButton>
                     <asp:Label runat="server" ID="Label2" Text="    " Font-Size="Large" />                               
                 </div>
             </div>

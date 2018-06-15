@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using DatabaseObjects;
 
 public partial class MainMenu : System.Web.UI.Page
 {
@@ -16,8 +17,10 @@ public partial class MainMenu : System.Web.UI.Page
     {
         DateTime result = DateTime.MinValue;
 
-        if (DateTime.TryParse(txtBoxUserName.Text, out result))
+        if (txtBoxUserName.Text.Equals("MyTherapist"))
+        {           
             Response.Redirect("~/UserManagement/TherapistList.aspx");
+        }
         else if (txtBoxUserName.Text.Equals("Pam", StringComparison.CurrentCultureIgnoreCase))
             Response.Redirect("~/PatientCare/PatientCare.aspx");
     }

@@ -122,7 +122,7 @@ namespace DataGridObjects
             databaseTableName = tableName;
             dataGridTable = new DataTable();
             whereClause = new StringBuilder();
-
+            
             dataEncryptionAlgorithm = new MyTherapistEncryption.SecurityController();
         }
 
