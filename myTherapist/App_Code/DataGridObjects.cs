@@ -41,9 +41,6 @@ namespace DataGridObjects
         public MyDataTypes MyDataType { get; set; }
     }
 
-   
-
-
     // represents what one row of value from the database.
     public class DataRowDisplay : IEnumerable<DataCellDisplay>
     {
@@ -243,40 +240,6 @@ namespace DataGridObjects
                 {
                     while (databaseReader.Read())
                     {
-                        // if there is a gridInfo object then 
-                        //if (gridInfo != null)
-                        //{
-                        //    IEnumerator<DataRowDisplay> rowIter = gridInfo.GetEnumerator();
-                        //    rowParser.sqlReader = databaseReader;
-
-                        //    while (rowIter.MoveNext())
-                        //    {
-                        //        itemCount = 0;
-                        //        rowToDisplay = rowIter.Current;
-
-                        //        row = dataGridTable.NewRow();
-                        //        itemArray = new object[rowToDisplay.NumberItems];
-
-                        //        IEnumerator<DataCellDisplay> columnIter = rowToDisplay.GetEnumerator();
-
-                        //        while (columnIter.MoveNext())
-                        //        {
-                        //            DataCellDisplay cellToDisplay = columnIter.Current;
-
-                        //            if (cellToDisplay.MyDataType == MyDataTypes.DATETIME)
-                        //                itemArray[itemCount] = DateTime.Parse(rowParser.GetValue(cellToDisplay.DatabaseColumnName).ToString());
-                        //            else
-                        //                itemArray[itemCount] = rowParser.GetValue(cellToDisplay.DatabaseColumnName);
-
-                        //            itemCount++;
-
-                        //        }
-
-                        //        row.ItemArray = itemArray;
-                        //        dataGridTable.Rows.Add(row);
-                        //    }
-                        //}
-                        //else
                         {
                             // for each row in the grid info object                        
                             // iterate through the columns and find that column in the the row from the database
@@ -330,11 +293,37 @@ namespace DataGridObjects
 
             return dataGridTable;
         }
+
+        //public void SetColumnWidth(string columnName, int gridwidth)
+        //{
+        //    List<DatabaseRowObject.DatabaseColumnObject>.Enumerator iter;
+           
+        //    iter = DatabaseRowObject.GetColumnObjectCollection().GetEnumerator();
+
+        //    while (iter.MoveNext())
+        //    {
+        //        if (iter.Current.DataBaseTableColumnName == columnName)
+        //            iter.Current.ColumnWidth = gridwidth;
+        //    }
+        //}
+
+        public int ColumnWidth(string columnName)
+        {
+            int columnWidth = 0;           
+            SortedDictionary<int, DatabaseRowObject.DatabaseColumnObject>.ValueCollection.Enumerator iter;
+
+            iter = this.DatabaseRowObject.GetColumnObjectCollection().GetEnumerator();
+                       
+            while (iter.MoveNext())
+            {
+                if (iter.Current.DataBaseTableColumnName == columnName)
+                    columnWidth = iter.Current.ColumnWidth;
+            }
+
+            return columnWidth;
+        }
     }
-
-
-
-
+    
     /// <summary>
     /// Summary description for DataGridObjects
     /// </summary>
@@ -347,6 +336,7 @@ namespace DataGridObjects
             public string DataGridColumnName { get; set; }
             public bool OrderByColumn { get; set; }
             public int Column { get; set; }
+            public int ColumnWidth { get; set; }
 
             private MyDataTypes _dataType;
             public MyDataTypes DataType
@@ -396,7 +386,7 @@ namespace DataGridObjects
             return columnDictionary.Values;
         }
 
-        public void AddColumn(string databaseColumnName, string dataGridColumnName, MyDataTypes dataType, bool orderByColumn, int gridWidth, bool encrypted, bool includeInGrid = true)
+        public void AddColumn(string databaseColumnName, string dataGridColumnName, MyDataTypes dataType, bool orderByColumn, int columnInGridWidth, bool encrypted, bool includeInGrid = true)
         {
             DatabaseColumnObject colObj = new DatabaseColumnObject();
             colObj.DataBaseTableColumnName = databaseColumnName;
@@ -406,6 +396,7 @@ namespace DataGridObjects
             colObj.OrderByColumn = orderByColumn;
             colObj.Column = columnDictionary.Count;
             colObj.Encrypted = encrypted;
+            colObj.ColumnWidth = columnInGridWidth;
 
             columnDictionary.Add(columnDictionary.Count + 1, colObj);
             columnList.Add(colObj);
@@ -418,6 +409,10 @@ namespace DataGridObjects
             columnDictionary.Add(columnDictionary.Count + 1, dataColumn);
             columnList.Add(dataColumn);
         }
+
+
+
+
 
         public int ColumnIndex(string columnName)
         {

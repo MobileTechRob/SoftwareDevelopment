@@ -19,6 +19,7 @@ namespace CommonDefinitions
         public static string PATIENT_APPT_START_DATE_TIME = "PatientApptStartDateTime";
         public static string DELETE_PATIENT_WARNING = "DeletePatientWarning";
         public static string THERAPIST_LIST_PAGENUMBER = "TherapistList_PageNumber";
+        public static string SHOW_THERAPIST_LIST = "Show_Therapist_List";
 
         public CommonDefinitions()
         {

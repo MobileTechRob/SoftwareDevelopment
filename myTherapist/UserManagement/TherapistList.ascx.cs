@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using DataGridObjects;
-using System.Web.Configuration;
-using CommonDefinitions;
 
-public partial class UserManagement_AddEditTherapist : System.Web.UI.Page
+public partial class UserManagement_TherapistList : System.Web.UI.UserControl
 {
+    DataGridObjects.DataGridObject gridObject = null;
+
     protected void Page_Load(object sender, EventArgs e)
-    {       
-        AddEditTherapists1.Visible = false;
+    {
         Refresh();
     }
 
@@ -20,10 +20,10 @@ public partial class UserManagement_AddEditTherapist : System.Web.UI.Page
     {
         DataGridObjects.DatabaseRowObject databaseRowObject = new DatabaseRowObject();
 
-        databaseRowObject.AddColumn("Id", "Id", MyDataTypes.GUID, true, 300, false);
-        databaseRowObject.AddColumn("Name", "Name", MyDataTypes.STRING, true, 300, false);
+        databaseRowObject.AddColumn("Id", "Id", MyDataTypes.GUID, true, 150, false);
+        databaseRowObject.AddColumn("Name", "Name", MyDataTypes.STRING, true, 350, false);
 
-        DataGridObjects.DataGridObject gridObject = new DataGridObject(WebConfigurationManager.ConnectionStrings[CommonDefinitions.CommonDefinitions.MYTHERAPIST_DATABASE_CONNECTION_STRING].ConnectionString, "Therapists");
+        gridObject = new DataGridObject(WebConfigurationManager.ConnectionStrings[CommonDefinitions.CommonDefinitions.MYTHERAPIST_DATABASE_CONNECTION_STRING].ConnectionString, "Therapists");
 
         gridObject.DatabaseRowObject = databaseRowObject;
         gridObject.NumberRowsToDisplay = 5;
@@ -38,14 +38,19 @@ public partial class UserManagement_AddEditTherapist : System.Web.UI.Page
             gridObject.PageNumber = Int32.Parse(Session[CommonDefinitions.CommonDefinitions.THERAPIST_LIST_PAGENUMBER].ToString());
 
         therapistlist.DataSource = gridObject.BuildTable();
-        therapistlist.RowCreated += Therapistlist_RowCreated;
-        therapistlist.RowDataBound += Therapistlist_RowDataBound;
+        therapistlist.RowCreated += Therapistlist_RowCreated; ;
+        therapistlist.RowDataBound += Therapistlist_RowDataBound; ;
         therapistlist.DataBind();
     }
 
     private void Therapistlist_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(therapistlist, "Select$" + e.Row.RowIndex);
+            e.Row.Cells[0].Width = gridObject.ColumnWidth("Id");
+            e.Row.Cells[1].Width = gridObject.ColumnWidth("Name");
+        }
     }
 
     private void Therapistlist_RowCreated(object sender, GridViewRowEventArgs e)
@@ -53,4 +58,3 @@ public partial class UserManagement_AddEditTherapist : System.Web.UI.Page
         
     }
 }
-
