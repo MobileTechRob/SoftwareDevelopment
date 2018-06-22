@@ -21,7 +21,7 @@ public partial class UserManagement_TherapistList : System.Web.UI.UserControl
         DataGridObjects.DatabaseRowObject databaseRowObject = new DatabaseRowObject();
 
         databaseRowObject.AddColumn("Id", "Id", MyDataTypes.GUID, true, 150, false);
-        databaseRowObject.AddColumn("Name", "Name", MyDataTypes.STRING, true, 350, false);
+        databaseRowObject.AddColumn("Name", "Name", MyDataTypes.STRING, true, 350, true);
 
         gridObject = new DataGridObject(WebConfigurationManager.ConnectionStrings[CommonDefinitions.CommonDefinitions.MYTHERAPIST_DATABASE_CONNECTION_STRING].ConnectionString, "Therapists");
 
@@ -38,9 +38,15 @@ public partial class UserManagement_TherapistList : System.Web.UI.UserControl
             gridObject.PageNumber = Int32.Parse(Session[CommonDefinitions.CommonDefinitions.THERAPIST_LIST_PAGENUMBER].ToString());
 
         therapistlist.DataSource = gridObject.BuildTable();
-        therapistlist.RowCreated += Therapistlist_RowCreated; ;
-        therapistlist.RowDataBound += Therapistlist_RowDataBound; ;
+        therapistlist.RowCreated += Therapistlist_RowCreated; 
+        therapistlist.RowDataBound += Therapistlist_RowDataBound;
+        therapistlist.SelectedIndexChanged += Therapistlist_SelectedIndexChanged;
         therapistlist.DataBind();
+    }
+
+    private void Therapistlist_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
     }
 
     private void Therapistlist_RowDataBound(object sender, GridViewRowEventArgs e)

@@ -10,6 +10,6 @@
 </asp:TableRow>
 </asp:Table>
 <br />
-<br />
-<asp:Button ID="btnSaveEdit" runat="server" Height="26px" Text="Save" Width="36px" OnClick="btnAddEdit_Click" />
 </asp:Panel>
+<br />
+<asp:Button ID="btnSaveEditTherapist" runat="server" Text="Save" OnClick="btnSaveEditTherapist_Click" />

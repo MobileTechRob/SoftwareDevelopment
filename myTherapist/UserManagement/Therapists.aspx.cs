@@ -15,6 +15,8 @@ public partial class UserManagement_Therapists : System.Web.UI.Page
 
     protected void btnAdd_Click(object sender, EventArgs e)
     {
-
+        btnAdd.Visible = false;
+        AddEditTherapists1.Visible = true;
+        TherapistList1.Visible = false;
     }
 }

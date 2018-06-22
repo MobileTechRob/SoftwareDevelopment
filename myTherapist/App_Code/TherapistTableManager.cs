@@ -4,10 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using CommonDefinitions;
+using MyTherapistEncryption;
 
 namespace DatabaseObjects
 {
-    public class Therapist
+    public class MassageTherapists
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -19,20 +20,39 @@ namespace DatabaseObjects
     /// </summary>
     public class TherapistTableManager
     {
+        TherapistsDataContext therapistDatabaseContext;
+
         public TherapistTableManager()
         {
             //
             // TODO: Add constructor logic here
             //            
-            TherapistsDataContext therapistDatabaseContext = new TherapistsDataContext(WebConfigurationManager.ConnectionStrings[CommonDefinitions.CommonDefinitions.MYTHERAPIST_DATABASE_CONNECTION_STRING].ConnectionString);          
+            therapistDatabaseContext = new TherapistsDataContext(WebConfigurationManager.ConnectionStrings[CommonDefinitions.CommonDefinitions.MYTHERAPIST_DATABASE_CONNECTION_STRING].ConnectionString);          
         }
 
-        public void UpdateTherapist(Therapist person)
+        public void UpdateTherapist(MassageTherapists person)
         {
+            MyTherapistEncryption.SecurityController dataEncryptionAlgo = new SecurityController();
 
+            if (person.Id.Equals(Guid.Empty))
+            {
+                person.Id = Guid.NewGuid();
+                
+                Therapist therapistRecord = new Therapist();
+
+                therapistRecord.Id = person.Id;
+                therapistRecord.Name = dataEncryptionAlgo.EncryptData(person.Name);
+                therapistRecord.Password = dataEncryptionAlgo.EncryptData(person.Password);
+
+                therapistDatabaseContext.Therapists.InsertOnSubmit(therapistRecord);
+                therapistDatabaseContext.SubmitChanges();
+            }
+            
+            //var therapistQuery = from therapist in therapistDatabaseContext.Therapists where therapist.Id == person.Id select therapist;
+                       
         }
 
-        public void DeleteTherapist(Therapist person)
+        public void DeleteTherapist(MassageTherapists person)
         {
 
         }
