@@ -9,8 +9,21 @@ public partial class UserManagement_Therapists : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        AddEditTherapists1.TherapistUpdated += AddEditTherapists1_TherapistUpdated;
+
+        if (IsPostBack == false)
+        {
+            AddEditTherapists1.Visible = false;
+            TherapistList1.Visible = true;
+        }
+    }
+
+    private void AddEditTherapists1_TherapistUpdated(object sender, EventArgs e)
+    {
         AddEditTherapists1.Visible = false;
         TherapistList1.Visible = true;
+
+        TherapistList1.Refresh();
     }
 
     protected void btnAdd_Click(object sender, EventArgs e)

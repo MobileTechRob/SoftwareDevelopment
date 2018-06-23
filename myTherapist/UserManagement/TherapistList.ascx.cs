@@ -20,7 +20,7 @@ public partial class UserManagement_TherapistList : System.Web.UI.UserControl
     {
         DataGridObjects.DatabaseRowObject databaseRowObject = new DatabaseRowObject();
 
-        databaseRowObject.AddColumn("Id", "Id", MyDataTypes.GUID, true, 150, false);
+        databaseRowObject.AddColumn("Id", "Id", MyDataTypes.GUID, true, 150, false, false);
         databaseRowObject.AddColumn("Name", "Name", MyDataTypes.STRING, true, 350, true);
 
         gridObject = new DataGridObject(WebConfigurationManager.ConnectionStrings[CommonDefinitions.CommonDefinitions.MYTHERAPIST_DATABASE_CONNECTION_STRING].ConnectionString, "Therapists");
@@ -46,6 +46,22 @@ public partial class UserManagement_TherapistList : System.Web.UI.UserControl
 
     private void Therapistlist_SelectedIndexChanged(object sender, EventArgs e)
     {
+        GridView gridView = (GridView)sender;
+        int selectedIndex = gridView.SelectedIndex;
+        int result = 0;
+
+        if (Int32.TryParse(therapistlist.Rows[selectedIndex].Cells[0].Text, out result))
+        {
+            int patientID = Int32.Parse(therapistlist.Rows[selectedIndex].Cells[0].Text);
+            string patientName = therapistlist.Rows[selectedIndex].Cells[1].Text;
+
+            for (int index = 0; index < therapistlist.Rows.Count; index++)
+                therapistlist.Rows[index].BackColor = System.Drawing.ColorTranslator.FromHtml("#F4A460");
+
+            therapistlist.Rows[selectedIndex].BackColor = System.Drawing.ColorTranslator.FromHtml("#F9cda8");
+
+            Session["TherapistId"] = therapistlist.Rows[selectedIndex].Cells[0].Text;
+        }
 
     }
 
@@ -54,13 +70,13 @@ public partial class UserManagement_TherapistList : System.Web.UI.UserControl
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(therapistlist, "Select$" + e.Row.RowIndex);
-            e.Row.Cells[0].Width = gridObject.ColumnWidth("Id");
+            e.Row.Cells[0].Visible = false;
             e.Row.Cells[1].Width = gridObject.ColumnWidth("Name");
         }
     }
 
     private void Therapistlist_RowCreated(object sender, GridViewRowEventArgs e)
     {
-        
+        e.Row.Cells[0].Visible = false;
     }
 }

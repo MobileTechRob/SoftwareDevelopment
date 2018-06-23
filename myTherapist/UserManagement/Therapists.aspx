@@ -13,11 +13,11 @@
 </head>
 
 <h3>Therapists</h3>
+<uc1:AddEditTherapists ID="AddEditTherapists1" runat="server" />
 <body class="bodystyle">
     <form id="form1" runat="server">
         <div>
         </div>
-        <uc1:AddEditTherapists ID="AddEditTherapists1" runat="server" />
         <uc2:TherapistList ID="TherapistList1" runat="server" />
         <br />
         <asp:Panel ID="Panel" runat="server">

@@ -163,11 +163,13 @@ namespace DataGridObjects
                 sqlSelectClause.Append("SELECT ");
 
                 IEnumerator<DatabaseRowObject.DatabaseColumnObject> iter = DatabaseRowObject.GetEnumerator();
-                
+
+                DataColumn dataColumn = null;
+                DataGridObjects.DatabaseRowObject.DatabaseColumnObject column = null;
+
                 while (iter.MoveNext())
                 {
-                    DataColumn dataColumn = new DataColumn();
-                    DataGridObjects.DatabaseRowObject.DatabaseColumnObject column;
+                    dataColumn = new DataColumn();                        
                     column = iter.Current;
 
                     dataColumn.ColumnName = column.DataGridColumnName;
@@ -175,7 +177,7 @@ namespace DataGridObjects
                     if (column.DataType == MyDataTypes.INTEGER)
                         dataColumn.DataType = System.Type.GetType("System.Int32");
 
-                    if (column.DataType == MyDataTypes.STRING)  
+                    if (column.DataType == MyDataTypes.STRING)
                         dataColumn.DataType = System.Type.GetType("System.String");
 
                     if (column.DataType == MyDataTypes.GUID)
@@ -187,7 +189,7 @@ namespace DataGridObjects
                     sqlSelectClause.Append(",");
 
                     if (column.OrderByColumn)
-                        orderByColumnName = column.DataBaseTableColumnName;
+                       orderByColumnName = column.DataBaseTableColumnName;                
                 }
 
                 sqlCommandString = new StringBuilder();
@@ -240,36 +242,32 @@ namespace DataGridObjects
                 {
                     while (databaseReader.Read())
                     {
+                        
+                        // for each row in the grid info object                        
+                        // iterate through the columns and find that column in the the row from the database
+                        // place that value of the column in the row for the data grid object 
+
+                        // else a row from the database is a row in the datagridview
+                        row = dataGridTable.NewRow();
+                        itemCount = 0;
+
+                        itemArray = new object[DatabaseRowObject.NumberColumns];
+                        iter = DatabaseRowObject.GetEnumerator();
+
+                        column = null;
+                        rowParser = new DatabaseRowParser(DatabaseRowObject, dataEncryptionAlgorithm);
+                        rowParser.sqlReader = databaseReader;
+
+
+                        while (iter.MoveNext())
                         {
-                            // for each row in the grid info object                        
-                            // iterate through the columns and find that column in the the row from the database
-                            // place that value of the column in the row for the data grid object 
-
-                            // else a row from the database is a row in the datagridview
-                            row = dataGridTable.NewRow();
-                            itemCount = 0;
-
-                            itemArray = new object[DatabaseRowObject.NumberColumns];
-                            iter = DatabaseRowObject.GetEnumerator();
-
-                            DatabaseRowObject.DatabaseColumnObject column = null;
-
-                            rowParser = new DatabaseRowParser(DatabaseRowObject, dataEncryptionAlgorithm);
-                            rowParser.sqlReader = databaseReader;
-
-
-                            while (iter.MoveNext())
-                            {
-                                column = iter.Current;
-
-                                itemArray[itemCount] = rowParser.GetValue(column.DataBaseTableColumnName);
-
-                                itemCount++;
-                            }
-
-                            row.ItemArray = itemArray;
-                            dataGridTable.Rows.Add(row);
+                           column = iter.Current;
+                           itemArray[itemCount] = rowParser.GetValue(column.DataBaseTableColumnName);
+                           itemCount++;
                         }
+
+                        row.ItemArray = itemArray;
+                        dataGridTable.Rows.Add(row);                        
                     }
 
                     databaseReader.Close();

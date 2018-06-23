@@ -9,6 +9,8 @@ using DatabaseObjects;
 
 public partial class UserManagement_AddEditTherapists : System.Web.UI.UserControl
 {
+    public event EventHandler TherapistUpdated;
+
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -24,6 +26,9 @@ public partial class UserManagement_AddEditTherapists : System.Web.UI.UserContro
         therapist.Password = txtBoxTherapistPassword.Text;
 
         therapistTableManager.UpdateTherapist(therapist);
+
+        if (TherapistUpdated != null)
+            TherapistUpdated(this, e); 
     }
 }
 
