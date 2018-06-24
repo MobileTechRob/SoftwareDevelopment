@@ -20,9 +20,11 @@
         </div>
         <uc2:TherapistList ID="TherapistList1" runat="server" />
         <br />
+        <asp:Label ID="UserAlert" runat="server" Text=""></asp:Label>
+        <br />
         <asp:Panel ID="Panel" runat="server">
             <asp:Button ID="btnAdd" runat="server" OnClick="btnAdd_Click" Text="Add" /> 
-
+            <asp:Button ID="btnEdit" runat="server" OnClick="btnEdit_Click" Text="Edit" /> 
         </asp:Panel>
     </form>
 </body>

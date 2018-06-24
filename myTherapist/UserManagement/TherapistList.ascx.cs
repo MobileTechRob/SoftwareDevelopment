@@ -48,12 +48,12 @@ public partial class UserManagement_TherapistList : System.Web.UI.UserControl
     {
         GridView gridView = (GridView)sender;
         int selectedIndex = gridView.SelectedIndex;
-        int result = 0;
+        Guid result = Guid.Empty; 
 
-        if (Int32.TryParse(therapistlist.Rows[selectedIndex].Cells[0].Text, out result))
+        if (Guid.TryParse(therapistlist.Rows[selectedIndex].Cells[0].Text, out result))
         {
-            int patientID = Int32.Parse(therapistlist.Rows[selectedIndex].Cells[0].Text);
-            string patientName = therapistlist.Rows[selectedIndex].Cells[1].Text;
+            Guid therapistId = Guid.Parse(therapistlist.Rows[selectedIndex].Cells[0].Text);
+            string therapistName = therapistlist.Rows[selectedIndex].Cells[1].Text;
 
             for (int index = 0; index < therapistlist.Rows.Count; index++)
                 therapistlist.Rows[index].BackColor = System.Drawing.ColorTranslator.FromHtml("#F4A460");

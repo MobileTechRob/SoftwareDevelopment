@@ -32,4 +32,13 @@ public partial class UserManagement_Therapists : System.Web.UI.Page
         AddEditTherapists1.Visible = true;
         TherapistList1.Visible = false;
     }
+
+    protected void btnEdit_Click(object sender, EventArgs e)
+    {
+        if (Session["TherapistId"] == null)
+            UserAlert.Text = "Select a Therapist";
+
+
+
+    }
 }

@@ -52,6 +52,32 @@ namespace DatabaseObjects
                        
         }
 
+        public MassageTherapists FindTherapist(MassageTherapists person)
+        {
+            MassageTherapists massageTherapist= null;
+            Therapist therapistRecord = null;
+
+            try
+            {
+                var query = from therapist in therapistDatabaseContext.Therapists where therapist.Id == person.Id select therapist;
+                therapistRecord = query.First<Therapist>();
+
+                massageTherapist = new MassageTherapists();
+
+                MyTherapistEncryption.SecurityController dataEncryptionAlgo = new MyTherapistEncryption.SecurityController();
+
+                massageTherapist.Id = therapistRecord.Id;
+                massageTherapist.Name = dataEncryptionAlgo.DecryptData(therapistRecord.Name);
+                massageTherapist.Password = dataEncryptionAlgo.DecryptData(therapistRecord.Password);
+            }
+            catch (Exception ex)
+            {
+                ex.GetHashCode();
+            }
+
+            return massageTherapist;
+        }
+        
         public void DeleteTherapist(MassageTherapists person)
         {
 

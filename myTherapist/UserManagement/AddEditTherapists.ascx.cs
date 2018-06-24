@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using DatabaseObjects;
 
 
+
 public partial class UserManagement_AddEditTherapists : System.Web.UI.UserControl
 {
     public event EventHandler TherapistUpdated;
@@ -29,6 +30,11 @@ public partial class UserManagement_AddEditTherapists : System.Web.UI.UserContro
 
         if (TherapistUpdated != null)
             TherapistUpdated(this, e); 
+    }
+
+    public void FindTherapist(MassageTherapists person)
+    {
+        
     }
 }
 
