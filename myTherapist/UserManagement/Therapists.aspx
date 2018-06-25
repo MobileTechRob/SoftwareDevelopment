@@ -6,18 +6,16 @@
 
 <!DOCTYPE html>
 
+<h3>Therapists</h3>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head runat="server">
     <title>MyTherapist</title>
 </head>
 
-<h3>Therapists</h3>
-<uc1:AddEditTherapists ID="AddEditTherapists1" runat="server" />
 <body class="bodystyle">
     <form id="form1" runat="server">
-        <div>
-        </div>
+        <uc1:AddEditTherapists ID="AddEditTherapists1" runat="server" />
         <uc2:TherapistList ID="TherapistList1" runat="server" />
         <br />
         <asp:Label ID="UserAlert" runat="server" Text=""></asp:Label>

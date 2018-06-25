@@ -5,12 +5,12 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using DatabaseObjects;
-
-
+using MyTherapistEncryption;
 
 public partial class UserManagement_AddEditTherapists : System.Web.UI.UserControl
 {
     public event EventHandler TherapistUpdated;
+    public event EventHandler TherapistFound;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -34,7 +34,20 @@ public partial class UserManagement_AddEditTherapists : System.Web.UI.UserContro
 
     public void FindTherapist(MassageTherapists person)
     {
-        
+        TherapistTableManager therapistTableManager = new TherapistTableManager();
+        MassageTherapists therapist = null;
+        MyTherapistEncryption.SecurityController dataEncryption = new SecurityController();
+
+        therapist =  therapistTableManager.FindTherapist(person);
+
+        if (therapist != null)
+        {            
+            txtBoxTherapistName.Text = therapist.Name;
+            txtBoxTherapistPassword.Text = therapist.Name; 
+        }
+
+        if (TherapistFound != null)
+            TherapistFound(this, null);
     }
 }
 
