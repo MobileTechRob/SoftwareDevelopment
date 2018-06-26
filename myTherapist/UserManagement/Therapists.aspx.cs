@@ -28,6 +28,9 @@ public partial class UserManagement_Therapists : System.Web.UI.Page
 
     private void AddEditTherapists1_TherapistUpdated(object sender, EventArgs e)
     {
+        btnAdd.Visible = true;
+        btnEdit.Visible = true;
+
         AddEditTherapists1.Visible = false;
         TherapistList1.Visible = true;
 
@@ -49,13 +52,12 @@ public partial class UserManagement_Therapists : System.Web.UI.Page
             return;
         }
 
+        btnAdd.Visible = false;
+        btnEdit.Visible = false;
+
         MassageTherapists massageTherapist = new MassageTherapists();
         massageTherapist.Id = Guid.Parse(Session["TherapistId"].ToString());
 
-        AddEditTherapists1.FindTherapist(massageTherapist);
-
-
-
-
+        AddEditTherapists1.FindTherapist(massageTherapist);        
     }
 }

@@ -33,23 +33,35 @@ namespace DatabaseObjects
         public void UpdateTherapist(MassageTherapists person)
         {
             MyTherapistEncryption.SecurityController dataEncryptionAlgo = new SecurityController();
+            bool newrecord = false;
+            Therapist therapistRecord = null;
 
-            if (person.Id.Equals(Guid.Empty))
+            try
             {
-                person.Id = Guid.NewGuid();
-                
-                Therapist therapistRecord = new Therapist();
+                var therapistQuery = from therapist in therapistDatabaseContext.Therapists where therapist.Id == person.Id select therapist;
+                therapistRecord = therapistQuery.Single<Therapist>();
 
-                therapistRecord.Id = person.Id;
+                therapistRecord = new Therapist();                
+                therapistRecord.Name = dataEncryptionAlgo.EncryptData(person.Name);
+                therapistRecord.Password = dataEncryptionAlgo.EncryptData(person.Password);                
+            }
+            catch (Exception ex)
+            {
+                newrecord = true;
+            }
+
+            if (newrecord)
+            {
+                therapistRecord = new Therapist();
+
+                therapistRecord.Id = Guid.NewGuid();
                 therapistRecord.Name = dataEncryptionAlgo.EncryptData(person.Name);
                 therapistRecord.Password = dataEncryptionAlgo.EncryptData(person.Password);
 
-                therapistDatabaseContext.Therapists.InsertOnSubmit(therapistRecord);
-                therapistDatabaseContext.SubmitChanges();
+                therapistDatabaseContext.Therapists.InsertOnSubmit(therapistRecord);                
             }
-            
-            //var therapistQuery = from therapist in therapistDatabaseContext.Therapists where therapist.Id == person.Id select therapist;
-                       
+
+            therapistDatabaseContext.SubmitChanges();
         }
 
         public MassageTherapists FindTherapist(MassageTherapists person)

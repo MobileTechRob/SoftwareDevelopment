@@ -21,12 +21,18 @@ public partial class UserManagement_AddEditTherapists : System.Web.UI.UserContro
     {
         TherapistTableManager therapistTableManager = new TherapistTableManager();
         DatabaseObjects.MassageTherapists therapist = new DatabaseObjects.MassageTherapists();
-     
-        therapist.Id = Guid.Empty;
+
+        if (Session["TherapistId"] == null)
+            therapist.Id = Guid.Empty;
+        else
+            therapist.Id = Guid.Parse(Session["TherapistId"].ToString());
+
         therapist.Name = txtBoxTherapistName.Text;
         therapist.Password = txtBoxTherapistPassword.Text;
 
         therapistTableManager.UpdateTherapist(therapist);
+
+        Session["TherapistId"] = null;
 
         if (TherapistUpdated != null)
             TherapistUpdated(this, e); 
