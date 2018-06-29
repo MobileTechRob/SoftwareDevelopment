@@ -39,9 +39,7 @@ namespace DatabaseObjects
             try
             {
                 var therapistQuery = from therapist in therapistDatabaseContext.Therapists where therapist.Id == person.Id select therapist;
-                therapistRecord = therapistQuery.Single<Therapist>();
-
-                therapistRecord = new Therapist();                
+                therapistRecord = therapistQuery.Single<Therapist>();                
                 therapistRecord.Name = dataEncryptionAlgo.EncryptData(person.Name);
                 therapistRecord.Password = dataEncryptionAlgo.EncryptData(person.Password);                
             }

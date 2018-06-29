@@ -13,3 +13,4 @@
 </asp:Panel>
 <br />
 <asp:Button ID="btnSaveEditTherapist" runat="server" Text="Save" OnClick="btnSaveEditTherapist_Click" />
+<asp:Button ID="btnCancelUpdateTherapist" runat="server" Text="Cancel" OnClick="btnCancelUpdateTherapist_Click" />

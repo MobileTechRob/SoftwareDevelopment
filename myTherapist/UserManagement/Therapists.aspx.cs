@@ -12,12 +12,20 @@ public partial class UserManagement_Therapists : System.Web.UI.Page
     {
         AddEditTherapists1.TherapistUpdated += AddEditTherapists1_TherapistUpdated;
         AddEditTherapists1.TherapistFound += AddEditTherapists1_TherapistFound;
+        AddEditTherapists1.TherapistUpdateCanceled += AddEditTherapists1_TherapistUpdateCanceled;
 
         if (IsPostBack == false)
         {
             AddEditTherapists1.Visible = false;
             TherapistList1.Visible = true;
         }
+    }
+
+    private void AddEditTherapists1_TherapistUpdateCanceled(object sender, EventArgs e)
+    {
+        AddEditTherapists1.Visible = false;
+        TherapistList1.Visible = true;
+        Session["TherapistId"] = null;
     }
 
     private void AddEditTherapists1_TherapistFound(object sender, EventArgs e)

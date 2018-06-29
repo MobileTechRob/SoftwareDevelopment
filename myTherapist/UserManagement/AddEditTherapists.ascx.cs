@@ -11,6 +11,7 @@ public partial class UserManagement_AddEditTherapists : System.Web.UI.UserContro
 {
     public event EventHandler TherapistUpdated;
     public event EventHandler TherapistFound;
+    public event EventHandler TherapistUpdateCanceled;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -54,6 +55,12 @@ public partial class UserManagement_AddEditTherapists : System.Web.UI.UserContro
 
         if (TherapistFound != null)
             TherapistFound(this, null);
+    }
+
+    protected void btnCancelUpdateTherapist_Click(object sender, EventArgs e)
+    {
+        if (TherapistUpdateCanceled != null)
+            TherapistUpdateCanceled(sender, e);
     }
 }
 
