@@ -13,6 +13,17 @@ namespace DatabaseObjects
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
+
+        public MassageTherapists(string id)
+        {
+            Id = Guid.Parse(id);
+        }
+
+        public MassageTherapists(Guid id)
+        {
+            Id = id;
+        }
+
     }
 
     /// <summary>
@@ -72,11 +83,10 @@ namespace DatabaseObjects
                 var query = from therapist in therapistDatabaseContext.Therapists where therapist.Id == person.Id select therapist;
                 therapistRecord = query.First<Therapist>();
 
-                massageTherapist = new MassageTherapists();
+                massageTherapist = new MassageTherapists(therapistRecord.Id);
 
                 MyTherapistEncryption.SecurityController dataEncryptionAlgo = new MyTherapistEncryption.SecurityController();
-
-                massageTherapist.Id = therapistRecord.Id;
+                
                 massageTherapist.Name = dataEncryptionAlgo.DecryptData(therapistRecord.Name);
                 massageTherapist.Password = dataEncryptionAlgo.DecryptData(therapistRecord.Password);
             }
@@ -90,7 +100,11 @@ namespace DatabaseObjects
         
         public void DeleteTherapist(MassageTherapists person)
         {
-
+            var therapistRecord = from therapist in therapistDatabaseContext.Therapists where therapist.Id == person.Id select therapist;
+           
+            therapistDatabaseContext.Therapists.DeleteOnSubmit(therapistRecord.Single<Therapist>());
+                       
+            therapistDatabaseContext.SubmitChanges();
         }
     }
 }

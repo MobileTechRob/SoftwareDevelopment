@@ -20,9 +20,12 @@
         <br />
         <asp:Label ID="UserAlert" runat="server" Text=""></asp:Label>
         <br />
+        <br />
         <asp:Panel ID="Panel" runat="server">
             <asp:Button ID="btnAdd" runat="server" OnClick="btnAdd_Click" Text="Add" /> 
             <asp:Button ID="btnEdit" runat="server" OnClick="btnEdit_Click" Text="Edit" /> 
+            <asp:Button ID="btnDelete" runat="server" OnClick="btnDelete_Click" Text="Delete" /> 
+            <asp:Button ID="btnLogOut" runat="server" OnClick="btnLogOut_Click" Text="Log Out" /> 
         </asp:Panel>
     </form>
 </body>

@@ -26,6 +26,7 @@ public partial class UserManagement_Therapists : System.Web.UI.Page
         AddEditTherapists1.Visible = false;
         TherapistList1.Visible = true;
         Session["TherapistId"] = null;
+        MainMenuButtonsAppear();
     }
 
     private void AddEditTherapists1_TherapistFound(object sender, EventArgs e)
@@ -36,8 +37,7 @@ public partial class UserManagement_Therapists : System.Web.UI.Page
 
     private void AddEditTherapists1_TherapistUpdated(object sender, EventArgs e)
     {
-        btnAdd.Visible = true;
-        btnEdit.Visible = true;
+        MainMenuButtonsAppear();
 
         AddEditTherapists1.Visible = false;
         TherapistList1.Visible = true;
@@ -47,7 +47,7 @@ public partial class UserManagement_Therapists : System.Web.UI.Page
 
     protected void btnAdd_Click(object sender, EventArgs e)
     {
-        btnAdd.Visible = false;
+        HideMainMenuButtons();
         AddEditTherapists1.Visible = true;
         TherapistList1.Visible = false;
     }
@@ -60,12 +60,58 @@ public partial class UserManagement_Therapists : System.Web.UI.Page
             return;
         }
 
+        UserAlert.Text = "";
+
         btnAdd.Visible = false;
         btnEdit.Visible = false;
 
-        MassageTherapists massageTherapist = new MassageTherapists();
-        massageTherapist.Id = Guid.Parse(Session["TherapistId"].ToString());
-
+        MassageTherapists massageTherapist = new MassageTherapists(Session["TherapistId"].ToString());
+        
         AddEditTherapists1.FindTherapist(massageTherapist);        
+    }
+
+    protected void btnDelete_Click(object sender, EventArgs e)
+    {
+        if (Session["TherapistId"] == null)
+        {
+            UserAlert.Text = "Select a Therapist";
+            UserAlert.ForeColor = System.Drawing.Color.Red;
+            return;
+        }
+        else if ((Session["TherapistId"] != null) && (Session["DeleteTherapist"] == null))
+        {
+            UserAlert.Text = "Click Delete again to confirm.";
+            UserAlert.ForeColor = System.Drawing.Color.Red;
+            Session["DeleteTherapist"] = "1";
+        }
+        else
+        {           
+            TherapistTableManager therapistTableManager = new TherapistTableManager();
+            therapistTableManager.DeleteTherapist(new MassageTherapists(Session["TherapistId"].ToString()));
+            TherapistList1.Refresh();
+            Session["DeleteTherapist"] = null;
+            UserAlert.Text = "";            
+        }
+   }
+
+    public void HideMainMenuButtons()
+    {
+        btnAdd.Visible = false;
+        btnEdit.Visible = false;
+        btnDelete.Visible = false;
+    }
+
+    public void MainMenuButtonsAppear()
+    {
+        btnAdd.Visible = true;
+        btnEdit.Visible = true;
+        btnDelete.Visible = true;
+    }
+
+
+
+    protected void btnLogOut_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("../MainMenu.aspx");
     }
 }
