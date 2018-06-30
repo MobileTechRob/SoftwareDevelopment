@@ -1,7 +1,7 @@
 USE [MyTherapist]
 GO
 
-/****** Object:  Table [dbo].[PatientAppointmentInformation]    Script Date: 5/10/18 8:25:00 PM ******/
+/****** Object:  Table [dbo].[PatientAppointmentInformation]    Script Date: 6/30/18 2:19:10 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -11,18 +11,19 @@ GO
 CREATE TABLE [dbo].[PatientAppointmentInformation](
 	[ApptDate] [datetime] NOT NULL,
 	[PatientId] [bigint] NOT NULL,
-	[RLU] [nchar](10) NULL,
-	[SP] [nchar](10) NULL,
-	[KD1] [nchar](10) NULL,
-	[LHT] [nchar](10) NULL,
-	[LV] [nchar](10) NULL,
-	[KD2] [nchar](10) NULL,
+	[RLU] [nvarchar](50) NULL,
+	[SP] [nvarchar](50) NULL,
+	[KD1] [nvarchar](50) NULL,
+	[LHT] [nvarchar](50) NULL,
+	[LV] [nvarchar](50) NULL,
+	[KD2] [nvarchar](50) NULL,
 	[TherapyPerformed] [nvarchar](max) NULL,
 	[OilsUsed] [nvarchar](max) NULL,
 	[SessionGoals] [nvarchar](max) NULL,
 	[ImageBeforeTherapy] [nvarchar](max) NULL,
 	[ImageAfterTherapy] [nvarchar](max) NULL,
 	[ApptId] [uniqueidentifier] NOT NULL,
+	[TherapistId] [uniqueidentifier] NOT NULL,
  CONSTRAINT [PK_PatientAppointmentInformation] PRIMARY KEY CLUSTERED 
 (
 	[ApptId] ASC

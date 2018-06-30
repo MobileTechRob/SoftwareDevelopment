@@ -16,6 +16,7 @@
       <Column Name="ImageBeforeTherapy" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="ImageAfterTherapy" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="ApptId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TherapistId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

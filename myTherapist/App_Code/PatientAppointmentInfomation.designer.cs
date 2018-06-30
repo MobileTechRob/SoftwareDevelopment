@@ -107,6 +107,8 @@ public partial class PatientAppointmentInformation : INotifyPropertyChanging, IN
 	
 	private System.Guid _ApptId;
 	
+	private System.Guid _TherapistId;
+	
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -139,6 +141,8 @@ public partial class PatientAppointmentInformation : INotifyPropertyChanging, IN
     partial void OnImageAfterTherapyChanged();
     partial void OnApptIdChanging(System.Guid value);
     partial void OnApptIdChanged();
+    partial void OnTherapistIdChanging(System.Guid value);
+    partial void OnTherapistIdChanged();
     #endregion
 	
 	public PatientAppointmentInformation()
@@ -422,6 +426,26 @@ public partial class PatientAppointmentInformation : INotifyPropertyChanging, IN
 				this._ApptId = value;
 				this.SendPropertyChanged("ApptId");
 				this.OnApptIdChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TherapistId", DbType="UniqueIdentifier NOT NULL")]
+	public System.Guid TherapistId
+	{
+		get
+		{
+			return this._TherapistId;
+		}
+		set
+		{
+			if ((this._TherapistId != value))
+			{
+				this.OnTherapistIdChanging(value);
+				this.SendPropertyChanging();
+				this._TherapistId = value;
+				this.SendPropertyChanged("TherapistId");
+				this.OnTherapistIdChanged();
 			}
 		}
 	}

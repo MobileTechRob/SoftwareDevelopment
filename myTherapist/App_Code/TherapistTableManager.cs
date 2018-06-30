@@ -14,6 +14,12 @@ namespace DatabaseObjects
         public string Name { get; set; }
         public string Password { get; set; }
 
+        public MassageTherapists(string name, string password)
+        {
+            Name = name;
+            Password = password;
+        }
+
         public MassageTherapists(string id)
         {
             Id = Guid.Parse(id);
@@ -78,21 +84,47 @@ namespace DatabaseObjects
             MassageTherapists massageTherapist= null;
             Therapist therapistRecord = null;
 
-            try
+            if (person.Id != Guid.Empty)
             {
-                var query = from therapist in therapistDatabaseContext.Therapists where therapist.Id == person.Id select therapist;
-                therapistRecord = query.First<Therapist>();
+                try
+                {
+                    var query = from therapist in therapistDatabaseContext.Therapists where therapist.Id == person.Id select therapist;
+                    therapistRecord = query.First<Therapist>();
 
-                massageTherapist = new MassageTherapists(therapistRecord.Id);
+                    massageTherapist = new MassageTherapists(therapistRecord.Id);
 
-                MyTherapistEncryption.SecurityController dataEncryptionAlgo = new MyTherapistEncryption.SecurityController();
-                
-                massageTherapist.Name = dataEncryptionAlgo.DecryptData(therapistRecord.Name);
-                massageTherapist.Password = dataEncryptionAlgo.DecryptData(therapistRecord.Password);
+                    MyTherapistEncryption.SecurityController dataEncryptionAlgo = new MyTherapistEncryption.SecurityController();
+
+                    massageTherapist.Name = dataEncryptionAlgo.DecryptData(therapistRecord.Name);
+                    massageTherapist.Password = dataEncryptionAlgo.DecryptData(therapistRecord.Password);
+                }
+                catch (Exception ex)
+                {
+                    ex.GetHashCode();
+                }
             }
-            catch (Exception ex)
+            else
             {
-                ex.GetHashCode();
+                try
+                {
+                    MyTherapistEncryption.SecurityController dataEnryptionAlgo = new SecurityController();
+
+                    string encryptedName = dataEnryptionAlgo.EncryptData(person.Name);
+                    string encryptedPassword = dataEnryptionAlgo.EncryptData(person.Password);
+                    
+                    var query = from therapist in therapistDatabaseContext.Therapists where (therapist.Name == encryptedName && therapist.Password == encryptedPassword) select therapist;
+                    therapistRecord = query.First<Therapist>();
+
+                    massageTherapist = new MassageTherapists(therapistRecord.Id);
+
+                    MyTherapistEncryption.SecurityController dataEncryptionAlgo = new MyTherapistEncryption.SecurityController();
+
+                    massageTherapist.Name = dataEncryptionAlgo.DecryptData(therapistRecord.Name);
+                    massageTherapist.Password = dataEncryptionAlgo.DecryptData(therapistRecord.Password);
+                }
+                catch (Exception ex)
+                {
+                }
             }
 
             return massageTherapist;

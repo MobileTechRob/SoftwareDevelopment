@@ -30,7 +30,9 @@
                     <asp:TextBox runat="server" ID="txtBoxPassword" />                    
                 </div>
             </div>
-            <br />            
+            <br />          
+                    <asp:Label runat="server" ID="lblInformationText" Text=""/>
+            <br />          
             <div class="tr">
                  <div class="td">                    
                     <asp:LinkButton runat="server" ID="lnkBtnPatientCare" Text="Login" Font-Size="Large" OnClick="btnPatientCare_Click"></asp:LinkButton>

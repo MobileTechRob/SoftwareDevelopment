@@ -20,6 +20,7 @@ namespace CommonDefinitions
         public static string DELETE_PATIENT_WARNING = "DeletePatientWarning";
         public static string THERAPIST_LIST_PAGENUMBER = "TherapistList_PageNumber";
         public static string SHOW_THERAPIST_LIST = "Show_Therapist_List";
+        public static string THERAPIST_NAME = "Therapist_Name";
 
         public CommonDefinitions()
         {

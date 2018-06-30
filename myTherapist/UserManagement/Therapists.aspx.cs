@@ -62,9 +62,8 @@ public partial class UserManagement_Therapists : System.Web.UI.Page
 
         UserAlert.Text = "";
 
-        btnAdd.Visible = false;
-        btnEdit.Visible = false;
-
+        HideMainMenuButtons();
+        
         MassageTherapists massageTherapist = new MassageTherapists(Session["TherapistId"].ToString());
         
         AddEditTherapists1.FindTherapist(massageTherapist);        
@@ -99,6 +98,7 @@ public partial class UserManagement_Therapists : System.Web.UI.Page
         btnAdd.Visible = false;
         btnEdit.Visible = false;
         btnDelete.Visible = false;
+        btnLogOut.Visible = false;
     }
 
     public void MainMenuButtonsAppear()
@@ -106,9 +106,9 @@ public partial class UserManagement_Therapists : System.Web.UI.Page
         btnAdd.Visible = true;
         btnEdit.Visible = true;
         btnDelete.Visible = true;
+        btnLogOut.Visible = true;
     }
-
-
+    
 
     protected void btnLogOut_Click(object sender, EventArgs e)
     {
