@@ -11,6 +11,7 @@ namespace DatabaseObjects
     {
         public int PatientId { get; set; }
         public Guid ApptId { get; set; }
+        public Guid TherapistId { get; set; }
         public DateTime AppointmentDate { get; set; }
 
         public string PulseKD1 { get; set; }
@@ -91,26 +92,27 @@ namespace DatabaseObjects
 
         public void Update(PatientAppointment patientAppt)
         {
-            PatientAppointmentInformation patientRecord1 = null;
+            PatientAppointmentInformation patientApptRecord = null;
             bool insert = false;
 
             try
             {
                 var appointmentquery = from patients in patientApptDataContext.PatientAppointmentInformations where patients.ApptId == patientAppt.ApptId select patients;
-                patientRecord1 = appointmentquery.First();
+                patientApptRecord = appointmentquery.First();
 
-                patientRecord1.LV = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseLV);
-                patientRecord1.RLU = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseRLU);
-                patientRecord1.KD1 = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseKD1);
-                patientRecord1.SP = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseSP);
-                patientRecord1.LHT = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseLHT);
-                patientRecord1.KD2 = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseKD2);
+                patientApptRecord.LV = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseLV);
+                patientApptRecord.RLU = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseRLU);
+                patientApptRecord.KD1 = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseKD1);
+                patientApptRecord.SP = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseSP);
+                patientApptRecord.LHT = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseLHT);
+                patientApptRecord.KD2 = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseKD2);
 
-                patientRecord1.ImageBeforeTherapy = dataEncryptionAlgorithm.EncryptData(patientAppt.ImageBeforeTherapy);
-                patientRecord1.ImageAfterTherapy = dataEncryptionAlgorithm.EncryptData(patientAppt.ImageAfterTherapy);
+                patientApptRecord.ImageBeforeTherapy = dataEncryptionAlgorithm.EncryptData(patientAppt.ImageBeforeTherapy);
+                patientApptRecord.ImageAfterTherapy = dataEncryptionAlgorithm.EncryptData(patientAppt.ImageAfterTherapy);
 
-                patientRecord1.TherapyPerformed = dataEncryptionAlgorithm.EncryptData(patientAppt.OilsAndTherapy);
-                patientRecord1.SessionGoals = dataEncryptionAlgorithm.EncryptData(patientAppt.SessionGoals);           
+                patientApptRecord.TherapyPerformed = dataEncryptionAlgorithm.EncryptData(patientAppt.OilsAndTherapy);
+                patientApptRecord.SessionGoals = dataEncryptionAlgorithm.EncryptData(patientAppt.SessionGoals);  
+                
             }
             catch (Exception ex)
             {
@@ -120,25 +122,27 @@ namespace DatabaseObjects
 
             if (insert)
             {
-                patientRecord1 = new PatientAppointmentInformation();
-                patientRecord1.PatientId = patientAppt.PatientId;
-                patientRecord1.ApptId = Guid.NewGuid();
-                patientRecord1.ApptDate = patientAppt.AppointmentDate;
+                patientApptRecord = new PatientAppointmentInformation();
+                patientApptRecord.PatientId = patientAppt.PatientId;
+                patientApptRecord.ApptId = Guid.NewGuid();
+                patientApptRecord.ApptDate = patientAppt.AppointmentDate;
+                patientApptRecord.TherapistId = patientAppt.TherapistId;
 
-                patientRecord1.LV = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseLV);
-                patientRecord1.RLU = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseRLU);
-                patientRecord1.KD1 = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseKD1);
-                patientRecord1.SP = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseSP);
-                patientRecord1.LHT = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseLHT);
-                patientRecord1.KD2 = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseKD2);
+                patientApptRecord.LV = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseLV);
+                patientApptRecord.RLU = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseRLU);
+                patientApptRecord.KD1 = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseKD1);
+                patientApptRecord.SP = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseSP);
+                patientApptRecord.LHT = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseLHT);
+                patientApptRecord.KD2 = dataEncryptionAlgorithm.EncryptData(patientAppt.PulseKD2);
 
-                patientRecord1.ImageBeforeTherapy = dataEncryptionAlgorithm.EncryptData(patientAppt.ImageBeforeTherapy);
-                patientRecord1.ImageAfterTherapy = dataEncryptionAlgorithm.EncryptData(patientAppt.ImageAfterTherapy);
+                patientApptRecord.ImageBeforeTherapy = dataEncryptionAlgorithm.EncryptData(patientAppt.ImageBeforeTherapy);
+                patientApptRecord.ImageAfterTherapy = dataEncryptionAlgorithm.EncryptData(patientAppt.ImageAfterTherapy);
+
+                patientApptRecord.TherapyPerformed = dataEncryptionAlgorithm.EncryptData(patientAppt.OilsAndTherapy);
+                patientApptRecord.SessionGoals = dataEncryptionAlgorithm.EncryptData(patientAppt.SessionGoals);
                 
-                patientRecord1.TherapyPerformed = dataEncryptionAlgorithm.EncryptData(patientAppt.OilsAndTherapy);
-                patientRecord1.SessionGoals = dataEncryptionAlgorithm.EncryptData(patientAppt.SessionGoals);
 
-                patientApptDataContext.PatientAppointmentInformations.InsertOnSubmit(patientRecord1);
+                patientApptDataContext.PatientAppointmentInformations.InsertOnSubmit(patientApptRecord);
             }
 
             patientApptDataContext.SubmitChanges();
