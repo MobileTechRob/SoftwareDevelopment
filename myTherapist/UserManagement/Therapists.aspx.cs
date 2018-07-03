@@ -13,12 +13,25 @@ public partial class UserManagement_Therapists : System.Web.UI.Page
         AddEditTherapists1.TherapistUpdated += AddEditTherapists1_TherapistUpdated;
         AddEditTherapists1.TherapistFound += AddEditTherapists1_TherapistFound;
         AddEditTherapists1.TherapistUpdateCanceled += AddEditTherapists1_TherapistUpdateCanceled;
+        TherapistList1.MyTherapistUserSelected += TherapistList1_MyTherapistUserSelected;
+        TherapistList1.MyTherapistUserNotSelected += TherapistList1_MyTherapistUserNotSelected;
+      
 
         if (IsPostBack == false)
         {
             AddEditTherapists1.Visible = false;
             TherapistList1.Visible = true;
         }
+    }
+
+    private void TherapistList1_MyTherapistUserNotSelected(object sender, EventArgs e)
+    {
+        
+    }
+
+    private void TherapistList1_MyTherapistUserSelected(object sender, EventArgs e)
+    {
+        
     }
 
     private void AddEditTherapists1_TherapistUpdateCanceled(object sender, EventArgs e)

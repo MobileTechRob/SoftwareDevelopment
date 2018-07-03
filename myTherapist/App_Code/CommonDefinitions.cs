@@ -21,6 +21,9 @@ namespace CommonDefinitions
         public static string THERAPIST_LIST_PAGENUMBER = "TherapistList_PageNumber";
         public static string SHOW_THERAPIST_LIST = "Show_Therapist_List";
         public static string THERAPIST_NAME = "Therapist_Name";
+        public static string THERAPIST_ID = "TherapistId";
+        public static string MYTHERAPIST_SELECTED = "MyTherapist_Selected";
+        public static string MYTHERAPIST = "MyTherapist";
 
         public CommonDefinitions()
         {

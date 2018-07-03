@@ -15,7 +15,8 @@ public partial class UserManagement_AddEditTherapists : System.Web.UI.UserContro
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (Session[CommonDefinitions.CommonDefinitions.MYTHERAPIST_SELECTED] != null)
+            txtBoxTherapistName.Enabled = false;
     }
 
     protected void btnSaveEditTherapist_Click(object sender, EventArgs e)
@@ -23,17 +24,17 @@ public partial class UserManagement_AddEditTherapists : System.Web.UI.UserContro
         TherapistTableManager therapistTableManager = new TherapistTableManager();
         DatabaseObjects.MassageTherapists therapist = null;
 
-        if (Session["TherapistId"] == null)
+        if (Session[CommonDefinitions.CommonDefinitions.THERAPIST_ID] == null)
             therapist = new DatabaseObjects.MassageTherapists(Guid.Empty);
         else
-            therapist = new DatabaseObjects.MassageTherapists(Guid.Parse(Session["TherapistId"].ToString()));
+            therapist = new DatabaseObjects.MassageTherapists(Guid.Parse(Session[CommonDefinitions.CommonDefinitions.THERAPIST_ID].ToString()));
 
         therapist.Name = txtBoxTherapistName.Text;
         therapist.Password = txtBoxTherapistPassword.Text;
 
         therapistTableManager.UpdateTherapist(therapist);
 
-        Session["TherapistId"] = null;
+        Session[CommonDefinitions.CommonDefinitions.THERAPIST_ID] = null;
 
         if (TherapistUpdated != null)
             TherapistUpdated(this, e); 

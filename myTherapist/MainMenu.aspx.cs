@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using DatabaseObjects;
-using CommonDefinitions;
+﻿using DatabaseObjects;
+using System;
 
 public partial class MainMenu : System.Web.UI.Page
 {
@@ -17,14 +11,19 @@ public partial class MainMenu : System.Web.UI.Page
     protected void btnPatientCare_Click(object sender, EventArgs e)
     {
         DateTime result = DateTime.MinValue;
+        TherapistTableManager therapistTableManager = new TherapistTableManager();
 
         if (txtBoxUserName.Text.Equals("MyTherapist"))
         {
-            Response.Redirect("~/UserManagement/Therapists.aspx");
+            MassageTherapists therapist = new MassageTherapists(txtBoxUserName.Text, txtBoxPassword.Text);
+            MassageTherapists massagePerson = therapistTableManager.FindTherapist(therapist);
+
+            if (massagePerson != null)           
+                Response.Redirect("~/UserManagement/Therapists.aspx");
         }
         else
         {
-            TherapistTableManager therapistTableManager = new TherapistTableManager();
+            
             MassageTherapists therapist = new MassageTherapists(txtBoxUserName.Text, txtBoxPassword.Text);
             MassageTherapists massagePerson = therapistTableManager.FindTherapist(therapist);
 

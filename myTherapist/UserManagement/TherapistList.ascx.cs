@@ -10,6 +10,8 @@ using DataGridObjects;
 public partial class UserManagement_TherapistList : System.Web.UI.UserControl
 {
     DataGridObjects.DataGridObject gridObject = null;
+    public event EventHandler MyTherapistUserSelected;
+    public event EventHandler MyTherapistUserNotSelected;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -60,7 +62,14 @@ public partial class UserManagement_TherapistList : System.Web.UI.UserControl
 
             therapistlist.Rows[selectedIndex].BackColor = System.Drawing.ColorTranslator.FromHtml("#F9cda8");
 
-            Session["TherapistId"] = therapistlist.Rows[selectedIndex].Cells[0].Text;
+            Session[CommonDefinitions.CommonDefinitions.THERAPIST_ID] = therapistlist.Rows[selectedIndex].Cells[0].Text;
+
+            if (therapistlist.Rows[selectedIndex].Cells[1].Text.Equals(CommonDefinitions.CommonDefinitions.MYTHERAPIST))
+            {
+                Session[CommonDefinitions.CommonDefinitions.MYTHERAPIST_SELECTED] = "true";                
+            }
+            else
+                Session[CommonDefinitions.CommonDefinitions.MYTHERAPIST_SELECTED] = null;
         }
 
     }
