@@ -19,24 +19,18 @@
         <div class="menutabletwo">
             <br />            
             <div class="trlogin">
-                <div class="tdlogin">
-                    <asp:Label runat="server" ID="lblUserName" Text="Therapist"/>                    
-                </div>
-                <div class="tdlogin">
-                    <asp:TextBox runat="server" ID="txtBoxUserName"  />                    
-                </div>
-
-
+                <div class="td">&nbsp</div><div class="td">&nbsp</div><div class="td">&nbsp</div><div class="td">&nbsp</div> <div class="td">&nbsp</div>
             </div>
-            <div class="trlogin">                
-                <div class="td">
-                    <asp:Label runat="server" ID="lblPassword" Text="Password"/>
-                    <asp:Label runat="server" ID="lblSpacer2" Text="&nbsp&nbsp"/>
-                    <asp:TextBox runat="server" ID="txtBoxPassword" />                    
-                </div>
-            </div>
+            <asp:Table ID="UserLogin" runat="server">
+                <asp:TableRow>
+                    <asp:TableCell><asp:Label runat="server" ID="lblUserName" Text="Therapist"/></asp:TableCell><asp:TableCell><asp:TextBox runat="server" ID="txtBoxUserName"  /></asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableCell><asp:Label runat="server" ID="lblPassword" Text="Password"/></asp:TableCell><asp:TableCell><asp:TextBox runat="server" ID="txtBoxPassword" /></asp:TableCell>
+                </asp:TableRow>
+            </asp:Table>
             <br />          
-                    <asp:Label runat="server" ID="lblInformationText" Text=""/>
+                <asp:Label runat="server" ID="lblInformationText" Text=""/>
             <br />          
             <div class="tr">
                  <div class="td">                    

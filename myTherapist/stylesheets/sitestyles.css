@@ -29,9 +29,9 @@ body {
 .menutabletwo {   
     background-color: #F4A460;
     display: table;
-    position: absolute;
+    position: absolute;    
     margin-top: 35%;
-    margin-left: 20%;
+    margin-left: 45%;
 }
 
 
@@ -172,7 +172,7 @@ body {
 .trlogin {
     display: table-row;    
     align-content: flex-start;
-    border: none;
+    border: solid;
 }
 
 
@@ -190,9 +190,10 @@ body {
 
 .td {
     display: table-cell;
-    align-content: center;
+    align-content: flex-start;    
+    width:3px;
     vertical-align: middle;
-    border: none;
+    border:none;
 }
 
 .tdlogin {
