@@ -20,12 +20,21 @@ body {
 
 .menutable {
     background-color: #F4A460;
-    display: table;
-    align-content: center;
+    display: table;    
     position: absolute;
-    margin-top: 20%;
-    margin-left: 35%;
+    margin-top: 10%;
+    margin-left: 20%;
 }
+
+.menutabletwo {   
+    background-color: #F4A460;
+    display: table;
+    position: absolute;
+    margin-top: 35%;
+    margin-left: 20%;
+}
+
+
 
 .table {
     background-color: #F4A460;
@@ -160,6 +169,13 @@ body {
     border: none;    
 }
 
+.trlogin {
+    display: table-row;    
+    align-content: flex-start;
+    border: none;
+}
+
+
 .tr {
     display: table-row;
     align-content: center;
@@ -178,6 +194,15 @@ body {
     vertical-align: middle;
     border: none;
 }
+
+.tdlogin {
+    display: table-cell;
+    align-content: flex-start;   
+    width:50px;
+    vertical-align: middle;
+    border: none;
+}
+
 
 .tda {
     display: table-cell;

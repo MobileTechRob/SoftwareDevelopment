@@ -20,6 +20,11 @@ public partial class MainMenu : System.Web.UI.Page
 
             if (massagePerson != null)           
                 Response.Redirect("~/UserManagement/Therapists.aspx");
+            else
+            {
+                lblInformationText.Text = "Invalid Logon";
+                lblInformationText.ForeColor = System.Drawing.Color.Red;
+            }
         }
         else
         {

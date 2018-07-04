@@ -22,16 +22,25 @@ public partial class UserManagement_Therapists : System.Web.UI.Page
             AddEditTherapists1.Visible = false;
             TherapistList1.Visible = true;
         }
+
+        if (Session[CommonDefinitions.CommonDefinitions.MYTHERAPIST_SELECTED] != null)
+            btnDelete.Enabled = false;
+        else
+            btnDelete.Enabled = true;
     }
 
     private void TherapistList1_MyTherapistUserNotSelected(object sender, EventArgs e)
     {
-        
+        btnDelete.Enabled = true;
+        Session[CommonDefinitions.CommonDefinitions.MYTHERAPIST_SELECTED] = null;
     }
 
     private void TherapistList1_MyTherapistUserSelected(object sender, EventArgs e)
     {
-        
+        btnDelete.Enabled = false;
+        Session[CommonDefinitions.CommonDefinitions.MYTHERAPIST_SELECTED] = "";
+            
+            ;
     }
 
     private void AddEditTherapists1_TherapistUpdateCanceled(object sender, EventArgs e)
@@ -125,6 +134,7 @@ public partial class UserManagement_Therapists : System.Web.UI.Page
 
     protected void btnLogOut_Click(object sender, EventArgs e)
     {
+        Session.Clear();
         Response.Redirect("../MainMenu.aspx");
     }
 }

@@ -6,7 +6,7 @@
 <asp:TableCell><asp:Label ID="lblTherapistName" Text="Name" runat="server" ></asp:Label></asp:TableCell><asp:TableCell><asp:TextBox ID="txtBoxTherapistName" Width="250" runat="server"></asp:TextBox></asp:TableCell>
 </asp:TableRow>
 <asp:TableRow>
-<asp:TableCell><asp:Label ID="lblTherapistPassword" Text="Password" runat="server" ></asp:Label></asp:TableCell><asp:TableCell><asp:TextBox ID="txtBoxTherapistPassword" Width="250" runat="server"></asp:TextBox></asp:TableCell>
+<asp:TableCell><asp:Label ID="lblTherapistPassword" Text="Password" runat="server" ></asp:Label></asp:TableCell><asp:TableCell><asp:TextBox ID="txtBoxTherapistPassword" TextMode="Password" Width="250" runat="server"></asp:TextBox></asp:TableCell>
 </asp:TableRow>
 </asp:Table>
 <br />

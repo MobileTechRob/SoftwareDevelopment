@@ -66,10 +66,18 @@ public partial class UserManagement_TherapistList : System.Web.UI.UserControl
 
             if (therapistlist.Rows[selectedIndex].Cells[1].Text.Equals(CommonDefinitions.CommonDefinitions.MYTHERAPIST))
             {
-                Session[CommonDefinitions.CommonDefinitions.MYTHERAPIST_SELECTED] = "true";                
+                Session[CommonDefinitions.CommonDefinitions.MYTHERAPIST_SELECTED] = "true";
+
+                if (MyTherapistUserSelected != null)
+                    MyTherapistUserSelected(sender, e);
             }
             else
+            {
                 Session[CommonDefinitions.CommonDefinitions.MYTHERAPIST_SELECTED] = null;
+
+                if (MyTherapistUserNotSelected != null)
+                    MyTherapistUserNotSelected(sender, e);
+            }
         }
 
     }

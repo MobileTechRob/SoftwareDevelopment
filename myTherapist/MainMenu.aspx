@@ -15,15 +15,20 @@
                     <asp:Image runat="server" ImageUrl="~/Images/PamCare.PNG" ID="PamCareImage" ImageAlign="Middle" />
                 </div>
             </div>
+        </div>
+        <div class="menutabletwo">
             <br />            
-            <div class="tr">
-                <div class="td">
-                    <asp:Label runat="server" ID="lblUserName" Text="Therapist"/>
-                    <asp:Label runat="server" ID="lblSpacer" Text="&nbsp&nbsp&nbsp"/>
+            <div class="trlogin">
+                <div class="tdlogin">
+                    <asp:Label runat="server" ID="lblUserName" Text="Therapist"/>                    
+                </div>
+                <div class="tdlogin">
                     <asp:TextBox runat="server" ID="txtBoxUserName"  />                    
                 </div>
+
+
             </div>
-            <div class="tr">                
+            <div class="trlogin">                
                 <div class="td">
                     <asp:Label runat="server" ID="lblPassword" Text="Password"/>
                     <asp:Label runat="server" ID="lblSpacer2" Text="&nbsp&nbsp"/>
