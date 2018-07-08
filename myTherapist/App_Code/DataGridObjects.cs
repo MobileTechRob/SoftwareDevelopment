@@ -197,6 +197,26 @@ namespace DataGridObjects
                 sqlCommandString.Append(" FROM ");
                 sqlCommandString.Append(databaseTableName);
 
+                ///////// now check for joins
+                iter.Reset();
+
+                while (iter.MoveNext())
+                {
+                    if (string.IsNullOrEmpty(iter.Current.JoinTable) == false)
+                    {
+                        sqlCommandString.Append(" ");
+                        sqlCommandString.Append(" INNER JOIN  ");
+                        sqlCommandString.Append(iter.Current.JoinTable);
+                        sqlCommandString.Append(" ON ");
+                        sqlCommandString.Append(iter.Current.JoinColumnMainTable);
+                        sqlCommandString.Append(" = ");
+                        sqlCommandString.Append(iter.Current.JoinColumnJoinTable);
+
+                    }
+                }
+                
+                ////////
+
                 if (whereClause.Length > 0)
                 {
                     wherePhrase = whereClause.ToString().TrimEnd(new char[] { ' ', 'A', 'N', 'D' });
@@ -332,6 +352,9 @@ namespace DataGridObjects
             public string DataBaseTableColumnName { get; set; }
             public bool IncludeInDataGrid { get; set; }
             public string DataGridColumnName { get; set; }
+            public string JoinTable { get; set; }
+            public string JoinColumnMainTable { get; set; }
+            public string JoinColumnJoinTable { get; set; }
             public bool OrderByColumn { get; set; }
             public int Column { get; set; }
             public int ColumnWidth { get; set; }
@@ -400,6 +423,24 @@ namespace DataGridObjects
             columnList.Add(colObj);
         }
 
+        public void AddColumn(string databaseColumnName, string dataGridColumnName, MyDataTypes dataType, bool orderByColumn, int columnInGridWidth, bool encrypted, string joinTable, string joinColumnMainTable, string joinColumnJoinTable, bool includeInGrid = true)
+        {
+            DatabaseColumnObject colObj = new DatabaseColumnObject();
+            colObj.DataBaseTableColumnName = databaseColumnName;
+            colObj.DataGridColumnName = dataGridColumnName;
+            colObj.DataType = dataType;
+            colObj.IncludeInDataGrid = includeInGrid;
+            colObj.OrderByColumn = orderByColumn;
+            colObj.Column = columnDictionary.Count;
+            colObj.Encrypted = encrypted;
+            colObj.ColumnWidth = columnInGridWidth;
+            colObj.JoinTable = joinTable;
+            colObj.JoinColumnMainTable = joinColumnMainTable;
+            colObj.JoinColumnJoinTable = joinColumnJoinTable;
+
+            columnDictionary.Add(columnDictionary.Count + 1, colObj);
+            columnList.Add(colObj);
+        }
 
         public void AddColumn(DatabaseColumnObject dataColumn)
         {
@@ -407,11 +448,7 @@ namespace DataGridObjects
             columnDictionary.Add(columnDictionary.Count + 1, dataColumn);
             columnList.Add(dataColumn);
         }
-
-
-
-
-
+        
         public int ColumnIndex(string columnName)
         {
             List<DatabaseColumnObject>.Enumerator iter;

@@ -57,7 +57,8 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         dbRowObject.AddColumn("ImageAfterTherapy", "", MyDataTypes.STRING, false, 0, true);
         dbRowObject.AddColumn("TherapyPerformed", "", MyDataTypes.STRING, false, 0, true);
         dbRowObject.AddColumn("SessionGoals", "", MyDataTypes.STRING, false, 0, true);
-       
+        dbRowObject.AddColumn("Name", "", MyDataTypes.STRING, false, 0, true, "Therapists", "TherapistId", "Id");
+
         dataGridObj.DatabaseRowObject = dbRowObject;
         
         if (IsPostBack == false)
@@ -86,7 +87,7 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
         linkButtonPatient = new LinkButton();
         
         if ((Session["PatientFirstName"] != null) && (Session["PatientLastName"] != null))
-            linkButtonPatient.Text = String.Format("{0} {1} {2}", Session["PatientFirstName"].ToString(), Session["PatientLastName"].ToString(), Session["PatientBirthDate"].ToString());
+            linkButtonPatient.Text = String.Format("{0} {1} DOB: {2}", Session["PatientFirstName"].ToString(), Session["PatientLastName"].ToString(), Session["PatientBirthDate"].ToString());
 
         linkButtonPatient.Command += linkButtonPatient_Command;
         linkButtonPatient.CommandArgument = Session["PatientId"].ToString();
@@ -173,9 +174,10 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
                 linkButtonApptDate.Command += linkButtonApptDate_Command;
                 linkButtonApptDate.CommandArgument = dataRow.ItemArray[dbRowObject.ColumnIndex("ApptId")].ToString();
 
-                cell.Controls.Add(linkButtonApptDate); 
-                row.Cells.Add(cell);
+                cell.Controls.Add(linkButtonApptDate);
 
+                row.Cells.Add(cell);
+                
                 cell = new TableCell();
                 cell.Text = dataRow.ItemArray[dbRowObject.ColumnIndex("RLU")].ToString();
                 row.Cells.Add(cell);
@@ -219,7 +221,10 @@ public partial class PatientCare_PatientHistoryControl : System.Web.UI.UserContr
                 PatientApptData.Rows.Add(row);
 
                 row = new TableRow();
+
                 cell = new TableCell();
+                cell.Text = dataRow.ItemArray[dbRowObject.ColumnIndex("Name")].ToString(); ;
+                cell.VerticalAlign = VerticalAlign.Top;
                 row.Cells.Add(cell);
                
                 cell = new TableCell();

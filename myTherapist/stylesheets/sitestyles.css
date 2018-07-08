@@ -189,10 +189,7 @@ body {
 }
 
 .td {
-    display: table-cell;
-    align-content: flex-start;    
-    width:3px;
-    vertical-align: middle;
+    display: table-cell;            
     border:none;
 }
 
