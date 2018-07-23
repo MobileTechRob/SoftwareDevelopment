@@ -108,10 +108,15 @@ public partial class UserManagement_Therapists : System.Web.UI.Page
         else
         {           
             TherapistTableManager therapistTableManager = new TherapistTableManager();
-            therapistTableManager.DeleteTherapist(new MassageTherapists(Session["TherapistId"].ToString()));
-            TherapistList1.Refresh();
-            Session["DeleteTherapist"] = null;
-            UserAlert.Text = "";            
+
+            if (therapistTableManager.DeleteTherapist(new MassageTherapists(Session["TherapistId"].ToString())))
+            {
+                TherapistList1.Refresh();
+                Session["DeleteTherapist"] = null;
+                UserAlert.Text = "";
+            }
+            else
+                UserAlert.Text = "This therapist is assocated with previous appointments.";
         }
    }
 

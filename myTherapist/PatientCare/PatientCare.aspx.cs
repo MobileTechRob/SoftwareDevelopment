@@ -374,5 +374,11 @@ public partial class PatientCare_PatientCare : System.Web.UI.Page
         btnPatientListing.Visible = false;
         btnPatientHistory.Visible = false;
         btnDeletePatient.Visible = false;
+        btnLogOut.Visible = false;
+    }
+
+    protected void btnLogOut_Click(object sender, EventArgs e)
+    {
+        this.ClientScript.RegisterClientScriptBlock(this.GetType(), "Close", "window.close()", true);
     }
 }

@@ -1,7 +1,7 @@
 USE [MyTherapist]
 GO
 
-/****** Object:  Table [dbo].[PatientInformation]    Script Date: 5/10/18 8:24:29 PM ******/
+/****** Object:  Table [dbo].[PatientInformation]    Script Date: 7/19/18 9:20:33 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -14,7 +14,7 @@ CREATE TABLE [dbo].[PatientInformation](
 	[EmailAddress] [nvarchar](max) NULL,
 	[TelephoneNumber] [nvarchar](50) NULL,
 	[LastName] [nvarchar](50) NULL,
-	[BirthDate] [date] NULL,
+	[BirthDate] [nvarchar](50) NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

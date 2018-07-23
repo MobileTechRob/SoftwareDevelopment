@@ -41,6 +41,7 @@
                     <asp:Button runat="server" ID="btnPatientListing" Text="Patient Listing" OnClick="btnPatientListing_Click" />
                     <asp:Button runat="server" ID="btnPatientHistory" Text="Patient History" OnClick="btnPatientHistory_Click" />
                     <asp:Button runat="server" ID="btnDeletePatient" Text="Delete Patient" OnClick="btnDeletePatient_Click" />
+                    <asp:Button runat="server" ID="btnLogOut" Text="Log Out" OnClick="btnLogOut_Click" />
                 </div>
             </div>
         </div>

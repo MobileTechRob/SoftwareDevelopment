@@ -1,7 +1,7 @@
 USE [MyTherapist]
 GO
 
-/****** Object:  Table [dbo].[PatientAppointmentInformation]    Script Date: 6/30/18 2:19:10 PM ******/
+/****** Object:  Table [dbo].[PatientAppointmentInformation]    Script Date: 7/12/18 9:58:50 PM ******/
 SET ANSI_NULLS ON
 GO
 

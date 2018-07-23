@@ -138,8 +138,16 @@ public partial class PatientCare_PatientApptControl : System.Web.UI.UserControl
         string therapist = Session[CommonDefinitions.CommonDefinitions.THERAPIST_NAME].ToString();
 
         patientAppointmentInformation.TherapistId = Guid.Parse(Session[therapist.ToUpper().ToString()].ToString());
-        patientAppointmentInformation.ImageBeforeTherapy = Session["UploadImageBefore"].ToString();
-        patientAppointmentInformation.ImageAfterTherapy = Session["UploadImageAfter"].ToString();
+
+        if (Session["UploadImageBefore"] != null)
+            patientAppointmentInformation.ImageBeforeTherapy = Session["UploadImageBefore"].ToString();
+        else
+            patientAppointmentInformation.ImageBeforeTherapy = "";
+
+        if (Session["UploadImageAfter"] != null)
+            patientAppointmentInformation.ImageAfterTherapy = Session["UploadImageAfter"].ToString();
+        else
+            patientAppointmentInformation.ImageAfterTherapy = "";
 
         patientAppointmentInformation.OilsAndTherapy = txtBoxTherapyPerformed.Text;
         patientAppointmentInformation.SessionGoals = txtBoxSessionGoals.Text;

@@ -38,13 +38,15 @@ namespace DatabaseObjects
     public class TherapistTableManager
     {
         TherapistsDataContext therapistDatabaseContext;
+        PatientAppointmentInfomationDataContext patientApptInformationDatabaseContext;
 
         public TherapistTableManager()
         {
             //
             // TODO: Add constructor logic here
             //            
-            therapistDatabaseContext = new TherapistsDataContext(WebConfigurationManager.ConnectionStrings[CommonDefinitions.CommonDefinitions.MYTHERAPIST_DATABASE_CONNECTION_STRING].ConnectionString);          
+            therapistDatabaseContext = new TherapistsDataContext(WebConfigurationManager.ConnectionStrings[CommonDefinitions.CommonDefinitions.MYTHERAPIST_DATABASE_CONNECTION_STRING].ConnectionString);
+            patientApptInformationDatabaseContext = new PatientAppointmentInfomationDataContext(WebConfigurationManager.ConnectionStrings[CommonDefinitions.CommonDefinitions.MYTHERAPIST_DATABASE_CONNECTION_STRING].ConnectionString);
         }
 
         public void UpdateTherapist(MassageTherapists person)
@@ -130,13 +132,30 @@ namespace DatabaseObjects
             return massageTherapist;
         }
         
-        public void DeleteTherapist(MassageTherapists person)
+        public bool DeleteTherapist(MassageTherapists person)
         {
-            var therapistRecord = from therapist in therapistDatabaseContext.Therapists where therapist.Id == person.Id select therapist;
-           
-            therapistDatabaseContext.Therapists.DeleteOnSubmit(therapistRecord.Single<Therapist>());
-                       
-            therapistDatabaseContext.SubmitChanges();
+            try
+            {
+                var patientAppRecord = from appts in patientApptInformationDatabaseContext.PatientAppointmentInformations where appts.TherapistId == person.Id select appts;
+
+                int count = patientAppRecord.Count<PatientAppointmentInformation>();
+
+                if (count == 0)
+                {                    
+                    var therapistRecord = from therapist in therapistDatabaseContext.Therapists where therapist.Id == person.Id select therapist;
+
+                    therapistDatabaseContext.Therapists.DeleteOnSubmit(therapistRecord.Single<Therapist>());
+                    therapistDatabaseContext.SubmitChanges();
+
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }            
         }
     }
 }
